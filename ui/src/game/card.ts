@@ -31,12 +31,18 @@ export const createAllCard = async (
       const attack = [] as number[]
       const life = [] as number[]
       const speed = [] as number[]
-      card.level.forEach((level: any) => {
-        description.push(level.description)
+      card.level.forEach((level: any, i: any) => {
+        description.push("Level " + i)
         attack.push(level.attack)
         life.push(level.life)
         speed.push(level.speed)
       });
+      for (let j = description.length; j < 6; j++) {
+        description.push("Level " + j)
+        attack.push(Math.round(attack[j - 1] * 120 / 100))
+        life.push(Math.round(life[j - 1] * 120 / 100))
+        speed.push(Math.round(speed[j - 1] * 120 / 100))
+      }
       const tx = await contractHandler.cardList.getContract().createCardFull(
         card.name,
         card.mana,
@@ -127,6 +133,7 @@ export const loadAllCard = async (
   contractHandler: ContractHandlerType,
   setMessage?: (message: string | undefined) => void,
 ) => {
+  /*
   const _cardHash = (await contractHandler.cardList.getContract().cardHash())[0]
   if (_cardHash) {
     let cardFile = require("../card/card.json")
@@ -135,6 +142,7 @@ export const loadAllCard = async (
       return loadAllCardFromFile()
     }
   }
+  */
   const cardLastId = await getCardLastId(contractHandler)
   //console.log(cardId)
   const cardList = [] as Array<CardType>
