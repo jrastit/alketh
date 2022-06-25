@@ -9,6 +9,27 @@
       "host" : "localhost"
     },
     {
+      "name" : "Optimism Testnet",
+      "url" : "https://kovan.optimism.io",
+      "faucet" : "https://optimismfaucet.xyz/",
+      "chainId": 69,
+      "gameContract": "",
+      "tokenName": "TEST",
+      "timeBetweenRequest" : 10,
+      "retry" : 2,
+      "host" : "localhost"
+    },
+    {
+      "name" : "Skale Testnet",
+      "url" : "https://hackathon.skalenodes.com/v1/downright-royal-saiph",
+      "faucet" : "https://hackathon.skale.network/",
+      "chainId": 1085866509,
+      "gameContract": "0x8BAC9995215487B3B3fB7A6203d778dc39731cE8",
+      "tokenName": "TEST",
+      "timeBetweenRequest" : 10,
+      "retry" : 2
+    },
+    {
       "name" : "Skale Testnet",
       "url" : "https://hackathon.skalenodes.com/v1/downright-royal-saiph",
       "faucet" : "https://hackathon.skale.network/",
@@ -94,6 +115,27 @@
       "refreshBalance" : 10000,
       "retry" : 2,
       "host" : "localhost"
-    }
+    },
+    {
+      "name" : "Polygon Testnet",
+      "url": "https://rpc-mumbai.matic.today",
+      "faucet": "https://faucet.polygon.technology/",
+      "chainId": 80001,
+      "gameContract": "",
+      "tokenName": "MATIC",
+      "timeBetweenRequest" : 1000,
+      "refreshBalance" : 10000,
+      "retry" : 16
+    },
+    {
+      "name" : "Polygon Mainnet",
+      "url": "https://rpc-mainnet.matic.network",
+      "chainId": 137,
+      "gameContract": "",
+      "tokenName": "MATIC",
+      "timeBetweenRequest" : 1000,
+      "refreshBalance" : 20000,
+      "retry" : 16
+    },
   ]
 }
