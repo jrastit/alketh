@@ -19,27 +19,27 @@ const CardWidget = (props : {
   let familyName=""
   switch (props.family){
     case 1:
-      familyColor="#3D550C"
+      familyColor="#bbddaa"
       familyName="Air"
     break
     case 2:
-      familyColor="#0c2d48"
+      familyColor="#ddaa22"
       familyName="Crypto"
     break
     case 3:
-      familyColor="#870A30"
+      familyColor="#852211"
       familyName="Earth"
     break
     case 4:
-      familyColor="#613659"
+      familyColor="#adadad"
       familyName="Ether"
     break
     case 5:
-      familyColor="#613659"
+      familyColor="#3377dd"
       familyName="Water"
     break
     case 6:
-      familyColor="#613659"
+      familyColor="#cc1111"
       familyName="Fire"
     break
     default:
@@ -152,9 +152,7 @@ const CardWidget = (props : {
         marginTop:"1.2em",
         borderRadius:"0.5em",
         width:"9.5em",
-        height:"7em",
-        transform: "scaleY(-1)",
-        opacity:".2",
+        height:"12.5em",
         pointerEvents: 'none',
       }}/>
       <div style={{
