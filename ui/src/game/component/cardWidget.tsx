@@ -100,7 +100,7 @@ const CardWidget = (props : {
         marginTop:"1.2em",
         borderRadius:"0.5em",
         width:"9.5em",
-        height:"11.5em",
+        height:"7em",
         pointerEvents: 'none',
       }}/>
       <div style={{
@@ -152,7 +152,7 @@ const CardWidget = (props : {
         marginTop:"1.2em",
         borderRadius:"0.5em",
         width:"9.5em",
-        height:"0.5em",
+        height:"7em",
         transform: "scaleY(-1)",
         opacity:".01",
         pointerEvents: 'none',
