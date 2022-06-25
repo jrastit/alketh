@@ -1,0 +1,224 @@
+{
+  "card": [
+    {
+      "name": "Hacker",
+      "mana": 1,
+      "family": 1,
+      "starter": 1,
+      "level": [
+        {
+          "life": 3,
+          "attack": 5,
+          "speed": 1,
+          "description": "Level 1"
+        },
+        {
+          "life": 5,
+          "attack": 10,
+          "speed": 2,
+          "description": "Level 2"
+        },
+        {
+          "life": 10,
+          "attack": 15,
+          "speed": 3,
+          "description": "Level 3"
+        },
+        {
+          "life": 15,
+          "attack": 20,
+          "speed": 1,
+          "description": "Level 4"
+        },
+        {
+          "life": 20,
+          "attack": 30,
+          "speed": 2,
+          "description": "Level 5"
+        },
+        {
+          "life": 30,
+          "attack": 40,
+          "speed": 3,
+          "description": "Level 6"
+        }
+      ]
+    },
+    {
+      "name": "Hacker",
+      "mana": 2,
+      "family": 2,
+      "starter": 1,
+      "level": [
+        {
+          "life": 3,
+          "attack": 5,
+          "speed": 1,
+          "description": "Level 1"
+        },
+        {
+          "life": 5,
+          "attack": 10,
+          "speed": 2,
+          "description": "Level 2"
+        },
+        {
+          "life": 10,
+          "attack": 15,
+          "speed": 3,
+          "description": "Level 3"
+        },
+        {
+          "life": 15,
+          "attack": 20,
+          "speed": 1,
+          "description": "Level 4"
+        },
+        {
+          "life": 20,
+          "attack": 30,
+          "speed": 2,
+          "description": "Level 5"
+        },
+        {
+          "life": 30,
+          "attack": 40,
+          "speed": 3,
+          "description": "Level 6"
+        }
+      ]
+    },
+    {
+      "name": "Hacker",
+      "mana": 3,
+      "family": 3,
+      "starter": 1,
+      "level": [
+        {
+          "life": 3,
+          "attack": 5,
+          "speed": 1,
+          "description": "Level 1"
+        },
+        {
+          "life": 5,
+          "attack": 10,
+          "speed": 2,
+          "description": "Level 2"
+        },
+        {
+          "life": 10,
+          "attack": 15,
+          "speed": 3,
+          "description": "Level 3"
+        },
+        {
+          "life": 15,
+          "attack": 20,
+          "speed": 1,
+          "description": "Level 4"
+        },
+        {
+          "life": 20,
+          "attack": 30,
+          "speed": 2,
+          "description": "Level 5"
+        },
+        {
+          "life": 30,
+          "attack": 40,
+          "speed": 3,
+          "description": "Level 6"
+        }
+      ]
+    },
+    {
+      "name": "Hacker",
+      "mana": 4,
+      "family": 4,
+      "starter": 1,
+      "level": [
+        {
+          "life": 3,
+          "attack": 5,
+          "speed": 1,
+          "description": "Level 1"
+        },
+        {
+          "life": 5,
+          "attack": 10,
+          "speed": 2,
+          "description": "Level 2"
+        },
+        {
+          "life": 10,
+          "attack": 15,
+          "speed": 3,
+          "description": "Level 3"
+        },
+        {
+          "life": 15,
+          "attack": 20,
+          "speed": 1,
+          "description": "Level 4"
+        },
+        {
+          "life": 20,
+          "attack": 30,
+          "speed": 2,
+          "description": "Level 5"
+        },
+        {
+          "life": 30,
+          "attack": 40,
+          "speed": 3,
+          "description": "Level 6"
+        }
+      ]
+    },
+    {
+      "name": "Hacker",
+      "mana": 5,
+      "family": 5,
+      "starter": 1,
+      "level": [
+        {
+          "life": 3,
+          "attack": 5,
+          "speed": 1,
+          "description": "Level 1"
+        },
+        {
+          "life": 5,
+          "attack": 10,
+          "speed": 2,
+          "description": "Level 2"
+        },
+        {
+          "life": 10,
+          "attack": 15,
+          "speed": 3,
+          "description": "Level 3"
+        },
+        {
+          "life": 15,
+          "attack": 20,
+          "speed": 1,
+          "description": "Level 4"
+        },
+        {
+          "life": 20,
+          "attack": 30,
+          "speed": 2,
+          "description": "Level 5"
+        },
+        {
+          "life": 30,
+          "attack": 40,
+          "speed": 3,
+          "description": "Level 6"
+        }
+      ]
+    }
+  ]
+}

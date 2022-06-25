@@ -43,7 +43,7 @@
       "contract": "GameManager",
       "arg": [
         {
-          "name": "_animalDominance",
+          "name": "_alchethmy",
           "type": "ethers.Contract"
         },
         {

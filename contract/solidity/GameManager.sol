@@ -53,7 +53,7 @@ contract GameManager {
     ///////////////////////// contract /////////////////////////////////////
 
     function checkOwner(address _sender) public view {
-        animalDominance.checkOwner(_sender);
+        alchethmy.checkOwner(_sender);
     }
 
     modifier _isOwner() {
@@ -62,19 +62,19 @@ contract GameManager {
     }
 
     function withdraw (uint _amount) public _isOwner {
-        animalDominance.owner().transfer(_amount);
+        alchethmy.owner().transfer(_amount);
     }
 
     constructor(
-        Alchethmy _animalDominance,
+        Alchethmy _alchethmy,
         CardList _cardList
     ) {
-        animalDominance = _animalDominance;
+        alchethmy = _alchethmy;
         cardList = _cardList;
     }
 
     //////////////////////////////////// Alchethmy ///////////////////////
-    Alchethmy public animalDominance;
+    Alchethmy public alchethmy;
 
     /////////////////////////////// CardList //////////////////////////////////
     CardList public cardList;
