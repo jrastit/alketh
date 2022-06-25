@@ -38,6 +38,10 @@ const CardWidget = (props : {
       familyColor="#613659"
       familyName="Water"
     break
+    case 6:
+      familyColor="#613659"
+      familyName="Fire"
+    break
     default:
       familyColor="pink"
     break

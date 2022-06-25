@@ -275,8 +275,8 @@ contract PlayGame {
         if (userId == 0){
           userId = gameUser[1 - _pos].userId;
         }
-        _setGameCard(pos, _i, playActionLib.getGameCard(gameManager, userId, userCardId));
-        emit PlayAction(turn, actionId++, _i, 0, 0, 1);
+        _setGameCard(_pos, _i, playActionLib.getGameCard(gameManager, userId, userCardId));
+        emit PlayAction(turn, actionId++, _i, _pos == pos ? 0 : 1, 0, 1);
         return;
       }
     }

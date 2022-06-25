@@ -13,17 +13,12 @@ import { UserType } from '../../type/userType'
 
 import GameTimer from './gameTimer'
 import GameCardWidget from './gameCardWidget'
-import UserGameWidget from './userGameWidget'
 import DropHelper from '../../component/dropHelper'
 import PlaceHelper, { PlaceRefType } from '../../component/placeHelper'
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from '../../component/buttonNice'
-
-import {
-  getLevel
-} from '../../game/card'
 
 import {
   playAction,
@@ -89,14 +84,6 @@ const annimatePlay = async (
         place2 = current[cardRefIdList[myTurn][gameCardId2]]?.getPlace()
         if (place2) {
           await current[cardRefIdList[1 - myTurn][gameCardId1]]?.doTranslate2({
-            x: place2.x - place1.x,
-            y: place2.y - place1.y,
-          })
-        }
-      } else if (actionId === ActionType.Play){
-        place2 = current[cardRefIdList[1 - myTurn][gameCardId2]]?.getPlace()
-        if (place2) {
-          await current[cardRefIdList[1 - myTurn][gameCardId1]]?.doTranslate({
             x: place2.x - place1.x,
             y: place2.y - place1.y,
           })
@@ -369,27 +356,6 @@ const GameBoard = (props: {
     )
   }
 
-  const _playCardTo3 = async (data: string, dest: number) => {
-    const gameCardId = parseInt(data)
-    const gameAction = {
-      gameCardId,
-      actionTypeId : ActionType.Play,
-      dest,
-      self : true,
-    }
-    await _playAction(
-      props.contractHandler,
-      gameAction,
-      turnData,
-      setTurnData,
-      {
-        cardRefIdList,
-        current : cardRefList.current,
-        annimatePlay,
-      }
-    )
-  }
-
   const _playAttack = async (data: string, gameCard2: GameCardType) => {
     const gameCardId1 = parseInt(data)
     const gameCardId2 = gameCard2.id
@@ -397,27 +363,6 @@ const GameBoard = (props: {
       gameCardId : gameCardId1,
       actionTypeId : ActionType.Attack,
       dest : gameCardId2,
-      self : true,
-    }
-    await _playAction(
-      props.contractHandler,
-      gameAction,
-      turnData,
-      setTurnData,
-      {
-        cardRefIdList,
-        current : cardRefList.current,
-        annimatePlay,
-      }
-    )
-  }
-
-  const _playAttackOponent = async (data: string) => {
-    const gameCardId = parseInt(data)
-    const gameAction = {
-      gameCardId,
-      actionTypeId : ActionType.Attack,
-      dest : 255,
       self : true,
     }
     await _playAction(
@@ -467,27 +412,6 @@ const GameBoard = (props: {
               {_turn} {ActionType[_playAction.actionTypeId]} {_playAction.gameCardId} {_playAction.dest}
             </div>
           )
-          /*
-          const pos = 1 - (_turn % 2)
-          const gameCard = turnData.cardList[pos][_playAction.gameCardId]
-          let name
-          let _style
-          if (_id === 0){
-            _style={borderBottom : 'thin solid black'}
-          }
-          if (gameCard) {
-            name = cardList[gameCard.cardId - 1]?.name
-            _actionList.push(
-              <div style={_style} key={_turn + ' ' + _id}>
-                {_turn} {ActionType[_playAction.actionTypeId]} {_playAction.gameCardId}
-              </div>
-            )
-          } else {
-            _actionList.push(
-              <div style={_style} key={_turn + ' ' + _id}>{_turn} Loading...</div>
-            )
-          }
-          */
         }
       }
     }

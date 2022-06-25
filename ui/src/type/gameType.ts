@@ -1,6 +1,6 @@
 export enum ActionType {
   Draw,
-  Play,
+  Draw2,
   Attack,
 }
 
