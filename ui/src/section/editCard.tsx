@@ -2,6 +2,8 @@ import CardListWidget from '../game/component/cardListWidget'
 
 import { useAppSelector, useAppDispatch } from '../hooks'
 
+import DownloadCardList from '../game/component/downloadCards'
+
 import {
   setCard,
   setCardLevel,
@@ -36,12 +38,16 @@ const DisplayCard = () => {
 
   if (cardList) {
     return (
+      <><DownloadCardList
+        cardList={cardList}
+        />
       <CardListWidget
         cardList={cardList}
         userId={user?.id}
         setCard={_setCard}
         setCardLevel={_setCardLevel}
       />
+      </>
     )
   }
 

@@ -133,7 +133,6 @@ export const loadAllCard = async (
   contractHandler: ContractHandlerType,
   setMessage?: (message: string | undefined) => void,
 ) => {
-  /*
   const _cardHash = (await contractHandler.cardList.getContract().cardHash())[0]
   if (_cardHash) {
     let cardFile = require("../card/card.json")
@@ -142,7 +141,6 @@ export const loadAllCard = async (
       return loadAllCardFromFile()
     }
   }
-  */
   const cardLastId = await getCardLastId(contractHandler)
   //console.log(cardId)
   const cardList = [] as Array<CardType>
