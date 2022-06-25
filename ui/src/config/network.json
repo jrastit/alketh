@@ -20,6 +20,16 @@
       "host" : "localhost"
     },
     {
+      "name" : "Optimism Testnet",
+      "url" : "https://kovan.optimism.io",
+      "faucet" : "https://optimismfaucet.xyz/",
+      "chainId": 69,
+      "gameContract": "",
+      "tokenName": "TEST",
+      "timeBetweenRequest" : 10,
+      "retry" : 2
+    },
+    {
       "name" : "Skale Testnet",
       "url" : "https://hackathon.skalenodes.com/v1/downright-royal-saiph",
       "faucet" : "https://hackathon.skale.network/",
@@ -136,6 +146,6 @@
       "timeBetweenRequest" : 1000,
       "refreshBalance" : 20000,
       "retry" : 16
-    },
+    }
   ]
 }

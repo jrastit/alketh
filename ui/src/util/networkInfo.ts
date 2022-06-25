@@ -31,7 +31,7 @@ export const getNetworkList = async (): Promise<NetworkType[]> => {
   const networkList = require('../config/network.json').network as NetworkType[]
   return networkList.filter((_network) => {
     if (!_network.host) {
-      return true
+      return window.location.hostname !== 'localhost'
     }
     return _network.host === window.location.hostname
   }).sort(

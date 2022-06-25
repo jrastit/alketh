@@ -21,9 +21,6 @@ export const createAllCard = async (
 ) => {
   let cardFile = require("../card/card.json")
   const cardLastId = await getCardLastId(contractHandler)
-  if (cardLastId >= cardFile.card.length) {
-    return
-  }
   for (let i = cardLastId; i < cardFile.card.length; i++) {
     const card = cardFile.card[i]
     if (1) {
@@ -89,7 +86,11 @@ export const createAllCard = async (
     }
   }
   const cardHash = BigNumber.from(ethersUtils.id(JSON.stringify(cardFile)))
-  await contractHandler.cardList.getContract().setCardHash(cardHash)
+  const _cardHash = (await contractHandler.cardList.getContract().cardHash())[0]
+  if (!cardHash.eq(_cardHash)) {
+    await contractHandler.cardList.getContract().setCardHash(cardHash)
+  }
+
 }
 
 export const buyNewCard = async (
@@ -137,7 +138,7 @@ export const loadAllCard = async (
   if (_cardHash) {
     let cardFile = require("../card/card.json")
     const cardHash = BigNumber.from(ethersUtils.id(JSON.stringify(cardFile)))
-    if (cardHash.eq(_cardHash)) {
+    if (cardHash.eq(_cardHash) && (cardFile.card[0] && cardFile.card[0].level.length == 6)) {
       return loadAllCardFromFile()
     }
   }
