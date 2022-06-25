@@ -122,40 +122,33 @@ export const playAction = async (
     ) => Promise<void>
   }
 ) => {
-  //console.log(turnData.turn, turnData.myTurn, gameAction)
+  const myTurn = gameAction.actionTypeId % 2
+  const actionTypeId = gameAction.actionTypeId - myTurn
   if (gameAction.result || gameAction.self) {
-    if (gameAction.actionTypeId === ActionType.Draw) {
+    if (actionTypeId === ActionType.Draw) {
       await playDrawCard(
         contractHandler,
         gameAction.gameCardId,
         turnData,
         setTurnData,
-        turnData.myTurn,
+        myTurn,
       )
-    } else if (gameAction.actionTypeId === ActionType.Draw2) {
-      await playDrawCard(
-        contractHandler,
-        gameAction.gameCardId,
-        turnData,
-        setTurnData,
-        1 - turnData.myTurn
-      )
-    } else if (gameAction.actionTypeId === ActionType.Attack) {
-      const _gameCard = turnData.cardList[1 - turnData.myTurn][gameAction.gameCardId]
+    } else if (actionTypeId === ActionType.Attack) {
+      const _gameCard = turnData.cardList[1 - myTurn][gameAction.gameCardId]
       //console.log(turnData.cardList[1 - turnData.myTurn])
       if (_gameCard) {
         const gameCard = _gameCard as GameCardType
         if (
           gameCard.id >= 0 && gameCard.id < 2 &&
-          gameAction.actionTypeId === ActionType.Attack &&
+          actionTypeId === ActionType.Attack &&
           gameAction.dest !== undefined
         ) {
           const gameCardId2 = gameAction.dest
           annimate && await annimate.annimatePlay(
-            turnData.myTurn,
+            myTurn,
             annimate.cardRefIdList,
             annimate.current,
-            gameAction.actionTypeId,
+            actionTypeId,
             gameCard.id,
             gameCardId2,
           )
@@ -164,7 +157,7 @@ export const playAction = async (
             gameCardId2,
             turnData,
             setTurnData,
-            turnData.myTurn,
+            myTurn,
           )
         } else {
           console.error('Invalid card', gameCard)

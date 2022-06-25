@@ -53,8 +53,7 @@ export const getTurnData = (game: GameType, userId: number) => {
   return {
     turn: game.turn,
     userId: [userId, game.userId1 === userId ? game.userId2 : game.userId1],
-    myTurn: isMyTurn(game.turn, game.userId1, userId),
-    mana: Math.floor((game.turn + 1) / 2),
+    myTurn: isMyTurn(game.userId1, userId),
     playActionList: [],
     drawCardList: [],
     cardList: [userId === game.userId1 ? game.cardList1 : game.cardList2, userId === game.userId1 ? game.cardList2 : game.cardList1],
@@ -69,17 +68,15 @@ export const endTurnData = (
   setTurnData({
     ...turnData,
     turn: turnData.turn + 1,
-    mana: (turnData.turn + 2) % 2,
-    myTurn: 1 - turnData.myTurn,
     playActionList: [],
   })
 }
 
-const isMyTurn = (turn: number, userId1: number, userId: number) => {
-  if (turn % 2 === 0 && userId1 === userId) {
+const isMyTurn = (userId1: number, userId: number) => {
+  if (userId1 === userId) {
     return 0
   }
-  if (turn % 2 === 1 && userId1 !== userId) {
+  if (userId1 !== userId) {
     return 0
   }
   return 1

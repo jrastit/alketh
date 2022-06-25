@@ -23,7 +23,7 @@ contract PlayBot {
         GameUser calldata user = gameUser[_pos];
         for (uint8 i = 0; i < 2 && !ended; i++){
           GameCard calldata gameCard = user.cardList[i];
-          if (gameCard.cardId != 0 && gameCard.turn < turn) {
+          if (gameCard.cardId != 0 && gameCard.botTurn < turn) {
             for (uint8 j = 0; j < 2; j++){
               if (gameUser[1 - _pos].cardList[j].cardId != 0){
                   return (i, 2, j);

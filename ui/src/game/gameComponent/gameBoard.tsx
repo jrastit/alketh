@@ -183,7 +183,6 @@ const GameBoard = (props: {
     turn: 0,
     myTurn: 0,
     userId: [0, 0],
-    mana: 0,
     playActionList: [],
     cardList: [[], []],
   })
@@ -238,8 +237,7 @@ const GameBoard = (props: {
   }
 
   const _autoPlay = async () => {
-    if (turnData.myTurn){
-      if (playRandomly(turnData, true)){
+    if (playRandomly(turnData, true)){
         await _playRandomly()
         setTimeout(async () => {
           setPlay(Play.AutoPlay)
@@ -247,9 +245,6 @@ const GameBoard = (props: {
       } else {
         await _endTurn()
       }
-    } else {
-      setPlay(Play.Ready)
-    }
 
   }
 
@@ -283,7 +278,7 @@ const GameBoard = (props: {
         setPlay(Play.Replay)
       }, 1000)
     }
-    if (play === Play.Ready && turnData.turn === turn && autoPlay && turnData.myTurn) {
+    if (play === Play.Ready && turnData.turn === turn && autoPlay) {
       setPlay(Play.Loading)
       setTimeout(async () => {
         setPlay(Play.AutoPlay)
@@ -330,8 +325,7 @@ const GameBoard = (props: {
                   cardList={cardList}
                   gameCard={_card}
                   draggable={draggable ?
-                    (_card.id < 6 && _card.mana <= turnData.mana) ||
-                    (_card.id > 8 && _card.id < 16 && _card.play === 0)
+                    (_card.id >= 0 && _card.id < 2 && _card.play === 0)
                     :
                     false}
                   onDrop={onDrop}
@@ -448,7 +442,7 @@ const GameBoard = (props: {
         )}
       </Row>
       <GameTimer
-        myTurn={turnData.myTurn}
+        myTurn={1}
         latestTime={props.game.latestTime}
         endGameByTime={_endGameByTime}
       />
@@ -462,7 +456,7 @@ const GameBoard = (props: {
             0,
             0,
             2,
-            !!turnData.myTurn && play === Play.Ready,
+            play === Play.Ready,
           )}
           </Col>
           </Row>
@@ -479,7 +473,6 @@ const GameBoard = (props: {
                     <span>
                     {!autoPlay && play === Play.Ready &&
                       playRandomly(turnData, true) === 1 &&
-                      !!turnData.myTurn &&
                       (<Button
                       onClick={() => {
                         _playRandomly()
@@ -493,7 +486,7 @@ const GameBoard = (props: {
                     </span>
 
                 </div>
-                {!autoPlay && play === Play.Ready && !!turnData.myTurn &&
+                {!autoPlay && play === Play.Ready &&
                   <Button
                     onClick={() => {
                       _endTurn()

@@ -22,7 +22,6 @@ export type GameActionType = {
 
 export type TurnDataType = {
   turn: number
-  mana: number
   playActionList: GameActionListType
   cardList: (GameCardType | undefined)[][]
   userId: number[]
