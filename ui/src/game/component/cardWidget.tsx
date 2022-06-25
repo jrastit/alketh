@@ -100,7 +100,7 @@ const CardWidget = (props : {
         marginTop:"1.2em",
         borderRadius:"0.5em",
         width:"9.5em",
-        height:"7em",
+        height:"12em",
         pointerEvents: 'none',
       }}/>
       <div style={{
@@ -148,13 +148,6 @@ const CardWidget = (props : {
         }}>{props.mana}</div>
         </div>
       </div>
-      <Image fluid src={url} style={{
-        marginTop:"1.2em",
-        borderRadius:"0.5em",
-        width:"9.5em",
-        height:"12.5em",
-        pointerEvents: 'none',
-      }}/>
       <div style={{
         marginTop:"-8em",
         marginBottom:"-.7em",
