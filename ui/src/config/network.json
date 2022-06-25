@@ -20,6 +20,16 @@
       "host" : "localhost"
     },
     {
+      "name" : "Skale Testnet",
+      "url" : "https://hackathon.skalenodes.com/v1/downright-royal-saiph",
+      "faucet" : "https://hackathon.skale.network/",
+      "chainId": 1085866509,
+      "gameContract": "0x347c0E910b020eAc3579E376294C0e45eDa53750",
+      "tokenName": "TEST",
+      "timeBetweenRequest" : 10,
+      "retry" : 2,
+    },
+    {
       "name" : "Emerald Testnet",
       "url": "https://testnet.emerald.oasis.dev",
       "faucet" : "https://faucet.testnet.oasis.dev/",
