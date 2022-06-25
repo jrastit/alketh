@@ -1,268 +1,784 @@
 {
-  "card": [
-    {
-      "name": "Hacker",
-      "mana": 1,
-      "family": 1,
-      "starter": 1,
-      "level": [
-        {
-          "life": 3,
-          "attack": 5,
-          "speed": 1,
-          "description": "Level 1"
-        },
-        {
-          "life": 5,
-          "attack": 10,
-          "speed": 2,
-          "description": "Level 2"
-        },
-        {
-          "life": 10,
-          "attack": 15,
-          "speed": 3,
-          "description": "Level 3"
-        },
-        {
-          "life": 15,
-          "attack": 20,
-          "speed": 1,
-          "description": "Level 4"
-        },
-        {
-          "life": 20,
-          "attack": 30,
-          "speed": 2,
-          "description": "Level 5"
-        },
-        {
-          "life": 30,
-          "attack": 40,
-          "speed": 3,
-          "description": "Level 6"
-        }
-      ]
-    },
-    {
-      "name": "Hacker",
-      "mana": 2,
-      "family": 2,
-      "starter": 1,
-      "level": [
-        {
-          "life": 3,
-          "attack": 5,
-          "speed": 1,
-          "description": "Level 1"
-        },
-        {
-          "life": 5,
-          "attack": 10,
-          "speed": 2,
-          "description": "Level 2"
-        },
-        {
-          "life": 10,
-          "attack": 15,
-          "speed": 3,
-          "description": "Level 3"
-        },
-        {
-          "life": 15,
-          "attack": 20,
-          "speed": 1,
-          "description": "Level 4"
-        },
-        {
-          "life": 20,
-          "attack": 30,
-          "speed": 2,
-          "description": "Level 5"
-        },
-        {
-          "life": 30,
-          "attack": 40,
-          "speed": 3,
-          "description": "Level 6"
-        }
-      ]
-    },
-    {
-      "name": "Hacker",
-      "mana": 3,
-      "family": 3,
-      "starter": 1,
-      "level": [
-        {
-          "life": 3,
-          "attack": 5,
-          "speed": 1,
-          "description": "Level 1"
-        },
-        {
-          "life": 5,
-          "attack": 10,
-          "speed": 2,
-          "description": "Level 2"
-        },
-        {
-          "life": 10,
-          "attack": 15,
-          "speed": 3,
-          "description": "Level 3"
-        },
-        {
-          "life": 15,
-          "attack": 20,
-          "speed": 1,
-          "description": "Level 4"
-        },
-        {
-          "life": 20,
-          "attack": 30,
-          "speed": 2,
-          "description": "Level 5"
-        },
-        {
-          "life": 30,
-          "attack": 40,
-          "speed": 3,
-          "description": "Level 6"
-        }
-      ]
-    },
-    {
-      "name": "Hacker",
-      "mana": 4,
-      "family": 4,
-      "starter": 1,
-      "level": [
-        {
-          "life": 3,
-          "attack": 5,
-          "speed": 1,
-          "description": "Level 1"
-        },
-        {
-          "life": 5,
-          "attack": 10,
-          "speed": 2,
-          "description": "Level 2"
-        },
-        {
-          "life": 10,
-          "attack": 15,
-          "speed": 3,
-          "description": "Level 3"
-        },
-        {
-          "life": 15,
-          "attack": 20,
-          "speed": 1,
-          "description": "Level 4"
-        },
-        {
-          "life": 20,
-          "attack": 30,
-          "speed": 2,
-          "description": "Level 5"
-        },
-        {
-          "life": 30,
-          "attack": 40,
-          "speed": 3,
-          "description": "Level 6"
-        }
-      ]
-    },
-    {
-      "name": "Hacker",
-      "mana": 5,
-      "family": 5,
-      "starter": 1,
-      "level": [
-        {
-          "life": 3,
-          "attack": 5,
-          "speed": 1,
-          "description": "Level 1"
-        },
-        {
-          "life": 5,
-          "attack": 10,
-          "speed": 2,
-          "description": "Level 2"
-        },
-        {
-          "life": 10,
-          "attack": 15,
-          "speed": 3,
-          "description": "Level 3"
-        },
-        {
-          "life": 15,
-          "attack": 20,
-          "speed": 1,
-          "description": "Level 4"
-        },
-        {
-          "life": 20,
-          "attack": 30,
-          "speed": 2,
-          "description": "Level 5"
-        },
-        {
-          "life": 30,
-          "attack": 40,
-          "speed": 3,
-          "description": "Level 6"
-        }
-      ]
-    },
-    {
-      "name": "Hacker",
-      "mana": 6,
-      "family": 6,
-      "starter": 1,
-      "level": [
-        {
-          "life": 3,
-          "attack": 5,
-          "speed": 1,
-          "description": "Level 1"
-        },
-        {
-          "life": 5,
-          "attack": 10,
-          "speed": 2,
-          "description": "Level 2"
-        },
-        {
-          "life": 10,
-          "attack": 15,
-          "speed": 3,
-          "description": "Level 3"
-        },
-        {
-          "life": 15,
-          "attack": 20,
-          "speed": 1,
-          "description": "Level 4"
-        },
-        {
-          "life": 20,
-          "attack": 30,
-          "speed": 2,
-          "description": "Level 5"
-        },
-        {
-          "life": 30,
-          "attack": 40,
-          "speed": 3,
-          "description": "Level 6"
-        }
-      ]
-    }
-  ]
-}
+    "card": [
+       {
+          "name": "Fairy",
+          "mana": 1,
+          "family": 1,
+          "starter": 1,
+          "level": [
+            {
+              "life": 4,
+              "attack": 4,
+              "speed": 2,
+              "description": "Level 1"
+            },
+            {
+              "life": 5,
+              "attack": 4,
+              "speed": 2,
+              "description": "Level 2"
+            },
+            {
+              "life": 5,
+              "attack": 5,
+              "speed": 2,
+              "description": "Level 3"
+            }
+          ]
+      },
+      {
+        "name": "Fairy",
+        "mana": 1,
+        "family": 2,
+        "starter": 1,
+        "level": [
+          {
+            "life": 4,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 1"
+          },
+          {
+            "life": 5,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 2"
+          },
+          {
+            "life": 5,
+            "attack": 5,
+            "speed": 2,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Fairy",
+        "mana": 1,
+        "family": 3,
+        "starter": 1,
+        "level": [
+          {
+            "life": 4,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 1"
+          },
+          {
+            "life": 5,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 2"
+          },
+          {
+            "life": 5,
+            "attack": 5,
+            "speed": 2,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Fairy",
+        "mana": 1,
+        "family": 4,
+        "starter": 1,
+        "level": [
+          {
+            "life": 4,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 1"
+          },
+          {
+            "life": 5,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 2"
+          },
+          {
+            "life": 5,
+            "attack": 5,
+            "speed": 2,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Fairy",
+        "mana": 1,
+        "family": 5,
+        "starter": 1,
+        "level": [
+          {
+            "life": 4,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 1"
+          },
+          {
+            "life": 5,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 2"
+          },
+          {
+            "life": 5,
+            "attack": 5,
+            "speed": 2,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Fairy",
+        "mana": 1,
+        "family": 6,
+        "starter": 1,
+        "level": [
+          {
+            "life": 4,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 1"
+          },
+          {
+            "life": 5,
+            "attack": 4,
+            "speed": 2,
+            "description": "Level 2"
+          },
+          {
+            "life": 5,
+            "attack": 5,
+            "speed": 2,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Hacker",
+        "mana": 2,
+        "family": 1,
+        "starter": 1,
+        "level": [
+          {
+            "life": 6,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 1"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 2"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 4,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Hacker",
+        "mana": 2,
+        "family": 2,
+        "starter": 1,
+        "level": [
+          {
+            "life": 6,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 1"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 2"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 4,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Hacker",
+        "mana": 2,
+        "family": 3,
+        "starter": 1,
+        "level": [
+          {
+            "life": 6,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 1"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 2"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 4,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Hacker",
+        "mana": 2,
+        "family": 4,
+        "starter": 1,
+        "level": [
+          {
+            "life": 6,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 1"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 2"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 4,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Hacker",
+        "mana": 2,
+        "family": 5,
+        "starter": 1,
+        "level": [
+          {
+            "life": 6,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 1"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 2"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 4,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Hacker",
+        "mana": 2,
+        "family": 6,
+        "starter": 1,
+        "level": [
+          {
+            "life": 6,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 1"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 3,
+            "description": "Level 2"
+          },
+          {
+            "life": 7,
+            "attack": 6,
+            "speed": 4,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Archer",
+        "mana": 3,
+        "family": 1,
+        "starter": 1,
+        "level": [
+          {
+            "life": 8,
+            "attack": 8,
+            "speed": 4,
+            "description": "Level 1"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 4,
+            "description": "Level 2"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Archer",
+        "mana": 3,
+        "family": 2,
+        "starter": 1,
+        "level": [
+          {
+            "life": 8,
+            "attack": 8,
+            "speed": 4,
+            "description": "Level 1"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 4,
+            "description": "Level 2"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Archer",
+        "mana": 3,
+        "family": 3,
+        "starter": 1,
+        "level": [
+          {
+            "life": 8,
+            "attack": 8,
+            "speed": 4,
+            "description": "Level 1"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 4,
+            "description": "Level 2"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Archer",
+        "mana": 3,
+        "family": 4,
+        "starter": 1,
+        "level": [
+          {
+            "life": 8,
+            "attack": 8,
+            "speed": 4,
+            "description": "Level 1"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 4,
+            "description": "Level 2"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Archer",
+        "mana": 3,
+        "family": 5,
+        "starter": 1,
+        "level": [
+          {
+            "life": 8,
+            "attack": 8,
+            "speed": 4,
+            "description": "Level 1"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 4,
+            "description": "Level 2"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Archer",
+        "mana": 3,
+        "family": 6,
+        "starter": 1,
+        "level": [
+          {
+            "life": 8,
+            "attack": 8,
+            "speed": 4,
+            "description": "Level 1"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 4,
+            "description": "Level 2"
+          },
+          {
+            "life": 8,
+            "attack": 9,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Cyborg",
+        "mana": 4,
+        "family": 1,
+        "starter": 1,
+        "level": [
+          {
+            "life": 10,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 1"
+          },
+          {
+            "life": 12,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 2"
+          },
+          {
+            "life": 13,
+            "attack": 11,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Cyborg",
+        "mana": 4,
+        "family": 2,
+        "starter": 1,
+        "level": [
+          {
+            "life": 10,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 1"
+          },
+          {
+            "life": 12,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 2"
+          },
+          {
+            "life": 13,
+            "attack": 11,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Cyborg",
+        "mana": 4,
+        "family": 3,
+        "starter": 1,
+        "level": [
+          {
+            "life": 10,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 1"
+          },
+          {
+            "life": 12,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 2"
+          },
+          {
+            "life": 13,
+            "attack": 11,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Cyborg",
+        "mana": 4,
+        "family": 4,
+        "starter": 1,
+        "level": [
+          {
+            "life": 10,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 1"
+          },
+          {
+            "life": 12,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 2"
+          },
+          {
+            "life": 13,
+            "attack": 11,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Cyborg",
+        "mana": 4,
+        "family": 5,
+        "starter": 1,
+        "level": [
+          {
+            "life": 10,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 1"
+          },
+          {
+            "life": 12,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 2"
+          },
+          {
+            "life": 13,
+            "attack": 11,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Cyborg",
+        "mana": 4,
+        "family": 6,
+        "starter": 1,
+        "level": [
+          {
+            "life": 10,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 1"
+          },
+          {
+            "life": 12,
+            "attack": 10,
+            "speed": 5,
+            "description": "Level 2"
+          },
+          {
+            "life": 13,
+            "attack": 11,
+            "speed": 5,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Dragon",
+        "mana": 5,
+        "family": 1,
+        "starter": 1,
+        "level": [
+          {
+            "life": 13,
+            "attack": 13,
+            "speed": 7,
+            "description": "Level 1"
+          },
+          {
+            "life": 14,
+            "attack": 13,
+            "speed": 8,
+            "description": "Level 2"
+          },
+          {
+            "life": 16,
+            "attack": 14,
+            "speed": 8,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Dragon",
+        "mana": 5,
+        "family": 2,
+        "starter": 1,
+        "level": [
+          {
+            "life": 13,
+            "attack": 13,
+            "speed": 7,
+            "description": "Level 1"
+          },
+          {
+            "life": 14,
+            "attack": 13,
+            "speed": 8,
+            "description": "Level 2"
+          },
+          {
+            "life": 16,
+            "attack": 14,
+            "speed": 8,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Dragon",
+        "mana": 5,
+        "family": 3,
+        "starter": 1,
+        "level": [
+          {
+            "life": 13,
+            "attack": 13,
+            "speed": 7,
+            "description": "Level 1"
+          },
+          {
+            "life": 14,
+            "attack": 13,
+            "speed": 8,
+            "description": "Level 2"
+          },
+          {
+            "life": 16,
+            "attack": 14,
+            "speed": 8,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Dragon",
+        "mana": 5,
+        "family": 4,
+        "starter": 1,
+        "level": [
+          {
+            "life": 13,
+            "attack": 13,
+            "speed": 7,
+            "description": "Level 1"
+          },
+          {
+            "life": 14,
+            "attack": 13,
+            "speed": 8,
+            "description": "Level 2"
+          },
+          {
+            "life": 16,
+            "attack": 14,
+            "speed": 8,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Dragon",
+        "mana": 5,
+        "family": 5,
+        "starter": 1,
+        "level": [
+          {
+            "life": 13,
+            "attack": 13,
+            "speed": 7,
+            "description": "Level 1"
+          },
+          {
+            "life": 14,
+            "attack": 13,
+            "speed": 8,
+            "description": "Level 2"
+          },
+          {
+            "life": 16,
+            "attack": 14,
+            "speed": 8,
+            "description": "Level 3"
+          }
+        ]
+      },
+      {
+        "name": "Dragon",
+        "mana": 5,
+        "family": 6,
+        "starter": 1,
+        "level": [
+          {
+            "life": 13,
+            "attack": 13,
+            "speed": 7,
+            "description": "Level 1"
+          },
+          {
+            "life": 14,
+            "attack": 13,
+            "speed": 8,
+            "description": "Level 2"
+          },
+          {
+            "life": 16,
+            "attack": 14,
+            "speed": 8,
+            "description": "Level 3"
+          }
+        ]
+      }
+    ]
+  }
