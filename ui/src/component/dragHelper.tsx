@@ -50,6 +50,8 @@ export default function DragHelper(props : {
 
   return (
     <div
+      onTouchStart={handlePointerDown}
+      onTouchMove={handlePointerMove}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       style={style}
