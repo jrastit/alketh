@@ -25,7 +25,7 @@ const userCardListWidget = (props : {
 }) => {
 
   const renderBottom = (userCard : UserCardType) => {
-    if (props.sellCard && props.nftCard && props.cancelSellCard && userCard.exp > 10){
+    if (props.nftCard && userCard.exp > 10){
       if (!userCard.nftId.eq(0)){
         return (
           <div style={{
@@ -36,24 +36,11 @@ const userCardListWidget = (props : {
           }}>nft id {userCard.nftId.toString()}</div>
         )
       }
-      if (userCard.price === 0) {
-        return (
-          <>
-            <ButtonNice onClick={() => { props.sellCard && props.sellCard(userCard) }}>
-              Sell card
-            </ButtonNice>&nbsp;
-            <ButtonNice onClick={() => { props.nftCard && props.nftCard(userCard) }}>
-              NFT card
-            </ButtonNice>
-          </>
-        )
-      } else {
-        return (
-          <ButtonNice onClick={() => { props.cancelSellCard && props.cancelSellCard(userCard) }}>
-            Unlist card
-          </ButtonNice>
-        )
-      }
+      return (
+        <ButtonNice onClick={() => { props.nftCard && props.nftCard(userCard) }}>
+          NFT card
+        </ButtonNice>
+      )
     }
     else if (props.nftBurnCard){
       return (

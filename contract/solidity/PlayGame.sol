@@ -31,6 +31,10 @@ struct GameExp {
   mapping(uint32 => uint64) expWin;
 }
 
+struct ActionListTurn {
+    uint8[3][] actionList;
+}
+
 contract PlayGame {
 
     constructor(
@@ -153,6 +157,18 @@ contract PlayGame {
     }
 
     ////////////////////////////// Step ///////////////////////////////////
+
+    function _addAction(uint8[3] memory _action) private{
+      if (actionListTurn.length == turn - 1){
+        uint8[3][] memory actionList = new uint8[3][](1);
+        actionList[0] = _action;
+        ActionListTurn memory actionListTurnItem = ActionListTurn(actionList);
+        actionListTurn.push(actionListTurnItem);
+      } else {
+        actionListTurn[turn - 1].actionList.push(_action);
+      }
+    }
+
     function _checkPlayer(uint8 _turn) private view returns (uint8) {
       uint64 userId = gameManager.userAddressList(msg.sender);
       require(!ended, 'Already ended');
@@ -166,13 +182,13 @@ contract PlayGame {
     function playStep(uint8 _turn, uint8[3] memory _action) public {
       uint8 pos = _checkPlayer(_turn);
       require(_action[1] % 2 == pos, 'Wrong user pos');
-      actionList[turn - 1].push(_action);
+      _addAction(_action);
       _updateVersion();
     }
 
     /////////////////////////////// Turn ////////////////////////////////////
 
-    uint8[4][][] actionList;
+    ActionListTurn[] actionListTurn;
 
     function _playBotTurn(uint8 _pos) private {
         uint8 actionTypeId;
@@ -191,7 +207,7 @@ contract PlayGame {
             );
           if (actionTypeId > 1){
             gameUser[0].cardList[gameCardId].botTurn = turn;
-            actionList[turn - 1].push([gameCardId, actionTypeId + _pos, dest]);
+            actionListTurn[turn - 1].actionList.push([gameCardId, actionTypeId + _pos, dest]);
           }
         } while (actionTypeId != 0 && !ended);
         if (!ended)
@@ -209,7 +225,7 @@ contract PlayGame {
       }
       turn = turn + 1;
       actionId = 0;
-      _drawNextCard();
+      //_drawNextCard();
       emit PlayAction(turn, actionId++, 0, 0, 0, 0);
     }
 
@@ -218,16 +234,17 @@ contract PlayGame {
       require(gameUser[pos].turn == turn - 1, 'turn already ended');
       for (uint8 i = 0; i < _action.length && !ended; i++){
         require(_action[i][1] % 2 == pos, 'Wrong user pos');
-        actionList[turn - 1].push(_action[i]);
+        _addAction(_action[i]);
       }
-
+      _addAction([0, pos, 0]);
       gameUser[pos].turn = turn;
       if (gameUser[1 - pos].userId == 0){
         _playBotTurn(1 - _turn);
       }
       if (gameUser[1 - pos].turn == turn){
-        for (uint8 i = 0; i < actionList[turn - 1].length && !ended; i++){
-          _playAction(actionList[turn - 1][i][0], actionList[turn - 1][i][1], actionList[turn - 1][i][2]);
+        uint8[3][] storage actionList = actionListTurn[turn - 1].actionList;
+        for (uint8 i = 0; i < actionList.length && !ended; i++){
+          _playAction(actionList[i][0], actionList[i][1], actionList[i][2]);
         }
         if (!ended) {
           _endTurn();
@@ -280,25 +297,28 @@ contract PlayGame {
     }
 
     function _drawCard(uint8 _pos, uint8 _i) private {
-      uint32 userCardId = gameUser[_pos].cardIdList[_i];
-      if (userCardId != 0){
-        gameUser[_pos].cardIdList[_i] = 0;
-        uint64 userId = gameUser[_pos].userId;
-        if (userId == 0){
-          userId = gameUser[1 - _pos].userId;
+      uint32 userCardId = 0;
+      for (uint8 i = 0; i < 5; i++){
+        userCardId = gameUser[_pos].cardIdList[i];
+        if (userCardId != 0){
+          gameUser[_pos].cardIdList[i] = 0;
+          uint64 userId = gameUser[_pos].userId;
+          if (userId == 0){
+            userId = gameUser[1 - _pos].userId;
+          }
+          _setGameCard(_pos, _i, playActionLib.getGameCard(gameManager, userId, userCardId));
+          emit PlayAction(turn, actionId++, _i, _pos, 0, 1);
+          return;
         }
-        _setGameCard(_pos, _i, playActionLib.getGameCard(gameManager, userId, userCardId));
-        emit PlayAction(turn, actionId++, _i, _pos, 0, 1);
-        return;
       }
     }
 
     function _drawNextCard() private {
         for (uint8 _pos = 0; _pos < 2; _pos++){
-          uint32[5] storage cardIdList = gameUser[_pos].cardIdList;
-          if (cardIdList.length == 0) return;
           for (uint8 i = 0; i < 2; i++) {
-            _drawCard(_pos, i);
+            if (gameUser[_pos].cardList[i].cardId == 0){
+              _drawCard(_pos, i);
+            }
           }
         }
     }
@@ -309,7 +329,7 @@ contract PlayGame {
 
     function _removeGameCard(uint8 _pos, uint8 _from, GameCard memory gameCard) private {
         //GameCard storage gameCard = gameUser[_pos].cardList[_from];
-        for (uint8 i = 16; i < 36; i++){
+        for (uint8 i = 2; i < 7; i++){
             if (gameUser[_pos].cardList[i].cardId == 0){
                 _setGameCard(_pos, i, gameCard);
                 gameUser[_pos].cardList[_from].cardId = 0;
@@ -325,6 +345,7 @@ contract PlayGame {
     ) private {
         uint16 result = 0;
         uint8 pos = _actionTypeId % 2;
+        _actionTypeId = _actionTypeId - pos;
         GameUser storage user = gameUser[pos];
         GameUser storage oponent = gameUser[1 - pos];
         GameCard memory gameCard = user.cardList[_gameCardId];
