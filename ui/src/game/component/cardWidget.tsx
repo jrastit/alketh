@@ -128,7 +128,7 @@ const CardWidget = (props : {
           border:"thin solid #303437",
           borderRadius:"1em",
           display:"inline-block",
-          backgroundColor:"#341948"
+          backgroundColor:"#AAFFAA"
         }}>{props.speed}</div>
         </div>
         <div style={{
