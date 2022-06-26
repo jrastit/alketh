@@ -94,7 +94,7 @@ const FindGame = (props: {
               resetStep={() => { dispatch(clearError(StepId.CardList)) }}
             />
             <StepMessageNiceWidget
-              title='Game liste'
+              title='Game list'
               step={getStep(StepId.GameList, step)}
               resetStep={() => { dispatch(clearError(StepId.GameList)) }}
             />
