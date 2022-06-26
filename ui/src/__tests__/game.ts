@@ -225,7 +225,7 @@ const userLeaveGame = async (
 
 const testTransaction = () => {
 
-  jest.setTimeout(6000000)
+  jest.setTimeout(10000)
 
   let transactionManager: TransactionManager[]
 

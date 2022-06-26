@@ -90,7 +90,7 @@ export class TransactionManager {
 
   async _sendTx(txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest, log: string) {
     try {
-      txu.gasLimit = (await this.signer.estimateGas(txu)).mul(120).div(100)
+      txu.gasLimit = (await this.signer.estimateGas(txu)) //.mul(120).div(100)
       txu.gasPrice = await this.signer.getGasPrice()
       txu.nonce = await this.getNonce()
       const tx = await this.signer.sendTransaction(txu)

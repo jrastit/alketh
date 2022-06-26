@@ -105,8 +105,18 @@
       "url": "https://rinkeby.boba.network",
       "faucet": "",
       "chainId": 28,
-      "gameContract": "",
+      "gameContract": "0x022adcA4B5B7407161ce43eC6ee68D36Eb556Dfa",
       "tokenName": "TEST",
+      "retry" : 2
+    },
+    {
+      "name" : "Boba testnet",
+      "url": "https://rinkeby.boba.network",
+      "faucet": "",
+      "chainId": 28,
+      "gameContract": "0xC6297e94e05A242Ce3e3d1cfcEc238A5Ec3B805D",
+      "tokenName": "TEST",
+      "host": "localhost",
       "retry" : 2
     }
   ]

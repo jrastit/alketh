@@ -239,7 +239,7 @@ contract PlayGame {
       //_addAction([0, pos, 0]);
       gameUser[pos].turn = turn;
       if (gameUser[1 - pos].userId == 0){
-        _playBotTurn(1 - _turn);
+        _playBotTurn(1 - pos);
       }
       if (gameUser[1 - pos].turn == turn){
         uint8[3][] storage actionList = actionListTurn[turn - 1].actionList;

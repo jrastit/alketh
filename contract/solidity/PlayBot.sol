@@ -26,7 +26,7 @@ contract PlayBot {
           if (gameCard.cardId != 0 && gameCard.botTurn < turn) {
             for (uint8 j = 0; j < 2; j++){
               if (gameUser[1 - _pos].cardList[j].cardId != 0){
-                  return (i, 2, j);
+                  return (i, 2 + _pos, j);
               }
             }
           }
