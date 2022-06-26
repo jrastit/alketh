@@ -154,24 +154,24 @@ const autoPlayGame = async (
   let turnData2 = getTurnData(game2, userId2)
   checkTurnData(game1, userId1, turnData1, check)
   checkTurnData(game2, userId2, turnData2, check)
-  expect(turnData1.myTurn != turnData2.myTurn).toBeTruthy()
   do {
-    if (turnData1.myTurn) {
-      turnData1 = getTurnData(game1, userId1)
-      const ret = await autoPlayTurn(
-        contractHandler1,
-        userId1,
-        turnData1,
-      )
-      turnData1 = ret.turnData
-    } else {
-      const ret = await autoPlayTurn(
-        contractHandler2,
-        userId2,
-        turnData2,
-      )
-      turnData2 = ret.turnData
-    }
+    turnData1 = getTurnData(game1, userId1)
+    turnData2 = getTurnData(game2, userId2)
+
+    const ret1 = await autoPlayTurn(
+      contractHandler1,
+      userId1,
+      turnData1,
+    )
+    turnData1 = ret1.turnData
+
+    const ret2 = await autoPlayTurn(
+      contractHandler2,
+      userId2,
+      turnData2,
+    )
+    turnData2 = ret2.turnData
+
     game1 = await getGameFull(contractHandler1)
     game2 = await getGameFull(contractHandler2)
     turnData1 = getTurnData(game1, userId1)
@@ -197,8 +197,6 @@ const autoPlayGameBot = async (
   do {
     let turnData = getTurnData(game, userId)
     checkTurnData(game, userId, turnData, check)
-
-    expect(turnData.myTurn).toBe(1)
 
     const ret = await autoPlayTurn(
       contractHandler,
@@ -264,7 +262,7 @@ const testTransaction = () => {
           useCache = true
         }
 
-        await loadAllCard(contractHandler)
+        const cardList = await loadAllCard(contractHandler)
 
         //console.log(transactionManager.transactionList.map(transactionManager.gasInfo))
 
@@ -275,26 +273,20 @@ const testTransaction = () => {
         const isOk2 = await checkAllContract(network, contractHandler2)
         expect(isOk2).toBeTruthy()
 
-        if (!useCache) {
-          await registerUser(contractHandler, 'test')
-          await registerUser(contractHandler1, 'test1')
-          await registerUser(contractHandler2, 'test2')
-        }
-
         userId = await getUserId(contractHandler, await transactionManager[0].signer.getAddress())
-        if (useCache && !userId) {
+        if (!userId) {
           await registerUser(contractHandler, 'test')
           userId = await getUserId(contractHandler, await transactionManager[0].signer.getAddress())
           expect(userId > 0).toBeTruthy()
         }
         userId1 = await getUserId(contractHandler1, await transactionManager[1].signer.getAddress())
-        if (useCache && !userId1) {
+        if (!userId1) {
           await registerUser(contractHandler1, 'test1')
           userId1 = await getUserId(contractHandler1, await transactionManager[1].signer.getAddress())
           expect(userId1 > 0).toBeTruthy()
         }
         userId2 = await getUserId(contractHandler2, await transactionManager[2].signer.getAddress())
-        if (useCache && !userId2) {
+        if (!userId2) {
           await registerUser(contractHandler2, 'test2')
           userId2 = await getUserId(contractHandler2, await transactionManager[2].signer.getAddress())
           expect(userId2 > 0).toBeTruthy()
@@ -303,24 +295,19 @@ const testTransaction = () => {
         const userCardList = await getUserCardList(contractHandler, userId)
         const userCardList1 = await getUserCardList(contractHandler1, userId1)
         const userCardList2 = await getUserCardList(contractHandler2, userId2)
-        if (!useCache) {
-          await addUserDefaultDeck(contractHandler, userCardList)
-          await addUserDefaultDeck(contractHandler1, userCardList1)
-          await addUserDefaultDeck(contractHandler2, userCardList2)
-        }
         deckList = await getUserDeckList(contractHandler, userId)
-        if (useCache && deckList.length === 0) {
-          await addUserDefaultDeck(contractHandler, userCardList)
+        if (deckList.length === 0) {
+          await addUserDefaultDeck(contractHandler, userCardList, cardList)
           deckList = await getUserDeckList(contractHandler, userId)
         }
         deckList1 = await getUserDeckList(contractHandler1, userId1)
-        if (useCache && deckList1.length === 0) {
-          await addUserDefaultDeck(contractHandler1, userCardList1)
+        if (deckList1.length === 0) {
+          await addUserDefaultDeck(contractHandler1, userCardList1, cardList)
           deckList1 = await getUserDeckList(contractHandler1, userId1)
         }
         deckList2 = await getUserDeckList(contractHandler2, userId2)
-        if (useCache && deckList2.length === 0) {
-          await addUserDefaultDeck(contractHandler2, userCardList2)
+        if (deckList2.length === 0) {
+          await addUserDefaultDeck(contractHandler2, userCardList2, cardList)
           deckList2 = await getUserDeckList(contractHandler2, userId2)
         }
         if (!useCache) {

@@ -35,7 +35,7 @@ export const playDrawCard = async (
 }
 
 const removeCard = (cardList: (GameCardType | undefined)[], cardId: number) => {
-  for (let i = 16; i < cardList.length; i++) {
+  for (let i = 2; i < cardList.length; i++) {
     if (cardList[i] === undefined && cardList[cardId]) {
       const gameCard = cardList[cardId] as GameCardType
       cardList[i] = gameCard
@@ -92,7 +92,7 @@ export const playAttack = (
       ...turnData,
       playActionList: turnData.playActionList.concat([{
         gameCardId: gameCardId1,
-        actionTypeId: ActionType.Attack,
+        actionTypeId: ActionType.Attack + myTurn,
         dest: gameCardId2,
       }]),
       cardList: myTurn ? [cardList1, cardList2] : [cardList2, cardList1],

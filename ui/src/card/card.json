@@ -9,32 +9,38 @@
         {
           "life": 4,
           "attack": 4,
-          "description": "Level 0"
-        },
-        {
-          "life": 5,
-          "attack": 4,
+          "speed": 2,
           "description": "Level 1"
         },
         {
           "life": 5,
-          "attack": 5,
+          "attack": 4,
+          "speed": 2,
           "description": "Level 2"
+        },
+        {
+          "life": 5,
+          "attack": 5,
+          "speed": 2,
+          "description": "Level 3"
         },
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 3"
+          "speed": 2,
+          "description": "Level 4"
         },
         {
           "life": 7,
           "attack": 7,
-          "description": "Level 4"
+          "speed": 2,
+          "description": "Level 5"
         },
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 5"
+          "speed": 2,
+          "description": "Level 6"
         }
       ]
     },
@@ -47,32 +53,38 @@
         {
           "life": 4,
           "attack": 4,
-          "description": "Level 0"
-        },
-        {
-          "life": 5,
-          "attack": 4,
+          "speed": 2,
           "description": "Level 1"
         },
         {
           "life": 5,
-          "attack": 5,
+          "attack": 4,
+          "speed": 2,
           "description": "Level 2"
+        },
+        {
+          "life": 5,
+          "attack": 5,
+          "speed": 2,
+          "description": "Level 3"
         },
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 3"
+          "speed": 2,
+          "description": "Level 4"
         },
         {
           "life": 7,
           "attack": 7,
-          "description": "Level 4"
+          "speed": 2,
+          "description": "Level 5"
         },
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 5"
+          "speed": 2,
+          "description": "Level 6"
         }
       ]
     },
@@ -85,32 +97,38 @@
         {
           "life": 4,
           "attack": 4,
-          "description": "Level 0"
-        },
-        {
-          "life": 5,
-          "attack": 4,
+          "speed": 2,
           "description": "Level 1"
         },
         {
           "life": 5,
-          "attack": 5,
+          "attack": 4,
+          "speed": 2,
           "description": "Level 2"
+        },
+        {
+          "life": 5,
+          "attack": 5,
+          "speed": 2,
+          "description": "Level 3"
         },
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 3"
+          "speed": 2,
+          "description": "Level 4"
         },
         {
           "life": 7,
           "attack": 7,
-          "description": "Level 4"
+          "speed": 2,
+          "description": "Level 5"
         },
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 5"
+          "speed": 2,
+          "description": "Level 6"
         }
       ]
     },
@@ -123,32 +141,38 @@
         {
           "life": 4,
           "attack": 4,
-          "description": "Level 0"
-        },
-        {
-          "life": 5,
-          "attack": 4,
+          "speed": 2,
           "description": "Level 1"
         },
         {
           "life": 5,
-          "attack": 5,
+          "attack": 4,
+          "speed": 2,
           "description": "Level 2"
+        },
+        {
+          "life": 5,
+          "attack": 5,
+          "speed": 2,
+          "description": "Level 3"
         },
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 3"
+          "speed": 2,
+          "description": "Level 4"
         },
         {
           "life": 7,
           "attack": 7,
-          "description": "Level 4"
+          "speed": 2,
+          "description": "Level 5"
         },
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 5"
+          "speed": 2,
+          "description": "Level 6"
         }
       ]
     },
@@ -161,32 +185,38 @@
         {
           "life": 4,
           "attack": 4,
-          "description": "Level 0"
-        },
-        {
-          "life": 5,
-          "attack": 4,
+          "speed": 2,
           "description": "Level 1"
         },
         {
           "life": 5,
-          "attack": 5,
+          "attack": 4,
+          "speed": 2,
           "description": "Level 2"
+        },
+        {
+          "life": 5,
+          "attack": 5,
+          "speed": 2,
+          "description": "Level 3"
         },
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 3"
+          "speed": 2,
+          "description": "Level 4"
         },
         {
           "life": 7,
           "attack": 7,
-          "description": "Level 4"
+          "speed": 2,
+          "description": "Level 5"
         },
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 5"
+          "speed": 2,
+          "description": "Level 6"
         }
       ]
     },
@@ -199,32 +229,38 @@
         {
           "life": 4,
           "attack": 4,
-          "description": "Level 0"
-        },
-        {
-          "life": 5,
-          "attack": 4,
+          "speed": 2,
           "description": "Level 1"
         },
         {
           "life": 5,
-          "attack": 5,
+          "attack": 4,
+          "speed": 2,
           "description": "Level 2"
+        },
+        {
+          "life": 5,
+          "attack": 5,
+          "speed": 2,
+          "description": "Level 3"
         },
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 3"
+          "speed": 2,
+          "description": "Level 4"
         },
         {
           "life": 7,
           "attack": 7,
-          "description": "Level 4"
+          "speed": 2,
+          "description": "Level 5"
         },
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 5"
+          "speed": 2,
+          "description": "Level 6"
         }
       ]
     },
@@ -237,32 +273,38 @@
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 0"
-        },
-        {
-          "life": 7,
-          "attack": 6,
+          "speed": 3,
           "description": "Level 1"
         },
         {
           "life": 7,
           "attack": 6,
+          "speed": 3,
           "description": "Level 2"
+        },
+        {
+          "life": 7,
+          "attack": 6,
+          "speed": 4,
+          "description": "Level 3"
         },
         {
           "life": 8,
           "attack": 7,
-          "description": "Level 3"
+          "speed": 5,
+          "description": "Level 4"
         },
         {
           "life": 10,
           "attack": 8,
-          "description": "Level 4"
+          "speed": 6,
+          "description": "Level 5"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 5"
+          "speed": 7,
+          "description": "Level 6"
         }
       ]
     },
@@ -275,32 +317,38 @@
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 0"
-        },
-        {
-          "life": 7,
-          "attack": 6,
+          "speed": 3,
           "description": "Level 1"
         },
         {
           "life": 7,
           "attack": 6,
+          "speed": 3,
           "description": "Level 2"
+        },
+        {
+          "life": 7,
+          "attack": 6,
+          "speed": 4,
+          "description": "Level 3"
         },
         {
           "life": 8,
           "attack": 7,
-          "description": "Level 3"
+          "speed": 5,
+          "description": "Level 4"
         },
         {
           "life": 10,
           "attack": 8,
-          "description": "Level 4"
+          "speed": 6,
+          "description": "Level 5"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 5"
+          "speed": 7,
+          "description": "Level 6"
         }
       ]
     },
@@ -313,32 +361,38 @@
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 0"
-        },
-        {
-          "life": 7,
-          "attack": 6,
+          "speed": 3,
           "description": "Level 1"
         },
         {
           "life": 7,
           "attack": 6,
+          "speed": 3,
           "description": "Level 2"
+        },
+        {
+          "life": 7,
+          "attack": 6,
+          "speed": 4,
+          "description": "Level 3"
         },
         {
           "life": 8,
           "attack": 7,
-          "description": "Level 3"
+          "speed": 5,
+          "description": "Level 4"
         },
         {
           "life": 10,
           "attack": 8,
-          "description": "Level 4"
+          "speed": 6,
+          "description": "Level 5"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 5"
+          "speed": 7,
+          "description": "Level 6"
         }
       ]
     },
@@ -351,32 +405,38 @@
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 0"
-        },
-        {
-          "life": 7,
-          "attack": 6,
+          "speed": 3,
           "description": "Level 1"
         },
         {
           "life": 7,
           "attack": 6,
+          "speed": 3,
           "description": "Level 2"
+        },
+        {
+          "life": 7,
+          "attack": 6,
+          "speed": 4,
+          "description": "Level 3"
         },
         {
           "life": 8,
           "attack": 7,
-          "description": "Level 3"
+          "speed": 5,
+          "description": "Level 4"
         },
         {
           "life": 10,
           "attack": 8,
-          "description": "Level 4"
+          "speed": 6,
+          "description": "Level 5"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 5"
+          "speed": 7,
+          "description": "Level 6"
         }
       ]
     },
@@ -389,32 +449,38 @@
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 0"
-        },
-        {
-          "life": 7,
-          "attack": 6,
+          "speed": 3,
           "description": "Level 1"
         },
         {
           "life": 7,
           "attack": 6,
+          "speed": 3,
           "description": "Level 2"
+        },
+        {
+          "life": 7,
+          "attack": 6,
+          "speed": 4,
+          "description": "Level 3"
         },
         {
           "life": 8,
           "attack": 7,
-          "description": "Level 3"
+          "speed": 5,
+          "description": "Level 4"
         },
         {
           "life": 10,
           "attack": 8,
-          "description": "Level 4"
+          "speed": 6,
+          "description": "Level 5"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 5"
+          "speed": 7,
+          "description": "Level 6"
         }
       ]
     },
@@ -427,32 +493,38 @@
         {
           "life": 6,
           "attack": 6,
-          "description": "Level 0"
-        },
-        {
-          "life": 7,
-          "attack": 6,
+          "speed": 3,
           "description": "Level 1"
         },
         {
           "life": 7,
           "attack": 6,
+          "speed": 3,
           "description": "Level 2"
+        },
+        {
+          "life": 7,
+          "attack": 6,
+          "speed": 4,
+          "description": "Level 3"
         },
         {
           "life": 8,
           "attack": 7,
-          "description": "Level 3"
+          "speed": 5,
+          "description": "Level 4"
         },
         {
           "life": 10,
           "attack": 8,
-          "description": "Level 4"
+          "speed": 6,
+          "description": "Level 5"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 5"
+          "speed": 7,
+          "description": "Level 6"
         }
       ]
     },
@@ -465,32 +537,38 @@
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 0"
-        },
-        {
-          "life": 8,
-          "attack": 9,
+          "speed": 4,
           "description": "Level 1"
         },
         {
           "life": 8,
           "attack": 9,
+          "speed": 4,
           "description": "Level 2"
+        },
+        {
+          "life": 8,
+          "attack": 9,
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 10,
           "attack": 11,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 12,
           "attack": 13,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 14,
           "attack": 16,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -503,32 +581,38 @@
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 0"
-        },
-        {
-          "life": 8,
-          "attack": 9,
+          "speed": 4,
           "description": "Level 1"
         },
         {
           "life": 8,
           "attack": 9,
+          "speed": 4,
           "description": "Level 2"
+        },
+        {
+          "life": 8,
+          "attack": 9,
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 10,
           "attack": 11,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 12,
           "attack": 13,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 14,
           "attack": 16,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -541,32 +625,38 @@
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 0"
-        },
-        {
-          "life": 8,
-          "attack": 9,
+          "speed": 4,
           "description": "Level 1"
         },
         {
           "life": 8,
           "attack": 9,
+          "speed": 4,
           "description": "Level 2"
+        },
+        {
+          "life": 8,
+          "attack": 9,
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 10,
           "attack": 11,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 12,
           "attack": 13,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 14,
           "attack": 16,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -579,32 +669,38 @@
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 0"
-        },
-        {
-          "life": 8,
-          "attack": 9,
+          "speed": 4,
           "description": "Level 1"
         },
         {
           "life": 8,
           "attack": 9,
+          "speed": 4,
           "description": "Level 2"
+        },
+        {
+          "life": 8,
+          "attack": 9,
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 10,
           "attack": 11,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 12,
           "attack": 13,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 14,
           "attack": 16,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -617,32 +713,38 @@
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 0"
-        },
-        {
-          "life": 8,
-          "attack": 9,
+          "speed": 4,
           "description": "Level 1"
         },
         {
           "life": 8,
           "attack": 9,
+          "speed": 4,
           "description": "Level 2"
+        },
+        {
+          "life": 8,
+          "attack": 9,
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 10,
           "attack": 11,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 12,
           "attack": 13,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 14,
           "attack": 16,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -655,32 +757,38 @@
         {
           "life": 8,
           "attack": 8,
-          "description": "Level 0"
-        },
-        {
-          "life": 8,
-          "attack": 9,
+          "speed": 4,
           "description": "Level 1"
         },
         {
           "life": 8,
           "attack": 9,
+          "speed": 4,
           "description": "Level 2"
+        },
+        {
+          "life": 8,
+          "attack": 9,
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 10,
           "attack": 11,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 12,
           "attack": 13,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 14,
           "attack": 16,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -693,32 +801,38 @@
         {
           "life": 10,
           "attack": 10,
-          "description": "Level 0"
+          "speed": 5,
+          "description": "Level 1"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 1"
+          "speed": 5,
+          "description": "Level 2"
         },
         {
           "life": 13,
           "attack": 11,
-          "description": "Level 2"
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 16,
           "attack": 13,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 19,
           "attack": 16,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 23,
           "attack": 19,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -731,32 +845,38 @@
         {
           "life": 10,
           "attack": 10,
-          "description": "Level 0"
+          "speed": 5,
+          "description": "Level 1"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 1"
+          "speed": 5,
+          "description": "Level 2"
         },
         {
           "life": 13,
           "attack": 11,
-          "description": "Level 2"
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 16,
           "attack": 13,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 19,
           "attack": 16,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 23,
           "attack": 19,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -769,32 +889,38 @@
         {
           "life": 10,
           "attack": 10,
-          "description": "Level 0"
+          "speed": 5,
+          "description": "Level 1"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 1"
+          "speed": 5,
+          "description": "Level 2"
         },
         {
           "life": 13,
           "attack": 11,
-          "description": "Level 2"
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 16,
           "attack": 13,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 19,
           "attack": 16,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 23,
           "attack": 19,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -807,32 +933,38 @@
         {
           "life": 10,
           "attack": 10,
-          "description": "Level 0"
+          "speed": 5,
+          "description": "Level 1"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 1"
+          "speed": 5,
+          "description": "Level 2"
         },
         {
           "life": 13,
           "attack": 11,
-          "description": "Level 2"
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 16,
           "attack": 13,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 19,
           "attack": 16,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 23,
           "attack": 19,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -845,32 +977,38 @@
         {
           "life": 10,
           "attack": 10,
-          "description": "Level 0"
+          "speed": 5,
+          "description": "Level 1"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 1"
+          "speed": 5,
+          "description": "Level 2"
         },
         {
           "life": 13,
           "attack": 11,
-          "description": "Level 2"
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 16,
           "attack": 13,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 19,
           "attack": 16,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 23,
           "attack": 19,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -883,32 +1021,38 @@
         {
           "life": 10,
           "attack": 10,
-          "description": "Level 0"
+          "speed": 5,
+          "description": "Level 1"
         },
         {
           "life": 12,
           "attack": 10,
-          "description": "Level 1"
+          "speed": 5,
+          "description": "Level 2"
         },
         {
           "life": 13,
           "attack": 11,
-          "description": "Level 2"
+          "speed": 5,
+          "description": "Level 3"
         },
         {
           "life": 16,
           "attack": 13,
-          "description": "Level 3"
+          "speed": 6,
+          "description": "Level 4"
         },
         {
           "life": 19,
           "attack": 16,
-          "description": "Level 4"
+          "speed": 7,
+          "description": "Level 5"
         },
         {
           "life": 23,
           "attack": 19,
-          "description": "Level 5"
+          "speed": 8,
+          "description": "Level 6"
         }
       ]
     },
@@ -921,32 +1065,38 @@
         {
           "life": 13,
           "attack": 13,
-          "description": "Level 0"
+          "speed": 7,
+          "description": "Level 1"
         },
         {
           "life": 14,
           "attack": 13,
-          "description": "Level 1"
+          "speed": 8,
+          "description": "Level 2"
         },
         {
           "life": 16,
           "attack": 14,
-          "description": "Level 2"
+          "speed": 8,
+          "description": "Level 3"
         },
         {
           "life": 19,
           "attack": 17,
-          "description": "Level 3"
+          "speed": 10,
+          "description": "Level 4"
         },
         {
           "life": 23,
           "attack": 20,
-          "description": "Level 4"
+          "speed": 12,
+          "description": "Level 5"
         },
         {
           "life": 28,
           "attack": 24,
-          "description": "Level 5"
+          "speed": 14,
+          "description": "Level 6"
         }
       ]
     },
@@ -959,32 +1109,38 @@
         {
           "life": 13,
           "attack": 13,
-          "description": "Level 0"
+          "speed": 7,
+          "description": "Level 1"
         },
         {
           "life": 14,
           "attack": 13,
-          "description": "Level 1"
+          "speed": 8,
+          "description": "Level 2"
         },
         {
           "life": 16,
           "attack": 14,
-          "description": "Level 2"
+          "speed": 8,
+          "description": "Level 3"
         },
         {
           "life": 19,
           "attack": 17,
-          "description": "Level 3"
+          "speed": 10,
+          "description": "Level 4"
         },
         {
           "life": 23,
           "attack": 20,
-          "description": "Level 4"
+          "speed": 12,
+          "description": "Level 5"
         },
         {
           "life": 28,
           "attack": 24,
-          "description": "Level 5"
+          "speed": 14,
+          "description": "Level 6"
         }
       ]
     },
@@ -997,32 +1153,38 @@
         {
           "life": 13,
           "attack": 13,
-          "description": "Level 0"
+          "speed": 7,
+          "description": "Level 1"
         },
         {
           "life": 14,
           "attack": 13,
-          "description": "Level 1"
+          "speed": 8,
+          "description": "Level 2"
         },
         {
           "life": 16,
           "attack": 14,
-          "description": "Level 2"
+          "speed": 8,
+          "description": "Level 3"
         },
         {
           "life": 19,
           "attack": 17,
-          "description": "Level 3"
+          "speed": 10,
+          "description": "Level 4"
         },
         {
           "life": 23,
           "attack": 20,
-          "description": "Level 4"
+          "speed": 12,
+          "description": "Level 5"
         },
         {
           "life": 28,
           "attack": 24,
-          "description": "Level 5"
+          "speed": 14,
+          "description": "Level 6"
         }
       ]
     },
@@ -1035,32 +1197,38 @@
         {
           "life": 13,
           "attack": 13,
-          "description": "Level 0"
+          "speed": 7,
+          "description": "Level 1"
         },
         {
           "life": 14,
           "attack": 13,
-          "description": "Level 1"
+          "speed": 8,
+          "description": "Level 2"
         },
         {
           "life": 16,
           "attack": 14,
-          "description": "Level 2"
+          "speed": 8,
+          "description": "Level 3"
         },
         {
           "life": 19,
           "attack": 17,
-          "description": "Level 3"
+          "speed": 10,
+          "description": "Level 4"
         },
         {
           "life": 23,
           "attack": 20,
-          "description": "Level 4"
+          "speed": 12,
+          "description": "Level 5"
         },
         {
           "life": 28,
           "attack": 24,
-          "description": "Level 5"
+          "speed": 14,
+          "description": "Level 6"
         }
       ]
     },
@@ -1073,32 +1241,38 @@
         {
           "life": 13,
           "attack": 13,
-          "description": "Level 0"
+          "speed": 7,
+          "description": "Level 1"
         },
         {
           "life": 14,
           "attack": 13,
-          "description": "Level 1"
+          "speed": 8,
+          "description": "Level 2"
         },
         {
           "life": 16,
           "attack": 14,
-          "description": "Level 2"
+          "speed": 8,
+          "description": "Level 3"
         },
         {
           "life": 19,
           "attack": 17,
-          "description": "Level 3"
+          "speed": 10,
+          "description": "Level 4"
         },
         {
           "life": 23,
           "attack": 20,
-          "description": "Level 4"
+          "speed": 12,
+          "description": "Level 5"
         },
         {
           "life": 28,
           "attack": 24,
-          "description": "Level 5"
+          "speed": 14,
+          "description": "Level 6"
         }
       ]
     },
@@ -1111,32 +1285,38 @@
         {
           "life": 13,
           "attack": 13,
-          "description": "Level 0"
+          "speed": 7,
+          "description": "Level 1"
         },
         {
           "life": 14,
           "attack": 13,
-          "description": "Level 1"
+          "speed": 8,
+          "description": "Level 2"
         },
         {
           "life": 16,
           "attack": 14,
-          "description": "Level 2"
+          "speed": 8,
+          "description": "Level 3"
         },
         {
           "life": 19,
           "attack": 17,
-          "description": "Level 3"
+          "speed": 10,
+          "description": "Level 4"
         },
         {
           "life": 23,
           "attack": 20,
-          "description": "Level 4"
+          "speed": 12,
+          "description": "Level 5"
         },
         {
           "life": 28,
           "attack": 24,
-          "description": "Level 5"
+          "speed": 14,
+          "description": "Level 6"
         }
       ]
     }

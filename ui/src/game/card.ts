@@ -29,13 +29,13 @@ export const createAllCard = async (
       const life = [] as number[]
       const speed = [] as number[]
       card.level.forEach((level: any, i: any) => {
-        description.push("Level " + i)
+        description.push("Level " + (i + 1))
         attack.push(level.attack)
         life.push(level.life)
         speed.push(level.speed)
       });
       for (let j = description.length; j < 6; j++) {
-        description.push("Level " + j)
+        description.push("Level " + (j + 1))
         attack.push(Math.round(attack[j - 1] * 120 / 100))
         life.push(Math.round(life[j - 1] * 120 / 100))
         speed.push(Math.round(speed[j - 1] * 120 / 100))
@@ -138,7 +138,7 @@ export const loadAllCard = async (
   if (_cardHash) {
     let cardFile = require("../card/card.json")
     const cardHash = BigNumber.from(ethersUtils.id(JSON.stringify(cardFile)))
-    if (cardHash.eq(_cardHash) && (cardFile.card[0] && cardFile.card[0].level.length == 6)) {
+    if (cardHash.eq(_cardHash) && (cardFile.card[0] && cardFile.card[0].level.length === 6)) {
       return loadAllCardFromFile()
     }
   }
@@ -163,6 +163,7 @@ export const loadAllCard = async (
         description: levelChain.description,
         life: levelChain.life,
         attack: levelChain.attack,
+        speed: levelChain.speed,
       } as CardLevelType
       card.level.push(level)
     }
@@ -187,6 +188,7 @@ export const loadAllCardFromFile = () => {
           description: cardLevel.description,
           life: cardLevel.life,
           attack: cardLevel.attack,
+          speed: cardLevel.speed,
         } as CardLevelType
       })
     } as CardType

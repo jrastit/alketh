@@ -74,10 +74,7 @@ export const endTurnData = (
 
 const isMyTurn = (userId1: number, userId: number) => {
   if (userId1 === userId) {
-    return 0
+    return 1
   }
-  if (userId1 !== userId) {
-    return 0
-  }
-  return 1
+  return 0
 }

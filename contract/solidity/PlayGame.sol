@@ -51,7 +51,7 @@ contract PlayGame {
         _loadCard(pos, _userId2, _gameDeckId2);
         latestTime = block.timestamp;
         gameId = _gameId;
-        pos = 0;
+        turn = 1;
         _drawNextCard();
     }
 
@@ -166,7 +166,7 @@ contract PlayGame {
     function playStep(uint8 _turn, uint8[3] memory _action) public {
       uint8 pos = _checkPlayer(_turn);
       require(_action[1] % 2 == pos, 'Wrong user pos');
-      actionList[actionList.length].push(_action);
+      actionList[turn - 1].push(_action);
       _updateVersion();
     }
 
@@ -191,7 +191,7 @@ contract PlayGame {
             );
           if (actionTypeId > 1){
             gameUser[0].cardList[gameCardId].botTurn = turn;
-            actionList[turn].push([gameCardId, actionTypeId + _pos, dest]);
+            actionList[turn - 1].push([gameCardId, actionTypeId + _pos, dest]);
           }
         } while (actionTypeId != 0 && !ended);
         if (!ended)
@@ -218,15 +218,16 @@ contract PlayGame {
       require(gameUser[pos].turn == turn - 1, 'turn already ended');
       for (uint8 i = 0; i < _action.length && !ended; i++){
         require(_action[i][1] % 2 == pos, 'Wrong user pos');
-        actionList[turn].push(_action[i]);
+        actionList[turn - 1].push(_action[i]);
       }
+
       gameUser[pos].turn = turn;
       if (gameUser[1 - pos].userId == 0){
         _playBotTurn(1 - _turn);
       }
       if (gameUser[1 - pos].turn == turn){
-        for (uint8 i = 0; i < actionList[turn].length && !ended; i++){
-          _playAction(actionList[turn][i][0], actionList[turn][i][1], actionList[turn][i][2]);
+        for (uint8 i = 0; i < actionList[turn - 1].length && !ended; i++){
+          _playAction(actionList[turn - 1][i][0], actionList[turn - 1][i][1], actionList[turn - 1][i][2]);
         }
         if (!ended) {
           _endTurn();
