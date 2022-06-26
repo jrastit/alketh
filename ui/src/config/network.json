@@ -44,7 +44,7 @@
       "url" : "https://kovan.optimism.io",
       "faucet" : "https://optimismfaucet.xyz/",
       "chainId": 69,
-      "gameContract": "",
+      "gameContract": "0xDe97a49910546b71f42A61Fb1e4A048263a3Fe8E",
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
       "retry" : 2
@@ -85,7 +85,7 @@
       "name" : "Polygon Mainnet",
       "url": "https://rpc-mainnet.matic.network",
       "chainId": 137,
-      "gameContract": "",
+      "gameContract": "0x1527e6C0A1d3d9d84ad86a7309BF40e0B96760d0",
       "tokenName": "MATIC",
       "timeBetweenRequest" : 1000,
       "refreshBalance" : 20000,
@@ -96,7 +96,7 @@
       "url": "https://evm-t3.cronos.org",
       "faucet": "https://cronos.org/faucet",
       "chainId": 338,
-      "gameContract": "0x8BaaC9A99EDCf9C5f5bF488Df1c4473555E8504C",
+      "gameContract": "0x6c60Fc1CeE5dFC6d9Eb368FeBb690273889C5e7F",
       "tokenName": "TEST",
       "retry" : 2
     },
