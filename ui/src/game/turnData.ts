@@ -49,15 +49,18 @@ export const checkTurnData = (
 }
 
 export const getTurnData = (game: GameType, userId: number) => {
-  return {
+  console.log(game)
+  const turnData = {
     turn: game.turn,
     userId: [game.userId1, game.userId2],
-    pos: game.userId1 === userId ? 1 : 0,
+    pos: game.userId1 === userId ? 0 : 1,
     playActionList: [],
     drawCardList: [],
     cardList: [game.cardList1, game.cardList2],
     actionId: 0,
   } as TurnDataType
+  console.log(turnData)
+  return turnData
 }
 
 export const endTurnData = (

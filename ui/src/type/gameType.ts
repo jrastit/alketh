@@ -2,6 +2,7 @@ export enum ActionType {
   Draw,
   Draw2,
   Attack,
+  Attack2,
 }
 
 export type GameActionListType = (GameActionType | null)[]

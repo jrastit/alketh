@@ -14,7 +14,7 @@ export const playRandomly = (
             if (!test) {
               return ({
                 gameCardId: gameCard.id,
-                actionTypeId: ActionType.Attack + turnData.pos,
+                actionTypeId: ActionType.Attack,
                 dest: gameCard2.id,
                 result: gameCard.attack,
               } as GameActionType)

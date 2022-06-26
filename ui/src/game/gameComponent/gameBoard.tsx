@@ -65,25 +65,25 @@ enum Play {
 const stepId = StepId.Game
 
 const annimatePlay = async (
-  myTurn: number,
+  pos: number,
   cardRefIdList: number[][],
   current: (PlaceRefType | null)[],
   actionId : number,
   gameCardId1: number,
   gameCardId2: number,
+  preview: boolean,
 ) => {
   //console.log(gameCardId1, current, cardRefIdList[1 - myTurn])
-  //console.log(actionId, gameCardId1, gameCardId2)
-  if (!gameCardId2) console.error('error!')
-  const place1 = current[cardRefIdList[1 - myTurn][gameCardId1]]?.getPlace()
+  console.log(preview, actionId, gameCardId1, gameCardId2)
+  const place1 = current[cardRefIdList[pos][gameCardId1]]?.getPlace()
   //console.log(place1)
   if (place1) {
     if (gameCardId2 !== undefined) {
       let place2 = undefined
-      if (actionId === ActionType.Attack){
-        place2 = current[cardRefIdList[myTurn][gameCardId2]]?.getPlace()
+      if (actionId % 2 === ActionType.Attack){
+        place2 = current[cardRefIdList[1 - pos][gameCardId2]]?.getPlace()
         if (place2) {
-          await current[cardRefIdList[1 - myTurn][gameCardId1]]?.doTranslate2({
+          await current[cardRefIdList[pos][gameCardId1]]?.doTranslate2({
             x: place2.x - place1.x,
             y: place2.y - place1.y,
           })
@@ -98,6 +98,7 @@ const _playAction = async (
   gameAction: GameActionType,
   turnData: TurnDataType,
   setTurnData: (turnData: TurnDataType) => void,
+  preview : boolean,
   annimate?: {
     cardRefIdList: number[][],
     current: (PlaceRefType | null)[],
@@ -107,15 +108,17 @@ const _playAction = async (
       current: (PlaceRefType | null)[],
       actionId: number,
       gameCardId1: number,
-      gameCardId2: number
+      gameCardId2: number,
+      preview: boolean,
     ) => Promise<void>
-  }
+  },
 ) => {
   await playAction(
     contractHandler,
     gameAction,
     turnData,
     setTurnData,
+    preview,
     annimate,
   )
 }
@@ -145,6 +148,7 @@ const _playNextAction = async (
       gameAction,
       turnData,
       setTurnData,
+      false,
       {
         cardRefIdList,
         current,
@@ -359,34 +363,46 @@ const GameBoard = (props: {
       dest : gameCardId2,
       self : true,
     }
-    await _playAction(
-      props.contractHandler,
-      gameAction,
-      turnData,
-      setTurnData,
-      {
-        cardRefIdList,
-        current : cardRefList.current,
-        annimatePlay,
-      }
-    )
-  }
-
-  const _playRandomly = async () => {
-    const gameAction = playRandomly(turnData)
-    if (gameAction !== 0 && gameAction !== 1) {
+    try{
       await _playAction(
         props.contractHandler,
         gameAction,
         turnData,
         setTurnData,
+        true,
         {
           cardRefIdList,
-          current: cardRefList.current,
+          current : cardRefList.current,
           annimatePlay,
         }
-
       )
+    } catch (err : any) {
+      console.log(err)
+      dispatch(setError({ id: stepId, catchError: err }))
+    }
+  }
+
+  const _playRandomly = async () => {
+    try {
+      const gameAction = playRandomly(turnData)
+      if (gameAction !== 0 && gameAction !== 1) {
+        await _playAction(
+          props.contractHandler,
+          gameAction,
+          turnData,
+          setTurnData,
+          true,
+          {
+            cardRefIdList,
+            current: cardRefList.current,
+            annimatePlay,
+          }
+
+        )
+      }
+    } catch (err : any) {
+      console.log(err)
+      dispatch(setError({ id: stepId, catchError: err }))
     }
   }
 
@@ -410,13 +426,29 @@ const GameBoard = (props: {
       }
     }
 
+    const _actionList2 = [] as ReactElement[]
+    for (let _id = turnData.playActionList.length - 1; _id >= 0 ; _id--) {
+      const _playAction = turnData.playActionList[_id]
+      if (_playAction) {
+        let _style
+        if (_id === 0){
+          _style={borderBottom : 'thin solid black'}
+        }
+        _actionList2.push(
+          <div style={_style} key={_id}>
+            {_id} {turnData.pos} {ActionType[_playAction.actionTypeId]} {_playAction.gameCardId} {_playAction.dest}
+          </div>
+        )
+      }
+    }
+
     return (
       <Row>
         <Col>
-          {_actionList.slice(0, 12)}
+          {_actionList}
         </Col>
         <Col>
-          {_actionList.slice(12, 24)}
+          {_actionList2}
         </Col>
       </Row>
     )
@@ -424,17 +456,10 @@ const GameBoard = (props: {
 
   return (
     <div style={{ fontSize: "11px" }}>
-      <Row style={{ height: "20em" }}>
-        <Col xs={2} style={{
-          backgroundColor: '#ffffffD0',
-          paddingTop: '1em',
-        }}>
-          {_displayAction()}
-        </Col>
-      </Row>
+
       <Row style={{ height: "20em", backgroundColor: "#00000080" }}>
         {displayGameCardList(
-          1,
+          1 - turnData.pos,
           0,
           2,
           false,
@@ -453,7 +478,7 @@ const GameBoard = (props: {
       >
       <Col>
           {displayGameCardList(
-            0,
+            turnData.pos,
             0,
             2,
             play === Play.Ready,
@@ -461,7 +486,7 @@ const GameBoard = (props: {
           </Col>
           </Row>
           <Row>
-        <Col xs={2} style={{
+        <Col style={{
           backgroundColor: '#ffffff80',
           paddingTop: '1em',
         }}>
@@ -504,6 +529,14 @@ const GameBoard = (props: {
           <div style={{ textAlign: 'center' }}>
             {props.children}
           </div>
+        </Col>
+      </Row>
+      <Row style={{ height: "20em" }}>
+        <Col style={{
+          backgroundColor: '#ffffffD0',
+          paddingTop: '1em',
+        }}>
+          {_displayAction()}
         </Col>
       </Row>
     </div>

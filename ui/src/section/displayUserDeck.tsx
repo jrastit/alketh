@@ -118,7 +118,7 @@ const DisplayUserDeck = (props : {
           deck={deck}
         />
 
-        {userCardSubList.length} card selected {userCardSubList.length === 20 ? "" : "(need 20 to update deck)"}
+        {userCardSubList.length} card selected {userCardSubList.length === 5 ? "" : "(need 5 to update deck)"}
 
         &nbsp;<ButtonNice onClick={() => {setResetSelection(true)}}>Reset selection</ButtonNice>
 
@@ -130,7 +130,7 @@ const DisplayUserDeck = (props : {
               <Button variant='danger' onClick={() => {setError(undefined)}}>Ok</Button>
               </div>
             }
-            {!error && !loading && userCardSubList.length === 20 &&
+            {!error && !loading && userCardSubList.length === 5 &&
               <>&nbsp;<ButtonNice onClick={() => {_updateDeck()}}>Update deck</ButtonNice></>
             }
             {loading &&

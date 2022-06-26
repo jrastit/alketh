@@ -52,11 +52,13 @@ export const playAttack = (
   turnData: TurnDataType,
   setTurnData: (turnData: TurnDataType) => void,
   pos: number,
+  preview: boolean,
 ) => {
   let cardList1 = turnData.cardList[pos].map((_gameCard) => {
     if (_gameCard) return { ..._gameCard }
     return undefined
   })
+
   let cardList2 = turnData.cardList[1 - pos].map((_gameCard) => {
     if (_gameCard) return { ..._gameCard }
     return undefined
@@ -65,42 +67,43 @@ export const playAttack = (
     const gameCard1 = cardList1[gameCardId1] as GameCardType
     const gameCard2 = cardList2[gameCardId2] as GameCardType
     gameCard1.play = 1
-    if (gameCard2.life > gameCard1.attack) {
-      gameCard1.expWin += gameCard1.attack * 5
-      gameCard2.expWin += gameCard1.attack
-      gameCard2.life = gameCard2.life - gameCard1.attack
-    } else {
-      gameCard1.expWin += gameCard2.life * 10
-      gameCard2.expWin += gameCard2.life
-      gameCard2.life = 0
-      //cardList2[gameCardId2] = undefined
-      cardList2 = removeCard(cardList2, gameCardId2)
-    }
-    if (gameCard1.life > gameCard2.attack) {
-      gameCard2.expWin += gameCard2.attack * 2
-      gameCard1.expWin += gameCard2.attack
-      gameCard1.life = gameCard1.life - gameCard2.attack
-    } else {
-      gameCard2.expWin += gameCard1.life * 4
-      gameCard1.expWin += gameCard1.life
-      gameCard1.life = 0
-      //cardList1[gameCardId1] = undefined
-      cardList1 = removeCard(cardList1, gameCardId1)
+    if (!preview) {
+      if (gameCard2.life > gameCard1.attack) {
+        gameCard1.expWin += gameCard1.attack * 5
+        gameCard2.expWin += gameCard1.attack
+        gameCard2.life = gameCard2.life - gameCard1.attack
+      } else {
+        gameCard1.expWin += gameCard2.life * 10
+        gameCard2.expWin += gameCard2.life
+        gameCard2.life = 0
+        //cardList2[gameCardId2] = undefined
+        cardList2 = removeCard(cardList2, gameCardId2)
+      }
+      if (gameCard1.life > gameCard2.attack) {
+        gameCard2.expWin += gameCard2.attack * 2
+        gameCard1.expWin += gameCard2.attack
+        gameCard1.life = gameCard1.life - gameCard2.attack
+      } else {
+        gameCard2.expWin += gameCard1.life * 4
+        gameCard1.expWin += gameCard1.life
+        gameCard1.life = 0
+        //cardList1[gameCardId1] = undefined
+        cardList1 = removeCard(cardList1, gameCardId1)
+      }
     }
     const newTurnData = {
       ...turnData,
+      cardList: !pos ? [cardList1, cardList2] : [cardList2, cardList1],
       playActionList: turnData.playActionList.concat([{
         gameCardId: gameCardId1,
         actionTypeId: ActionType.Attack + pos,
         dest: gameCardId2,
       }]),
-      cardList: pos ? [cardList1, cardList2] : [cardList2, cardList1],
     }
     setTurnData(newTurnData)
   } else {
     throw Error("Unable to play attack " + cardList1[gameCardId1] + ' => ' + cardList2[gameCardId2])
   }
-
 }
 
 export const playAction = async (
@@ -108,6 +111,7 @@ export const playAction = async (
   gameAction: GameActionType,
   turnData: TurnDataType,
   setTurnData: (turnData: TurnDataType) => void,
+  preview: boolean,
   annimate?: {
     cardRefIdList: number[][],
     current: (PlaceRefType | null)[],
@@ -117,7 +121,8 @@ export const playAction = async (
       current: (PlaceRefType | null)[],
       actionId: number,
       gameCardId1: number,
-      gameCardId2: number
+      gameCardId2: number,
+      preview: boolean,
     ) => Promise<void>
   }
 ) => {
@@ -133,6 +138,7 @@ export const playAction = async (
         pos,
       )
     } else if (actionTypeId === ActionType.Attack) {
+      console.log(pos)
       const _gameCard = turnData.cardList[pos][gameAction.gameCardId]
       //console.log(turnData.cardList[1 - turnData.myTurn])
       if (_gameCard) {
@@ -150,6 +156,7 @@ export const playAction = async (
             actionTypeId,
             gameCard.id,
             gameCardId2,
+            preview,
           )
           playAttack(
             gameCard.id,
@@ -157,6 +164,7 @@ export const playAction = async (
             turnData,
             setTurnData,
             pos,
+            preview,
           )
         } else {
           console.error('Invalid card', gameCard)
