@@ -40,11 +40,21 @@
       "retry" : 2
     },
     {
+      "name" : "Optimism Testnet",
+      "url" : "https://kovan.optimism.io",
+      "faucet" : "https://optimismfaucet.xyz/",
+      "chainId": 69,
+      "gameContract": "",
+      "tokenName": "TEST",
+      "timeBetweenRequest" : 10,
+      "retry" : 2
+    },
+    {
       "name" : "Skale Testnet",
       "url" : "https://hackathon.skalenodes.com/v1/downright-royal-saiph",
       "faucet" : "https://hackathon.skale.network/",
       "chainId": 1085866509,
-      "gameContract": "0x8BAC9995215487B3B3fB7A6203d778dc39731cE8",
+      "gameContract": "",
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
       "retry" : 2
@@ -54,7 +64,7 @@
       "url": "https://rinkeby.arbitrum.io/rpc",
       "faucet": "https://fauceth.komputing.org/?chain=421611",
       "chainId": 421611,
-      "gameContract": "0xEfe26c68549a33aEF3826a44cE856E44C90a6450",
+      "gameContract": "0xAC343dd067a67394E378EF16Aeef3Bc7f97C3C46",
       "tokenName": "ETH",
       "timeBetweenRequest" : 1000,
       "retry" : 2,
@@ -82,13 +92,12 @@
       "retry" : 16
     },
     {
-      "name" : "Cosmos testnet",
+      "name" : "Cronos testnet",
       "url": "https://evm-t3.cronos.org",
       "faucet": "https://cronos.org/faucet",
       "chainId": 338,
       "gameContract": "",
       "tokenName": "TEST",
-      "host" : "localhost",
       "retry" : 2
     },
     {
@@ -98,7 +107,6 @@
       "chainId": 28,
       "gameContract": "",
       "tokenName": "TEST",
-      "host" : "localhost",
       "retry" : 2
     }
   ]
