@@ -96,7 +96,7 @@
       "url": "https://evm-t3.cronos.org",
       "faucet": "https://cronos.org/faucet",
       "chainId": 338,
-      "gameContract": "",
+      "gameContract": "0x8BaaC9A99EDCf9C5f5bF488Df1c4473555E8504C",
       "tokenName": "TEST",
       "retry" : 2
     },
