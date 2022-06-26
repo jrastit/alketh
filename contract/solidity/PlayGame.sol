@@ -225,7 +225,7 @@ contract PlayGame {
       }
       turn = turn + 1;
       actionId = 0;
-      //_drawNextCard();
+      _drawNextCard();
       emit PlayAction(turn, actionId++, 0, 0, 0, 0);
     }
 
@@ -236,7 +236,7 @@ contract PlayGame {
         require(_action[i][1] % 2 == pos, 'Wrong user pos');
         _addAction(_action[i]);
       }
-      _addAction([0, pos, 0]);
+      //_addAction([0, pos, 0]);
       gameUser[pos].turn = turn;
       if (gameUser[1 - pos].userId == 0){
         _playBotTurn(1 - _turn);
@@ -349,7 +349,7 @@ contract PlayGame {
         GameUser storage user = gameUser[pos];
         GameUser storage oponent = gameUser[1 - pos];
         GameCard memory gameCard = user.cardList[_gameCardId];
-        require(gameCard.turn < turn);
+        require(gameCard.turn < turn, "wrong card turn");
         if (_actionTypeId == 2) {
             if (_gameCardId >= 0 && _gameCardId < 2) {
                     require(_dest >= 0 && _dest < 2, "dest out of bound");

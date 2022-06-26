@@ -13,8 +13,11 @@ export const playDrawCard = async (
   setTurnData: (turnData: TurnDataType) => void,
   pos: number,
 ) => {
-  if (turnData.cardList[pos][gameCardId] === undefined) {
-    const cardList = turnData.cardList[pos].concat([])
+  const cardList = turnData.cardList[pos].concat([])
+  if (cardList[gameCardId] !== undefined) {
+    removeCard(cardList, gameCardId)
+  }
+  if (cardList[gameCardId] === undefined) {
     cardList[gameCardId] = await getNewGameCardFromId(
       contractHandler,
       turnData.userId[pos],
@@ -126,6 +129,7 @@ export const playAction = async (
     ) => Promise<void>
   }
 ) => {
+  console.log(gameAction)
   const pos = (turnData.pos + gameAction.actionTypeId) % 2
   const actionTypeId = gameAction.actionTypeId - (gameAction.actionTypeId % 2)
   if (gameAction.result || gameAction.self) {
@@ -138,7 +142,6 @@ export const playAction = async (
         pos,
       )
     } else if (actionTypeId === ActionType.Attack) {
-      console.log(pos)
       const _gameCard = turnData.cardList[pos][gameAction.gameCardId]
       //console.log(turnData.cardList[1 - turnData.myTurn])
       if (_gameCard) {

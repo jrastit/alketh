@@ -15,8 +15,9 @@ contract PlayActionLib {
         contractHash = _contractHash;
     }
 
-    function random8(uint8 number, uint8 _turn, uint8 _actionId) public view returns(uint8){
-        return uint8(uint(keccak256(abi.encode(blockhash(block.number-1), block.timestamp, _turn, _actionId)))) % number;
+    function random8(uint8 number, uint8 _turn, uint8 _actionId) public pure returns(uint8){
+      return (_turn + _actionId) % number;
+        //return uint8(uint(keccak256(abi.encode(blockhash(block.number-1), block.timestamp, _turn, _actionId)))) % number;
     }
 
     function getGameCard(GameManager gameManager, uint64 _userId, uint32 _userCardId) public view returns (GameCard memory){

@@ -90,7 +90,7 @@ const autoPlayTurn = async (
   do {
     const gameAction = playRandomly(turnData)
     if (gameAction !== 0 && gameAction !== 1) {
-      await playAction(contractHandler, gameAction, turnData, setTurnData)
+      await playAction(contractHandler, gameAction, turnData, setTurnData, true)
     }
   } while (playRandomly(turnData, true))
   let playTurn = 0
@@ -115,13 +115,14 @@ const autoPlayTurn = async (
           contractHandler,
           gameActionPayload.gameAction,
           turnData,
-          setTurnData
+          setTurnData,
+          true
         )
       }
     }
   }
   const game = await getGameFull(contractHandler)
-  checkTurnData(game, turnData, check)
+  //checkTurnData(game, turnData, check)
   return { turnData, game }
 }
 
@@ -151,8 +152,8 @@ const autoPlayGame = async (
   let game2 = await getGameFull(contractHandler2)
   let turnData1 = getTurnData(game1, userId1)
   let turnData2 = getTurnData(game2, userId2)
-  checkTurnData(game1, turnData1, check)
-  checkTurnData(game2, turnData2, check)
+  //checkTurnData(game1, turnData1, check)
+  //checkTurnData(game2, turnData2, check)
   do {
     turnData1 = getTurnData(game1, userId1)
     turnData2 = getTurnData(game2, userId2)
@@ -193,7 +194,7 @@ const autoPlayGameBot = async (
   let game = await getGameFull(contractHandler)
   do {
     let turnData = getTurnData(game, userId)
-    checkTurnData(game, turnData, check)
+    //checkTurnData(game, turnData, check)
 
     const ret = await autoPlayTurn(
       contractHandler,
@@ -202,7 +203,7 @@ const autoPlayGameBot = async (
     turnData = ret.turnData
 
     game = await getGameFull(contractHandler)
-    checkTurnData(game, turnData, check)
+    //checkTurnData(game, turnData, check)
   } while (!game.ended)
 }
 
@@ -317,11 +318,9 @@ const testTransaction = () => {
             return (tx.log + ' ' + tx.result.gasUsed.toNumber())
           }))
         }
-        if (useCache) {
-          await userLeaveGame(contractHandler, userId)
-          await userLeaveGame(contractHandler, userId1)
-          await userLeaveGame(contractHandler, userId2)
-        }
+        await userLeaveGame(contractHandler, userId)
+        await userLeaveGame(contractHandler1, userId1)
+        await userLeaveGame(contractHandler2, userId2)
         done()
       } catch (error) {
         done(error)
