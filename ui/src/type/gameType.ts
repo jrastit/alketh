@@ -25,7 +25,7 @@ export type TurnDataType = {
   playActionList: GameActionListType
   cardList: (GameCardType | undefined)[][]
   userId: number[]
-  myTurn: number
+  pos: number
 }
 
 export type GameCardPlaceType = {

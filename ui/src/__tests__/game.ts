@@ -79,7 +79,6 @@ const check = (val1: number, val2: number, message: string) => {
 
 const autoPlayTurn = async (
   contractHandler: ContractHandlerType,
-  userId: number,
   turnData: TurnDataType,
 ) => {
 
@@ -122,7 +121,7 @@ const autoPlayTurn = async (
     }
   }
   const game = await getGameFull(contractHandler)
-  checkTurnData(game, userId, turnData, check)
+  checkTurnData(game, turnData, check)
   return { turnData, game }
 }
 
@@ -152,22 +151,20 @@ const autoPlayGame = async (
   let game2 = await getGameFull(contractHandler2)
   let turnData1 = getTurnData(game1, userId1)
   let turnData2 = getTurnData(game2, userId2)
-  checkTurnData(game1, userId1, turnData1, check)
-  checkTurnData(game2, userId2, turnData2, check)
+  checkTurnData(game1, turnData1, check)
+  checkTurnData(game2, turnData2, check)
   do {
     turnData1 = getTurnData(game1, userId1)
     turnData2 = getTurnData(game2, userId2)
 
     const ret1 = await autoPlayTurn(
       contractHandler1,
-      userId1,
       turnData1,
     )
     turnData1 = ret1.turnData
 
     const ret2 = await autoPlayTurn(
       contractHandler2,
-      userId2,
       turnData2,
     )
     turnData2 = ret2.turnData
@@ -196,17 +193,16 @@ const autoPlayGameBot = async (
   let game = await getGameFull(contractHandler)
   do {
     let turnData = getTurnData(game, userId)
-    checkTurnData(game, userId, turnData, check)
+    checkTurnData(game, turnData, check)
 
     const ret = await autoPlayTurn(
       contractHandler,
-      userId,
       turnData,
     )
     turnData = ret.turnData
 
     game = await getGameFull(contractHandler)
-    checkTurnData(game, userId, turnData, check)
+    checkTurnData(game, turnData, check)
   } while (!game.ended)
 }
 

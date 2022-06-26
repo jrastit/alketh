@@ -5,16 +5,16 @@ export const playRandomly = (
   test?: boolean,
 ) => {
   for (let i = 0; i < 2; i++) {
-    if (turnData.cardList[1 - turnData.myTurn][i]) {
-      const gameCard = turnData.cardList[1 - turnData.myTurn][i] as GameCardType
+    if (turnData.cardList[turnData.pos][i]) {
+      const gameCard = turnData.cardList[turnData.pos][i] as GameCardType
       if (gameCard.play === 0) {
         for (let j = 0; j < 2; j++) {
-          if (turnData.cardList[turnData.myTurn][j]) {
-            const gameCard2 = turnData.cardList[turnData.myTurn][j] as GameCardType
+          if (turnData.cardList[1 - turnData.pos][j]) {
+            const gameCard2 = turnData.cardList[1 - turnData.pos][j] as GameCardType
             if (!test) {
               return ({
                 gameCardId: gameCard.id,
-                actionTypeId: ActionType.Attack,
+                actionTypeId: ActionType.Attack + turnData.pos,
                 dest: gameCard2.id,
                 result: gameCard.attack,
               } as GameActionType)

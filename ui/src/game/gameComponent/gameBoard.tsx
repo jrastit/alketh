@@ -158,7 +158,7 @@ const _playNextAction = async (
       endTurnData(turnData, setTurnData)
       setPlay(Play.Replay)
     } else {
-      checkTurnData(game, userId, turnData, check)
+      checkTurnData(game, turnData, check)
       setTurnData(getTurnData(game, userId))
       setPlay(Play.Ready)
     }
@@ -181,7 +181,7 @@ const GameBoard = (props: {
 
   const [turnData, setTurnData] = useState<TurnDataType>({
     turn: 0,
-    myTurn: 0,
+    pos: 0,
     userId: [0, 0],
     playActionList: [],
     cardList: [[], []],

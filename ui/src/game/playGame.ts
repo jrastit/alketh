@@ -11,26 +11,25 @@ export const playDrawCard = async (
   gameCardId: number,
   turnData: TurnDataType,
   setTurnData: (turnData: TurnDataType) => void,
-  myTurn: number,
+  pos: number,
 ) => {
-  if (turnData.cardList[1 - myTurn][gameCardId] === undefined) {
-    const cardList = turnData.cardList[1 - myTurn].concat([])
+  if (turnData.cardList[pos][gameCardId] === undefined) {
+    const cardList = turnData.cardList[pos].concat([])
     cardList[gameCardId] = await getNewGameCardFromId(
       contractHandler,
-      turnData.userId[1 - myTurn],
+      turnData.userId[pos],
       gameCardId
     )
     setTurnData({
       ...turnData,
-      cardList: myTurn ? [cardList, turnData.cardList[myTurn]] : [turnData.cardList[myTurn], cardList],
+      cardList: [cardList, turnData.cardList[1 - pos]],
       playActionList: turnData.playActionList.concat([{
         gameCardId: gameCardId,
         actionTypeId: ActionType.Draw,
       }]),
     })
-
   } else {
-    throw Error('invalid draw gameCardId ' + turnData.cardList[1 - myTurn][gameCardId])
+    throw Error('invalid draw gameCardId ' + turnData.cardList[pos][gameCardId])
   }
 }
 
@@ -52,13 +51,13 @@ export const playAttack = (
   gameCardId2: number,
   turnData: TurnDataType,
   setTurnData: (turnData: TurnDataType) => void,
-  myTurn: number,
+  pos: number,
 ) => {
-  let cardList1 = turnData.cardList[1 - myTurn].map((_gameCard) => {
+  let cardList1 = turnData.cardList[pos].map((_gameCard) => {
     if (_gameCard) return { ..._gameCard }
     return undefined
   })
-  let cardList2 = turnData.cardList[myTurn].map((_gameCard) => {
+  let cardList2 = turnData.cardList[1 - pos].map((_gameCard) => {
     if (_gameCard) return { ..._gameCard }
     return undefined
   })
@@ -92,10 +91,10 @@ export const playAttack = (
       ...turnData,
       playActionList: turnData.playActionList.concat([{
         gameCardId: gameCardId1,
-        actionTypeId: ActionType.Attack + myTurn,
+        actionTypeId: ActionType.Attack + pos,
         dest: gameCardId2,
       }]),
-      cardList: myTurn ? [cardList1, cardList2] : [cardList2, cardList1],
+      cardList: pos ? [cardList1, cardList2] : [cardList2, cardList1],
     }
     setTurnData(newTurnData)
   } else {
@@ -122,8 +121,8 @@ export const playAction = async (
     ) => Promise<void>
   }
 ) => {
-  const myTurn = gameAction.actionTypeId % 2
-  const actionTypeId = gameAction.actionTypeId - myTurn
+  const pos = (turnData.pos + gameAction.actionTypeId) % 2
+  const actionTypeId = gameAction.actionTypeId - (gameAction.actionTypeId % 2)
   if (gameAction.result || gameAction.self) {
     if (actionTypeId === ActionType.Draw) {
       await playDrawCard(
@@ -131,10 +130,10 @@ export const playAction = async (
         gameAction.gameCardId,
         turnData,
         setTurnData,
-        myTurn,
+        pos,
       )
     } else if (actionTypeId === ActionType.Attack) {
-      const _gameCard = turnData.cardList[1 - myTurn][gameAction.gameCardId]
+      const _gameCard = turnData.cardList[pos][gameAction.gameCardId]
       //console.log(turnData.cardList[1 - turnData.myTurn])
       if (_gameCard) {
         const gameCard = _gameCard as GameCardType
@@ -145,7 +144,7 @@ export const playAction = async (
         ) {
           const gameCardId2 = gameAction.dest
           annimate && await annimate.annimatePlay(
-            myTurn,
+            pos,
             annimate.cardRefIdList,
             annimate.current,
             actionTypeId,
@@ -157,7 +156,7 @@ export const playAction = async (
             gameCardId2,
             turnData,
             setTurnData,
-            myTurn,
+            pos,
           )
         } else {
           console.error('Invalid card', gameCard)

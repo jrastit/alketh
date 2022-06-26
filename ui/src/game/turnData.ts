@@ -24,12 +24,11 @@ const checkCard = (
 
 export const checkTurnData = (
   game: GameType,
-  userId: number,
   turnData: TurnDataType,
   check: (val1: number, val2: number, message: string) => boolean
 ) => {
-  const cardList1 = userId === game.userId1 ? game.cardList1 : game.cardList2
-  const cardList2 = userId === game.userId1 ? game.cardList2 : game.cardList1
+  const cardList1 = game.cardList1
+  const cardList2 = game.cardList2
   /*
   console.log(
     turnData.cardList[0].map(_card => _card ?.userCardId),
@@ -52,11 +51,11 @@ export const checkTurnData = (
 export const getTurnData = (game: GameType, userId: number) => {
   return {
     turn: game.turn,
-    userId: [userId, game.userId1 === userId ? game.userId2 : game.userId1],
-    myTurn: isMyTurn(game.userId1, userId),
+    userId: [game.userId1, game.userId2],
+    pos: game.userId1 === userId ? 1 : 0,
     playActionList: [],
     drawCardList: [],
-    cardList: [userId === game.userId1 ? game.cardList1 : game.cardList2, userId === game.userId1 ? game.cardList2 : game.cardList1],
+    cardList: [game.cardList1, game.cardList2],
     actionId: 0,
   } as TurnDataType
 }
@@ -70,11 +69,4 @@ export const endTurnData = (
     turn: turnData.turn + 1,
     playActionList: [],
   })
-}
-
-const isMyTurn = (userId1: number, userId: number) => {
-  if (userId1 === userId) {
-    return 1
-  }
-  return 0
 }

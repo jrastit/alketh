@@ -54,7 +54,7 @@
       "url" : "https://hackathon.skalenodes.com/v1/downright-royal-saiph",
       "faucet" : "https://hackathon.skale.network/",
       "chainId": 1085866509,
-      "gameContract": "",
+      "gameContract": "0xFA1efce9ffF20C0cEB853F98412446752061fe68",
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
       "retry" : 2

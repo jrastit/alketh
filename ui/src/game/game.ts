@@ -168,7 +168,7 @@ export const endTurn = async (
       gameAction.dest,
     ]
   )
-  //console.log("endTurn", turn, _playActionList)
+  console.log("endTurn", turn, _playActionList)
   const tx = await contractHandler.playGame.getContract().endTurn(
     turn,
     _playActionList,

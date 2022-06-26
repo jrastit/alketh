@@ -16,7 +16,6 @@ contract PlayActionLib {
     }
 
     function random8(uint8 number, uint8 _turn, uint8 _actionId) public view returns(uint8){
-        //return turn % number;
         return uint8(uint(keccak256(abi.encode(blockhash(block.number-1), block.timestamp, _turn, _actionId)))) % number;
     }
 
