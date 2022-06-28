@@ -34,7 +34,6 @@ contract PlayActionLib {
             userCard.exp,
             0,
             card.mana,
-            0,
             0
         );
         return gameCard;

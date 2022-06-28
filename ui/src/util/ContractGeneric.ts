@@ -18,8 +18,12 @@ function initContract(contractClass: any, abi: any[]) {
       const functionName = obj.name as string
       Object.defineProperty(contractClass, functionName, {
         value: async (...args: any[]) => {
+          console.log('contract populateTransaction')
           const tx = await contractClass.transactionManager.populateTransaction(contractClass, functionName, ...args)
-          return await contractClass.transactionManager.sendTx(tx, functionName)
+          console.log('contract call')
+          const ret = await contractClass.transactionManager.sendTx(tx, functionName)
+          console.log('contract call end')
+          return ret
         },
         writable: false,
         enumerable: true,
@@ -37,10 +41,13 @@ function initContract(contractClass: any, abi: any[]) {
         value: async (...args: any[]) => {
           //console.log("call view ", functionName)
           try {
-            return await contractClass.transactionManager.callView(
+            console.log('call view')
+            const ret = await contractClass.transactionManager.callView(
               contractClass.contract.functions[functionName],
               ...args
             )
+            console.log("call view end")
+            return ret
           } catch (err: any) {
             console.error(err)
             throw Error(getErrorMessage(err))

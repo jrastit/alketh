@@ -173,7 +173,7 @@ export const endTurn = async (
     turn,
     _playActionList,
   )
-
+  console.log("endTurn2", turn, _playActionList)
   for (let i = 0; i < tx.result.logs.length; i++) {
     const log = contractHandler.playGame.getContract().interface.parseLog(tx.result.logs[i])
     if (log.name === 'PlayAction' && addPlayAction) {
@@ -213,8 +213,5 @@ export const endGameByTime = async (
 export const leaveGame = async (
   contractHandler: ContractHandlerType,
 ) => {
-
-  return await contractHandler.playGame.getContract().leaveGame(
-
-  )
+  return await contractHandler.playGame.getContract().leaveGame()
 }

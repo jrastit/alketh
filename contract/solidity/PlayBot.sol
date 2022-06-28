@@ -17,17 +17,14 @@ contract PlayBot {
       function nextAction(
           uint8 _pos,
           GameUser[2] calldata gameUser,
-          bool ended,
-          uint8 turn
+          uint8 cardPos
           ) public pure returns(uint8, uint8, uint8){
         GameUser calldata user = gameUser[_pos];
-        for (uint8 i = 0; i < 2 && !ended; i++){
-          GameCard calldata gameCard = user.cardList[i];
-          if (gameCard.cardId != 0 && gameCard.botTurn < turn) {
-            for (uint8 j = 0; j < 2; j++){
-              if (gameUser[1 - _pos].cardList[j].cardId != 0){
-                  return (i, 2 + _pos, j);
-              }
+        GameCard calldata gameCard = user.cardList[cardPos];
+        if (gameCard.cardId != 0) {
+          for (uint8 j = 0; j < 2; j++){
+            if (gameUser[1 - _pos].cardList[j].cardId != 0){
+              return (cardPos, 2 + _pos, j);
             }
           }
         }

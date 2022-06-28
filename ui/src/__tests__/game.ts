@@ -99,12 +99,14 @@ const autoPlayTurn = async (
     if (payload.turn > playTurn) playTurn = payload.turn
   }
   //console.log(turnData.playActionList)
+  console.log('end turn')
   await endTurn(
     contractHandler,
     turnData.playActionList,
     turnData.turn,
     addPlayAction,
   )
+  console.log('end turn2')
 
   while (playTurn > turnData.turn) {
     endTurnData(turnData, setTurnData)
@@ -215,6 +217,7 @@ const userLeaveGame = async (
   if (gameId) {
     const gameChain = await contractHandler.gameList.getContract().gameList(gameId)
     const contractAddress = gameChain.playGame
+    console.log(contractAddress)
     if (contractAddress) {
       contractHandler.playGame.contract = getWithManagerContractPlayGame(contractAddress, contractHandler.transactionManager)
       contractHandler.playGame.versionOk = true
@@ -225,7 +228,8 @@ const userLeaveGame = async (
 
 const testTransaction = () => {
 
-  jest.setTimeout(10000)
+  //jest.setTimeout(3600000)
+  jest.setTimeout(30000)
 
   let transactionManager: TransactionManager[]
 

@@ -17,7 +17,6 @@ struct GameCard {
     uint64 expWin;
     uint8 mana;
     uint8 turn;
-    uint8 botTurn;
 }
 
 struct GameUser {
@@ -194,7 +193,7 @@ contract PlayGame {
         uint8 actionTypeId;
         uint8 gameCardId;
         uint8 dest;
-        do {
+        for (uint8 cardPos = 0; cardPos < 2 && !ended; cardPos++){
           (
               gameCardId,
               actionTypeId,
@@ -202,16 +201,12 @@ contract PlayGame {
           ) = playBot.nextAction(
             _pos,
             gameUser,
-            ended,
-            turn
+            cardPos
             );
-          if (actionTypeId > 1){
-            gameUser[0].cardList[gameCardId].botTurn = turn;
-            actionListTurn[turn - 1].actionList.push([gameCardId, actionTypeId + _pos, dest]);
-          }
-        } while (actionTypeId != 0 && !ended);
-        if (!ended)
-            _endTurn();
+            if (actionTypeId > 1){
+              _addAction([gameCardId, actionTypeId, dest]);
+            }
+        }
     }
 
     function _endTurn() public {
@@ -240,6 +235,7 @@ contract PlayGame {
       gameUser[pos].turn = turn;
       if (gameUser[1 - pos].userId == 0){
         _playBotTurn(1 - pos);
+        gameUser[1 - pos].turn = turn;
       }
       if (gameUser[1 - pos].turn == turn){
         uint8[3][] storage actionList = actionListTurn[turn - 1].actionList;
@@ -249,8 +245,8 @@ contract PlayGame {
         if (!ended) {
           _endTurn();
         }
+        _updateVersion();
       }
-      _updateVersion();
     }
 
     /////////////////////////////// End ///////////////////////////////////

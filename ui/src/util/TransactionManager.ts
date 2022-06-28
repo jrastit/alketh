@@ -78,23 +78,32 @@ export class TransactionManager {
   }
 
   async sendTx(txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest, log: string) {
+    console.log('send tx')
     if (!txu) {
       console.error(txu)
     }
     if (this.timerSemaphore) {
+      console.log("time semaphore")
       return this.timerSemaphore.callClassFunction(this, this._sendTx, txu, log) as Promise<TransactionItem>
     } else {
+      console.log("no time semaphore")
       return this._sendTx(txu, log)
     }
   }
 
   async _sendTx(txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest, log: string) {
     try {
-      txu.gasLimit = (await this.signer.estimateGas(txu)) //.mul(120).div(100)
+      console.log('send tx 1')
+      txu.gasLimit = await this.signer.estimateGas(txu) //.mul(120).div(100)
+      console.log('send tx 2')
       txu.gasPrice = await this.signer.getGasPrice()
+      console.log('send tx 3')
       txu.nonce = await this.getNonce()
+      console.log('send tx 4')
       const tx = await this.signer.sendTransaction(txu)
+      console.log('wait for result')
       const result = await tx.wait()
+      console.log('result ok')
       const transactionItem = {
         txu,
         tx,
@@ -114,6 +123,7 @@ export class TransactionManager {
         ethers.utils.formatEther(txu.gasPrice.mul(result.gasUsed)))
       return transactionItem
     } catch (e: any) {
+      console.error(e)
       this.nextNonce = -1
       const message = getErrorMessage(e)
       throw new Error(log + ' : ' + message)
