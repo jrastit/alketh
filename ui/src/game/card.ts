@@ -18,6 +18,7 @@ export const createAllCard = async (
   contractHandler: ContractHandlerType,
   setMessage?: (msg: string | undefined) => void,
   speed?: number,
+  firstFamily?: boolean
 ) => {
   let cardFile = require("../card/card.json")
   const cardLastId = await getCardLastId(contractHandler)
@@ -40,17 +41,19 @@ export const createAllCard = async (
         life.push(Math.round(life[j - 1] * 120 / 100))
         speed.push(Math.round(speed[j - 1] * 120 / 100))
       }
-      const tx = await contractHandler.cardList.getContract().createCardFull(
-        card.name,
-        card.mana,
-        card.family,
-        card.starter,
-        description,
-        life,
-        attack,
-        speed,
-      );
-      if (setMessage) setMessage(tx.log + ' ' + card.name)
+      if (!firstFamily || card.family === 2) {
+        const tx = await contractHandler.cardList.getContract().createCardFull(
+          card.name,
+          card.mana,
+          card.family,
+          card.starter,
+          description,
+          life,
+          attack,
+          speed,
+        );
+        if (setMessage) setMessage(tx.log + ' ' + card.name)
+      }
     } else {
       const tx = await contractHandler.cardList.getContract().createCard(
         card.name,
@@ -85,11 +88,14 @@ export const createAllCard = async (
       }))
     }
   }
-  const cardHash = BigNumber.from(ethersUtils.id(JSON.stringify(cardFile)))
-  const _cardHash = (await contractHandler.cardList.getContract().cardHash())[0]
-  if (!cardHash.eq(_cardHash)) {
-    await contractHandler.cardList.getContract().setCardHash(cardHash)
+  if (!firstFamily) {
+    const cardHash = BigNumber.from(ethersUtils.id(JSON.stringify(cardFile)))
+    const _cardHash = (await contractHandler.cardList.getContract().cardHash())[0]
+    if (!cardHash.eq(_cardHash)) {
+      await contractHandler.cardList.getContract().setCardHash(cardHash)
+    }
   }
+
 
 }
 

@@ -1,6 +1,6 @@
 import { Contract, EventFilter } from 'ethers'
 import { Listener } from '@ethersproject/abstract-provider'
-import { TransactionManager, getErrorMessage } from '../util/TransactionManager'
+import { TransactionManager, TransactionInfoType, getErrorMessage } from '../util/TransactionManager'
 
 export type ContractFunction<T = any> = (...args: Array<any>) => Promise<T>;
 
@@ -18,11 +18,22 @@ function initContract(contractClass: any, abi: any[]) {
       const functionName = obj.name as string
       Object.defineProperty(contractClass, functionName, {
         value: async (...args: any[]) => {
-          console.log('contract populateTransaction')
+          //console.log('contract populateTransaction')
+          //console.log("call contract", functionName, ...args)
           const tx = await contractClass.transactionManager.populateTransaction(contractClass, functionName, ...args)
-          console.log('contract call')
-          const ret = await contractClass.transactionManager.sendTx(tx, functionName)
-          console.log('contract call end')
+          //console.log('contract call')
+          const ret = await contractClass.transactionManager.sendTx(
+            tx,
+            functionName,
+            {
+              transactionType: TransactionInfoType.ModifyContract,
+              contractName: contractClass.constructor.name.substring(8),
+              contractAddress: contractClass.address,
+              functionName,
+              args,
+            }
+          )
+          //console.log('contract call end')
           return ret
         },
         writable: false,
@@ -41,12 +52,12 @@ function initContract(contractClass: any, abi: any[]) {
         value: async (...args: any[]) => {
           //console.log("call view ", functionName)
           try {
-            console.log('call view')
+            //console.log('call view')
             const ret = await contractClass.transactionManager.callView(
               contractClass.contract.functions[functionName],
               ...args
             )
-            console.log("call view end")
+            //console.log("call view end")
             return ret
           } catch (err: any) {
             console.error(err)
@@ -67,6 +78,7 @@ class ContractGeneric {
   contract: Contract
   transactionManager: TransactionManager
   address: string
+  name: string
   listenerCount(eventName?: EventFilter | string) {
     return this.contract.listenerCount(eventName)
   }
@@ -83,8 +95,6 @@ class ContractGeneric {
     this.transactionManager = transactionManager
     this.interface = contract.interface
     this.signer = contract.signer
-
-
   }
 
 

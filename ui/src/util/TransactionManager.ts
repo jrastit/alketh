@@ -1,12 +1,30 @@
 import * as ethers from 'ethers'
 
 import TimerSemaphore from './TimerSemaphore'
+import { ReplayScript } from './ReplayScript'
+
+export enum TransactionInfoType {
+  CreateContract,
+  ModifyContract,
+  ReadContract,
+}
+
+export interface TransactionInfo {
+  transactionType: TransactionInfoType
+  contractName?: string
+  contractAddress?: string
+  functionName?: string
+  args: any
+
+}
 
 export interface TransactionItem {
   txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest,
-  tx: ethers.ethers.providers.TransactionResponse
-  result: ethers.ethers.providers.TransactionReceipt
+  tx?: ethers.ethers.providers.TransactionResponse
+  result?: ethers.ethers.providers.TransactionReceipt
   log?: string
+  transactionInfo?: TransactionInfo
+  error?: string
 }
 
 export function getErrorMessage(err: any) {
@@ -26,6 +44,9 @@ export function getErrorMessage(err: any) {
 }
 
 export class TransactionManager {
+
+  replayScript: ReplayScript | undefined
+
   signer: ethers.Signer
 
   transactionList: TransactionItem[]
@@ -39,6 +60,13 @@ export class TransactionManager {
     this.transactionList = []
     this.nextNonce = -1
     this.timerSemaphore = timerSemaphore
+  }
+
+  setReplayScript(replayScript?: ReplayScript) {
+    if (!replayScript) {
+      replayScript = new ReplayScript()
+    }
+    this.replayScript = replayScript
   }
 
   async getBalance() {
@@ -77,56 +105,65 @@ export class TransactionManager {
     return contractClass.contract.populateTransaction[functionName](...args)
   }
 
-  async sendTx(txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest, log: string) {
-    console.log('send tx')
+  async sendTx(
+    txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest,
+    log: string,
+    transactionInfo: TransactionInfo
+  ) {
     if (!txu) {
       console.error(txu)
     }
     if (this.timerSemaphore) {
-      console.log("time semaphore")
-      return this.timerSemaphore.callClassFunction(this, this._sendTx, txu, log) as Promise<TransactionItem>
+      return this.timerSemaphore.callClassFunction(
+        this,
+        this._sendTx,
+        txu,
+        log,
+        transactionInfo
+      ) as Promise<TransactionItem>
     } else {
-      console.log("no time semaphore")
-      return this._sendTx(txu, log)
+      return this._sendTx(txu, log, transactionInfo)
     }
   }
 
-  async _sendTx(txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest, log: string) {
+  async _sendTx(
+    txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest,
+    log: string,
+    transactionInfo: TransactionInfo
+  ) {
+    const transactionItem = {
+      txu,
+      log,
+      transactionInfo
+    } as TransactionItem
+    this.transactionList.push(transactionItem)
     try {
-      console.log('send tx 1')
-      txu.gasLimit = await this.signer.estimateGas(txu) //.mul(120).div(100)
-      console.log('send tx 2')
-      txu.gasPrice = await this.signer.getGasPrice()
-      console.log('send tx 3')
-      txu.nonce = await this.getNonce()
-      console.log('send tx 4')
-      const tx = await this.signer.sendTransaction(txu)
-      console.log('wait for result')
-      const result = await tx.wait()
-      console.log('result ok')
-      const transactionItem = {
-        txu,
-        tx,
-        result,
-        log
-      } as TransactionItem
-      this.transactionList.push(transactionItem)
+      transactionItem.txu.gasLimit = await this.signer.estimateGas(txu) //.mul(120).div(100)
+      transactionItem.txu.gasPrice = await this.signer.getGasPrice()
+      transactionItem.txu.nonce = await this.getNonce()
+      transactionItem.tx = await this.signer.sendTransaction(txu)
+      transactionItem.result = await transactionItem.tx.wait()
+      /*
       console.log("Success => " +
         log +
         ":" +
-        txu.nonce +
+        transactionItem.txu.nonce +
         ' ' +
-        result.gasUsed.toNumber() +
+        transactionItem.result.gasUsed.toNumber() +
         ' ' +
-        (Math.round(result.gasUsed.mul(10000).div(txu.gasLimit).toNumber()) / 100) +
+        (Math.round(transactionItem.result.gasUsed.mul(10000).div(transactionItem.txu.gasLimit).toNumber()) / 100) +
         '% ' +
-        ethers.utils.formatEther(txu.gasPrice.mul(result.gasUsed)))
+        ethers.utils.formatEther(transactionItem.txu.gasPrice.mul(transactionItem.result.gasUsed)))
+      */
+      console.log(TransactionInfoType[transactionInfo.transactionType], transactionInfo.contractName, transactionInfo.functionName, transactionInfo.args)
+      if (this.replayScript) this.replayScript.addItem(transactionItem)
       return transactionItem
     } catch (e: any) {
-      console.error(e)
+      console.error(TransactionInfoType[transactionInfo.transactionType], transactionInfo.contractName, transactionInfo.functionName, transactionInfo.args, getErrorMessage(e))
       this.nextNonce = -1
-      const message = getErrorMessage(e)
-      throw new Error(log + ' : ' + message)
+      transactionItem.error = getErrorMessage(e)
+      if (this.replayScript) this.replayScript.addItemError(transactionItem)
+      throw new Error(log + ' : ' + transactionItem.error)
     }
 
   }
@@ -145,22 +182,31 @@ export class TransactionManager {
       contractAddress: string,
       signer: ethers.Signer,
     ) => ethers.Contract,
-    log: string
+    log: string,
+    contractName: string,
+    args: any[],
   ) {
-    const result = await this.sendTx(txu, log)
-    const contract = getContract(result.result.contractAddress, this.signer)
-    return contract
+    const result = await this.sendTx(txu, log, {
+      transactionType: TransactionInfoType.CreateContract,
+      contractName: contractName,
+      args
+    })
+    if (result.result) {
+      const contract = getContract(result.result.contractAddress, this.signer)
+      return contract
+    }
+    throw Error("contract error")
   }
 
   gasInfo(
     transactionItem: TransactionItem
   ) {
     return {
-      transactionHash: transactionItem.result.transactionHash,
+      transactionHash: transactionItem.result ?.transactionHash,
       log: transactionItem.log,
-      gasUsed: transactionItem.result.gasUsed.toNumber(),
-      gasLimit: transactionItem.tx.gasLimit.toNumber(),
-      gasPrice: transactionItem.tx.gasPrice && transactionItem.tx.gasPrice.toNumber(),
+      gasUsed: transactionItem.result ?.gasUsed.toNumber(),
+      gasLimit: transactionItem.tx ?.gasLimit.toNumber(),
+      gasPrice: transactionItem.tx ?.gasPrice && transactionItem.tx ?.gasPrice.toNumber(),
     }
   }
 

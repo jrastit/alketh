@@ -129,7 +129,7 @@ export const playAction = async (
     ) => Promise<void>
   }
 ) => {
-  console.log(gameAction)
+  //console.log(gameAction)
   const pos = (turnData.pos + gameAction.actionTypeId) % 2
   const actionTypeId = gameAction.actionTypeId - (gameAction.actionTypeId % 2)
   if (gameAction.result || gameAction.self) {

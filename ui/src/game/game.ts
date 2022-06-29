@@ -168,12 +168,11 @@ export const endTurn = async (
       gameAction.dest,
     ]
   )
-  console.log("endTurn", turn, _playActionList)
+  //console.log("endTurn", turn, _playActionList)
   const tx = await contractHandler.playGame.getContract().endTurn(
     turn,
     _playActionList,
   )
-  console.log("endTurn2", turn, _playActionList)
   for (let i = 0; i < tx.result.logs.length; i++) {
     const log = contractHandler.playGame.getContract().interface.parseLog(tx.result.logs[i])
     if (log.name === 'PlayAction' && addPlayAction) {

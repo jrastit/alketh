@@ -29,13 +29,14 @@ export const checkTurnData = (
 ) => {
   const cardList1 = game.cardList1
   const cardList2 = game.cardList2
-
+  /*
   console.log(
     turnData.cardList[0].map(_card => _card ?.userCardId),
     cardList1.map(_card => _card ?.userCardId),
     turnData.cardList[1].map(_card => _card ?.userCardId),
     cardList2.map(_card => _card ?.userCardId),
   )
+  */
 
   check(turnData.cardList[0].length, cardList1.length, "Check player 0 nb card")
   for (let i = 0; i < turnData.cardList[0].length; i++) {
@@ -49,7 +50,7 @@ export const checkTurnData = (
 }
 
 export const getTurnData = (game: GameType, userId: number) => {
-  console.log(game)
+  //console.log(game)
   const turnData = {
     turn: game.turn,
     userId: [game.userId1, game.userId2],
@@ -59,7 +60,7 @@ export const getTurnData = (game: GameType, userId: number) => {
     cardList: [game.cardList1, game.cardList2],
     actionId: 0,
   } as TurnDataType
-  console.log(turnData)
+  //console.log(turnData)
   return turnData
 }
 

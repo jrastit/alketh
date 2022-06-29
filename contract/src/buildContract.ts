@@ -110,15 +110,7 @@ const compileInput = (contractConfig: any, outputPath: string, fileTs: FileTs) =
       fs.writeFileSync(outputPath + contractName + '.json', JSON.stringify(outputfile))
       fileTs.import.push(
         "import json" + contractName + " from './" + (contractConfig.outputPath || "") + contractName + '.json' + "'")
-      fileTs.class.push(
-        "export class Contract" + contractName + " extends ContractGeneric {\n" +
-        "\treadonly [key: string]: ContractFunction | any\n" +
-        "\tconstructor(contract: ethers.Contract, transactionManager: TransactionManager) {\n" +
-        "\t\tsuper(contract, transactionManager)\n" +
-        "\t\tinitContract(this, json" + contractName + ".abi)\n" +
-        "\t}\n" +
-        "}\n"
-      )
+
       fileTs.abi.push(
         "export const getAbi" + contractName + " = () => {\n" +
         "\treturn json" + contractName + ".abi\n" +
@@ -147,11 +139,18 @@ const compileInput = (contractConfig: any, outputPath: string, fileTs: FileTs) =
           "\tawait contract.deployed()\n" +
           "\treturn contract\n" +
           "}\n")
+        const contractArgDef = contractConfig.arg.map((arg: { name: string, type: string }) => {
+          return "\t" + arg.name + " : " + (arg.type === "ethers.Contract" ? "{address : string}" : arg.type) + ",\n"
+        }).join("")
+        const contractArg = contractConfig.arg.map((arg: { name: string, type: string }) => {
+          return "\t\t" + arg.name + (arg.type === "ethers.Contract" ? ".address" : "") + ",\n"
+        }).join("")
+        const contractArg2 = contractConfig.arg.map((arg: { name: string, type: string }) => {
+          return "\t\t\t\t" + arg.name + (arg.type === "ethers.Contract" ? ".address" : "") + ",\n"
+        }).join("")
         fileTs.createWithManager.push(
           "export const createWithManagerContract" + contractName + " = async (\n" +
-          contractConfig.arg.map((arg: { name: string, type: string }) => {
-            return "\t" + arg.name + " : " + (arg.type === "ethers.Contract" ? "{address : string}" : arg.type) + ",\n"
-          }).join("") +
+          contractArgDef +
           "\ttransactionManager: TransactionManager\n" +
           ") => {\n" +
           "\tconst factory = new ethers.ContractFactory(\n" +
@@ -159,16 +158,31 @@ const compileInput = (contractConfig: any, outputPath: string, fileTs: FileTs) =
           "\t\tjson" + contractName + ".bytecode,\n" +
           "\t)\n" +
           "\tconst utx = factory.getDeployTransaction(\n" +
-          contractConfig.arg.map((arg: { name: string, type: string }) => {
-            return "\t\t" + arg.name + (arg.type === "ethers.Contract" ? ".address" : "") + ",\n"
-          }).join("") +
+          contractArg +
           "\t)\n" +
-          "\treturn new Contract" + contractName + "(await transactionManager.sendContractTx(\n" +
-          "\t\tutx,\n" +
-          "\t\tgetContract" + contractName + ",\n" +
-          "\t\t 'Create contract " + contractName + "',\n" +
-          "\t), transactionManager)\n" +
-          "}\n")
+          "\treturn new Contract" + contractName + "(\n" +
+          "\t\tawait transactionManager.sendContractTx(\n" +
+          "\t\t\tutx,\n" +
+          "\t\t\tgetContract" + contractName + ",\n" +
+          "\t\t\t 'Create contract " + contractName + "',\n" +
+          "\t\t\t\"" + contractName + "\",\n" +
+          "\t\t\t[\n" +
+          contractArg2 +
+          "\t\t\t],\n" +
+          "\t\t),\n" +
+          "\t\ttransactionManager,\n" +
+          "\t)\n" +
+          "}\n"
+        )
+        fileTs.class.push(
+          "export class Contract" + contractName + " extends ContractGeneric {\n" +
+          "\treadonly [key: string]: ContractFunction | any\n" +
+          "\tconstructor(contract: ethers.Contract, transactionManager: TransactionManager) {\n" +
+          "\t\tsuper(contract, transactionManager)\n" +
+          "\t\tinitContract(this, json" + contractName + ".abi)\n" +
+          "\t}\n" +
+          "}\n"
+        )
       }
       fileTs.get.push(
         "export const getContract" + contractName + " = (\n" +

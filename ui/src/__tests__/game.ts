@@ -99,14 +99,12 @@ const autoPlayTurn = async (
     if (payload.turn > playTurn) playTurn = payload.turn
   }
   //console.log(turnData.playActionList)
-  console.log('end turn')
   await endTurn(
     contractHandler,
     turnData.playActionList,
     turnData.turn,
     addPlayAction,
   )
-  console.log('end turn2')
 
   while (playTurn > turnData.turn) {
     endTurnData(turnData, setTurnData)
@@ -217,7 +215,6 @@ const userLeaveGame = async (
   if (gameId) {
     const gameChain = await contractHandler.gameList.getContract().gameList(gameId)
     const contractAddress = gameChain.playGame
-    console.log(contractAddress)
     if (contractAddress) {
       contractHandler.playGame.contract = getWithManagerContractPlayGame(contractAddress, contractHandler.transactionManager)
       contractHandler.playGame.versionOk = true
@@ -228,8 +225,8 @@ const userLeaveGame = async (
 
 const testTransaction = () => {
 
-  //jest.setTimeout(3600000)
-  jest.setTimeout(30000)
+  jest.setTimeout(3600000)
+  //jest.setTimeout(30000)
 
   let transactionManager: TransactionManager[]
 
@@ -251,6 +248,8 @@ const testTransaction = () => {
       try {
         transactionManager = getTransactionManagerList()
         let useCache = false
+
+        transactionManager[0].setReplayScript()
 
         contractHandler = newContractHandler(transactionManager[0])
         const isOk = await checkAllContract(network, contractHandler, console.log)
@@ -313,13 +312,13 @@ const testTransaction = () => {
         }
         if (!useCache) {
           console.log(transactionManager[0].transactionList.map((tx) => {
-            return (tx.log + ' ' + tx.result.gasUsed.toNumber())
+            return (tx.log + ' ' + tx.result ?.gasUsed.toNumber())
           }))
           console.log(transactionManager[1].transactionList.map((tx) => {
-            return (tx.log + ' ' + tx.result.gasUsed.toNumber())
+            return (tx.log + ' ' + tx.result ?.gasUsed.toNumber())
           }))
           console.log(transactionManager[2].transactionList.map((tx) => {
-            return (tx.log + ' ' + tx.result.gasUsed.toNumber())
+            return (tx.log + ' ' + tx.result ?.gasUsed.toNumber())
           }))
         }
         await userLeaveGame(contractHandler, userId)
@@ -345,13 +344,15 @@ const testTransaction = () => {
       let gasUsed = ethers.BigNumber.from(0)
       let gasPrice = ethers.BigNumber.from(0)
       console.log(transactionManager[0].transactionList.map((tx) => {
-        if (tx.txu.gasPrice) {
-          gasPrice = gasPrice.add(tx.result.gasUsed.mul(tx.txu.gasPrice))
-          gasUsed = gasUsed.add(tx.result.gasUsed)
+        if (tx.result) {
+          if (tx.txu.gasPrice) {
+            gasPrice = gasPrice.add(tx.result.gasUsed.mul(tx.txu.gasPrice))
+            gasUsed = gasUsed.add(tx.result.gasUsed)
+          }
+          return (tx.log + ' ' + tx.result.gasUsed.toNumber() + ' ' + (tx.txu.gasPrice && ethers.utils.formatEther(
+            tx.result.gasUsed.mul(tx.txu.gasPrice)
+          )))
         }
-        return (tx.log + ' ' + tx.result.gasUsed.toNumber() + ' ' + (tx.txu.gasPrice && ethers.utils.formatEther(
-          tx.result.gasUsed.mul(tx.txu.gasPrice)
-        )))
       }))
       console.log(
         "total gaz used :",
@@ -376,23 +377,26 @@ const testTransaction = () => {
       let gasPrice1 = ethers.BigNumber.from(0)
       let gasPrice2 = ethers.BigNumber.from(0)
       console.log(transactionManager[1].transactionList.map((tx) => {
-        if (tx.txu.gasPrice) {
-          gasPrice1 = gasPrice1.add(tx.result.gasUsed.mul(tx.txu.gasPrice))
-          gasUsed1 = gasUsed1.add(tx.result.gasUsed)
+        if (tx.result) {
+          if (tx.txu.gasPrice) {
+            gasPrice1 = gasPrice1.add(tx.result.gasUsed.mul(tx.txu.gasPrice))
+            gasUsed1 = gasUsed1.add(tx.result.gasUsed)
+          }
+          return (tx.log + ' ' + tx.result.gasUsed.toNumber() + ' ' + (tx.txu.gasPrice && ethers.utils.formatEther(
+            tx.result.gasUsed.mul(tx.txu.gasPrice)
+          )))
         }
-        return (tx.log + ' ' + tx.result.gasUsed.toNumber() + ' ' + (tx.txu.gasPrice && ethers.utils.formatEther(
-          tx.result.gasUsed.mul(tx.txu.gasPrice)
-        )))
-
       }))
       console.log(transactionManager[2].transactionList.map((tx) => {
-        if (tx.txu.gasPrice) {
-          gasPrice2 = gasPrice2.add(tx.result.gasUsed.mul(tx.txu.gasPrice))
-          gasUsed2 = gasUsed2.add(tx.result.gasUsed)
+        if (tx.result) {
+          if (tx.txu.gasPrice) {
+            gasPrice2 = gasPrice2.add(tx.result.gasUsed.mul(tx.txu.gasPrice))
+            gasUsed2 = gasUsed2.add(tx.result.gasUsed)
+          }
+          return (tx.log + ' ' + tx.result.gasUsed.toNumber() + ' ' + (tx.txu.gasPrice && ethers.utils.formatEther(
+            tx.result.gasUsed.mul(tx.txu.gasPrice)
+          )))
         }
-        return (tx.log + ' ' + tx.result.gasUsed.toNumber() + ' ' + (tx.txu.gasPrice && ethers.utils.formatEther(
-          tx.result.gasUsed.mul(tx.txu.gasPrice)
-        )))
       }))
       console.log(
         "total gaz used :",
