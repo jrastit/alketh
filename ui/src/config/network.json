@@ -5,6 +5,8 @@
       "url": "http://localhost:8545",
       "chainId": 1337,
       "gameContract": "0x8CdaF0CD259887258Bc13a92C0a6dA92698644C0",
+      "timeBetweenRequest" : 10,
+      "retry" : 2,
       "tokenName": "TEST",
       "host" : "localhost"
     },

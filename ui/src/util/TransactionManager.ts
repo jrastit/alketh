@@ -138,9 +138,10 @@ export class TransactionManager {
     } as TransactionItem
     this.transactionList.push(transactionItem)
     try {
-      transactionItem.txu.gasLimit = await this.signer.estimateGas(txu) //.mul(120).div(100)
       transactionItem.txu.gasPrice = await this.signer.getGasPrice()
       transactionItem.txu.nonce = await this.getNonce()
+      transactionItem.txu.gasLimit = (await this.signer.estimateGas(txu)).mul(150).div(100)
+      console.log(transactionItem.txu)
       transactionItem.tx = await this.signer.sendTransaction(txu)
       transactionItem.result = await transactionItem.tx.wait()
       /*

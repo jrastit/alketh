@@ -12,6 +12,7 @@ export class ReplayScript {
   contractId = 0
   gameId = 0
   nextPlayGameVar = undefined as string | undefined
+  isTest = false
 
   argToString(arg: any): any {
     if (Array.isArray(arg)) {
@@ -32,13 +33,39 @@ export class ReplayScript {
 
   addItemError(transactionItem: TransactionItem) {
     this.addItem(transactionItem)
-    const result = "const { ethers } = require(\"hardhat\")\n\n" +
-      "describe(\"test\", function () {\n" +
-      "\tit(\"test\", async function () {\n" +
-      this.script.map(str => { return "\t\t" + str + "\n" }).join("") +
-      "\t})\n" +
-      "})"
-    console.log(result)
+    if (this.isTest) {
+      const result = "const { ethers } = require(\"hardhat\")\n\n" +
+        "describe(\"test\", function () {\n" +
+        "\tit(\"test\", async function () {\n" +
+        this.script.map(str => { return "\t\t" + str + "\n" }).join("") +
+        "\t})\n" +
+        "})"
+      console.log(result)
+    } else {
+      const result = "import { ethers } from 'ethers'\n\n" +
+        "const getContractFactory = async (contractName : string, signer : ethers.Signer) => {\n" +
+        "\tconst artifactsPath = `browser/contracts/artifacts/${contractName}.json`\n" +
+        "\tconst metadata = JSON.parse(await remix.call('fileManager', 'getFile', artifactsPath))\n" +
+        "\tconst factory = new ethers.ContractFactory(metadata.abi, metadata.data.bytecode.object, signer)\n" +
+        "\treturn factory\n" +
+        "}\n\n" +
+        "const getContractAt = async (contractName : string, address : string, signer : ethers.Signer) => {\n" +
+        "\tconst artifactsPath = `browser/contracts/artifacts/${contractName}.json`\n" +
+        "\tconst metadata = JSON.parse(await remix.call('fileManager', 'getFile', artifactsPath))\n" +
+        "\tconst contract = new ethers.Contract(address, metadata.abi, signer)\n" +
+        "\treturn contract\n" +
+        "}\n\n" +
+        "(async () => {\n" +
+        "\ttry {\n" +
+        "\t\tconst signer = (new ethers.providers.Web3Provider(web3Provider)).getSigner()\n" +
+        this.script.map(str => { return "\t\t" + str + "\n" }).join("") +
+        "\t} catch (e) {\n" +
+        "\t\tconsole.log(e.message)\n" +
+        "\t}\n" +
+        "})()"
+      console.log(result)
+    }
+
   }
 
   addItem(transactionItem: TransactionItem) {
@@ -54,7 +81,12 @@ export class ReplayScript {
           const address = transactionItem.result.contractAddress
           this.contractMap.set(address, contractVar)
         }
-        this.script.push("const _" + contractVar + "Factory = await ethers.getContractFactory(\"" + newTransaction.contractName + "\")")
+        if (this.isTest) {
+          this.script.push("const _" + contractVar + "Factory = await ethers.getContractFactory(\"" + newTransaction.contractName + "\")")
+        } else {
+          this.script.push("const _" + contractVar + "Factory = await getContractFactory(\"" + newTransaction.contractName + "\", signer)")
+        }
+
         this.script.push("const " + contractVar + " = await _" + contractVar + "Factory.deploy(")
         transactionItem.transactionInfo.args.forEach((arg: any) => {
           this.script.push("\t" + this.argToString(arg) + ",")
@@ -62,12 +94,30 @@ export class ReplayScript {
         this.script.push(")")
         this.script.push("await " + contractVar + ".deployed()")
       } else if (transactionItem.transactionInfo.transactionType === TransactionInfoType.ModifyContract) {
+        this.script.push(
+          "console.log(\"" +
+          addslashes(transactionItem.transactionInfo.contractName) +
+          " => " +
+          addslashes(transactionItem.transactionInfo.functionName) +
+          "\")")
         if (transactionItem.transactionInfo.contractAddress) {
           let contractVar
           if (transactionItem.transactionInfo.contractName === "PlayGame") {
             contractVar = this.nextPlayGameVar
           } else {
             contractVar = this.contractMap.get(transactionItem.transactionInfo.contractAddress)
+          }
+          if (!contractVar) {
+            const address = transactionItem.transactionInfo.contractAddress
+            const contractName = transactionItem.transactionInfo.contractName
+            contractVar = "contract" + (++this.contractId)
+            if (this.isTest) {
+              this.script.push("const " + contractVar + " = await getContractAt(\"" + contractName + "\", \"" + address + "\")")
+            } else {
+              this.script.push("const " + contractVar + " = await getContractAt(\"" + contractName + "\", \"" + address + "\", signer)")
+            }
+
+            this.contractMap.set(address, contractVar)
           }
           const newTransaction = {
             ...transactionItem.transactionInfo,
@@ -76,13 +126,14 @@ export class ReplayScript {
           this.transactionList.push(newTransaction)
           if (newTransaction.functionName === "createGameBotSelf" && transactionItem.result) {
             const gameVar = "game" + (this.gameId++)
-            this.script.push("const " + gameVar + " = await " + contractVar + "." + transactionItem.transactionInfo.functionName + '(')
+            this.script.push("const " + gameVar + "Tx = await " + contractVar + "." + transactionItem.transactionInfo.functionName + '(')
             transactionItem.transactionInfo.args.forEach((arg: any) => {
               this.script.push("\t" + this.argToString(arg) + ",")
             });
             this.script.push(")")
+            this.script.push("const " + gameVar + " = await " + gameVar + "Tx.wait()")
             this.script.push("let " + gameVar + "Id = 0")
-            this.script.push(gameVar + ".logs.forEach((_log) => {")
+            this.script.push(gameVar + ".events.forEach((_log) => {")
             this.script.push("\tconst log = " + contractVar + ".interface.parseLog(_log)")
             this.script.push("\tif (log.name === 'GameCreateBot') {")
             this.script.push("\t\t" + gameVar + "Id = log.args.id.toNumber()")
@@ -90,22 +141,21 @@ export class ReplayScript {
             this.script.push("})")
             this.script.push("const " + gameVar + "Address = (await " + contractVar + ".gameList(" + gameVar + "Id)).playGame")
             const contractVar2 = "contract" + (++this.contractId)
-            this.script.push("const " + contractVar2 + " = await ethers.getContractAt(\"PlayGame\", " + gameVar + "Address)")
+            if (this.isTest) {
+              this.script.push("const " + contractVar2 + " = await ethers.getContractAt(\"PlayGame\", " + gameVar + "Address)")
+            } else {
+              this.script.push("const " + contractVar2 + " = await getContractAt(\"PlayGame\", " + gameVar + "Address, signer)")
+            }
             this.nextPlayGameVar = contractVar2
           } else {
-            this.script.push("await " + contractVar + "." + transactionItem.transactionInfo.functionName + '(')
+            this.script.push("await (await " + contractVar + "." + transactionItem.transactionInfo.functionName + '(')
             transactionItem.transactionInfo.args.forEach((arg: any) => {
               this.script.push("\t" + this.argToString(arg) + ",")
             });
-            this.script.push(")")
+            this.script.push(")).wait()")
           }
         }
-        this.script.push(
-          "console.log(\"" +
-          addslashes(transactionItem.transactionInfo.contractName) +
-          "\", \"" +
-          addslashes(transactionItem.transactionInfo.functionName) +
-          "\")")
+
       }
     }
   }

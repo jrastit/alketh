@@ -78,7 +78,6 @@ class ContractGeneric {
   contract: Contract
   transactionManager: TransactionManager
   address: string
-  name: string
   listenerCount(eventName?: EventFilter | string) {
     return this.contract.listenerCount(eventName)
   }
