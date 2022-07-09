@@ -1,4 +1,5 @@
-import * as ethers from 'ethers'
+import { BigNumber, utils as ethersUtils } from 'ethers'
+import ethers from 'ethers'
 
 import TimerSemaphore from './TimerSemaphore'
 import { ReplayScript } from './ReplayScript'
@@ -18,10 +19,16 @@ export interface TransactionInfo {
 
 }
 
+export interface TransactionGasInfo {
+  gasLimitEstimated: BigNumber
+  gasPriceEstimated: BigNumber
+}
+
 export interface TransactionItem {
   txu: ethers.ethers.PopulatedTransaction | ethers.providers.TransactionRequest,
   tx?: ethers.ethers.providers.TransactionResponse
   result?: ethers.ethers.providers.TransactionReceipt
+  gasInfo: TransactionGasInfo
   log?: string
   transactionInfo?: TransactionInfo
   error?: string
@@ -134,14 +141,20 @@ export class TransactionManager {
     const transactionItem = {
       txu,
       log,
-      transactionInfo
+      transactionInfo,
+      gasInfo: {}
     } as TransactionItem
     this.transactionList.push(transactionItem)
     try {
-      transactionItem.txu.gasPrice = await this.signer.getGasPrice()
       transactionItem.txu.nonce = await this.getNonce()
-      transactionItem.txu.gasLimit = (await this.signer.estimateGas(txu)).mul(150).div(100)
-      console.log(transactionItem.txu)
+      transactionItem.gasInfo.gasPriceEstimated = await this.signer.getGasPrice()
+      transactionItem.txu.gasPrice = transactionItem.gasInfo.gasPriceEstimated
+      transactionItem.gasInfo.gasLimitEstimated = await this.signer.estimateGas(txu)
+      transactionItem.txu.gasLimit = transactionItem.gasInfo.gasLimitEstimated.mul(150).div(100)
+      if (transactionItem.txu.gasLimit.gt(BigNumber.from(10000000))) {
+        transactionItem.txu.gasLimit = BigNumber.from(10000000)
+      }
+      console.log(transactionItem.txu.gasLimit.toNumber())
       transactionItem.tx = await this.signer.sendTransaction(txu)
       transactionItem.result = await transactionItem.tx.wait()
       /*
@@ -156,7 +169,17 @@ export class TransactionManager {
         '% ' +
         ethers.utils.formatEther(transactionItem.txu.gasPrice.mul(transactionItem.result.gasUsed)))
       */
-      console.log(TransactionInfoType[transactionInfo.transactionType], transactionInfo.contractName, transactionInfo.functionName, transactionInfo.args)
+      const gasUsed = BigNumber.from(transactionItem.result.gasUsed)
+      const value = transactionItem.txu.value ? BigNumber.from(transactionItem.txu.value) : BigNumber.from(0)
+      const gasPrice = BigNumber.from(transactionItem.txu.gasPrice)
+      console.log(
+        TransactionInfoType[transactionInfo.transactionType],
+        transactionInfo.contractName,
+        transactionInfo.functionName,
+        transactionInfo.args,
+        ethersUtils.formatEther(gasUsed.add(value).mul(gasPrice)),
+        gasUsed.mul(100).div(transactionItem.gasInfo.gasLimitEstimated).toNumber(),
+      )
       if (this.replayScript) this.replayScript.addItem(transactionItem)
       return transactionItem
     } catch (e: any) {

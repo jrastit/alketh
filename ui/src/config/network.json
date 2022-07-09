@@ -25,10 +25,28 @@
       "name" : "Emerald",
       "url": "https://emerald.oasis.dev",
       "chainId": 42262,
-      "gameContract": "0xB248683991e813b725Aceb06c3A35737Fc81F06b",
+      "gameContract": "0x5eb33e6f00004433672c57ff5b0836e269f03475",
       "tokenName": "ROSE",
       "retry" : 2,
       "host" : "localhost"
+    },
+    {
+      "name" : "Emerald Testnet",
+      "url": "https://testnet.emerald.oasis.dev",
+      "faucet" : "https://faucet.testnet.oasis.dev/",
+      "chainId": 42261,
+      "gameContract": "0x9F77276d33b1C7c029b2420065584802943fC2A2",
+      "tokenName": "TEST",
+      "timeBetweenRequest" : 10,
+      "retry" : 2
+    },
+    {
+      "name" : "Emerald",
+      "url": "https://emerald.oasis.dev",
+      "chainId": 42262,
+      "gameContract": "0x5eb33e6f00004433672c57ff5b0836e269f03475",
+      "tokenName": "ROSE",
+      "retry" : 2
     },
     {
       "name" : "Optimism Testnet",
