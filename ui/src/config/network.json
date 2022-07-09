@@ -25,7 +25,7 @@
       "name" : "Emerald",
       "url": "https://emerald.oasis.dev",
       "chainId": 42262,
-      "gameContract": "0xC2e8A24062edFf7e1a657e0b6788Fe109fF833F2",
+      "gameContract": "0x5eb33e6f00004433672c57ff5b0836e269f03475",
       "tokenName": "ROSE",
       "retry" : 2,
       "host" : "localhost"
@@ -44,7 +44,7 @@
       "name" : "Emerald",
       "url": "https://emerald.oasis.dev",
       "chainId": 42262,
-      "gameContract": "0x5eb33e6f00004433672c57ff5b0836e269f03475",
+      "gameContract": "0xC17c3Fece9C4c1D05b12E2dc467e86918cB0fD4d",
       "tokenName": "ROSE",
       "retry" : 2
     },
