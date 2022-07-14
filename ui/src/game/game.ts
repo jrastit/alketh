@@ -79,17 +79,19 @@ export const getGameFull = async (
   const id = gameFull[0].toNumber()
   const userId1 = gameFull[1].toNumber()
   const userId2 = gameFull[2].toNumber()
-  const cardList1 = gameFull[5].map((gameCardListChain: any, id: number) => {
+  const cardList1 = gameFull[3].map((gameCardListChain: any, id: number) => {
     return getGameCardFromChain(gameCardListChain, id)
   }) as GameCardType[]
-  const cardList2 = gameFull[6].map((gameCardListChain: any, id: number) => {
+  const cardList2 = gameFull[4].map((gameCardListChain: any, id: number) => {
     return getGameCardFromChain(gameCardListChain, id)
   }) as GameCardType[]
-  const latestTime = gameFull[7].toNumber()
-  const version = gameFull[8]
-  const turn = gameFull[9]
-  const winner = gameFull[10].toNumber()
-  const ended = gameFull[11]
+  const latestTime = gameFull[5].toNumber()
+  const version = gameFull[6]
+  const turn = gameFull[7]
+  const actionId = gameFull[8]
+  const winner = gameFull[9].toNumber()
+  const ended = gameFull[10]
+  console.log("load game turn/actionId", turn, actionId)
   const game = {
     id,
     userId1,
@@ -99,6 +101,7 @@ export const getGameFull = async (
     latestTime,
     version,
     turn,
+    actionId,
     winner,
     ended,
   } as GameType
@@ -129,6 +132,8 @@ export const getGameFull2 = async (
   const version = (await contractHandler.playGame.getContract().version())[0]
   setMessage && setMessage('Load turn ')
   const turn = (await contractHandler.playGame.getContract().turn())[0]
+  setMessage && setMessage('Load actionId ')
+  const actionId = (await contractHandler.playGame.getContract().actionId())[0]
   setMessage && setMessage('Load winner ')
   const winner = (await contractHandler.playGame.getContract().winner())[0].toNumber()
   setMessage && setMessage('Load ended ')
@@ -144,6 +149,7 @@ export const getGameFull2 = async (
     latestTime,
     version,
     turn,
+    actionId,
     winner,
     ended,
   } as GameType
@@ -176,8 +182,9 @@ export const endTurn = async (
   for (let i = 0; i < tx.result.logs.length; i++) {
     const log = contractHandler.playGame.getContract().interface.parseLog(tx.result.logs[i])
     if (log.name === 'PlayAction' && addPlayAction) {
-      /*
+
       console.log(
+        "add action",
         log.args.turn,
         log.args.id,
         log.args.gameCardId,
@@ -185,7 +192,7 @@ export const endTurn = async (
         log.args.dest,
         log.args.result,
       )
-      */
+
       await addPlayAction({
         turn: log.args.turn,
         id: log.args.id,

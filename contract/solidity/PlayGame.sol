@@ -99,31 +99,33 @@ contract PlayGame {
       uint64,
       uint64,
       uint64,
-      uint32[5] memory,
-      uint32[5] memory,
+      //uint32[5] memory,
+      //uint32[5] memory,
       GameCard[7] memory,
       GameCard[7] memory,
       uint256,
       uint16,
       uint8,
+      uint8,
       uint64,
       bool
     ) {
-      uint32[5] memory cardIdList0 = gameUser[0].cardIdList;
-      uint32[5] memory cardIdList1 = gameUser[1].cardIdList;
+      //uint32[5] memory cardIdList0 = gameUser[0].cardIdList;
+      //uint32[5] memory cardIdList1 = gameUser[1].cardIdList;
       GameCard[7] memory cardList0 = gameUser[0].cardList;
       GameCard[7] memory cardList1 = gameUser[1].cardList;
       return (
         gameId,
         gameUser[0].userId,
         gameUser[1].userId,
-        cardIdList0,
-        cardIdList1,
+        //cardIdList0,
+        //cardIdList1,
         cardList0,
         cardList1,
         latestTime,
         version,
         turn,
+        actionId,
         winner,
         ended
       );
@@ -341,12 +343,12 @@ contract PlayGame {
     ) private {
         uint16 result = 0;
         uint8 pos = _actionTypeId % 2;
-        _actionTypeId = _actionTypeId - pos;
+        uint8 actionTypeId = _actionTypeId - pos;
         GameUser storage user = gameUser[pos];
         GameUser storage oponent = gameUser[1 - pos];
         GameCard memory gameCard = user.cardList[_gameCardId];
         require(gameCard.turn < turn, "wrong card turn");
-        if (_actionTypeId == 2) {
+        if (actionTypeId == 2) {
             if (_gameCardId >= 0 && _gameCardId < 2) {
                     require(_dest >= 0 && _dest < 2, "dest out of bound");
                     GameCard memory gameCard2 = oponent.cardList[_dest];

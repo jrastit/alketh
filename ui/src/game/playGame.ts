@@ -13,7 +13,10 @@ export const playDrawCard = async (
   setTurnData: (turnData: TurnDataType) => void,
   pos: number,
 ) => {
-  const cardList = turnData.cardList[pos].concat([])
+  const cardList = turnData.cardList[pos].map((card) => {
+    if (card === undefined) return undefined
+    return { ...card } as GameCardType
+  })
   if (cardList[gameCardId] !== undefined) {
     removeCard(cardList, gameCardId)
   }
@@ -25,6 +28,7 @@ export const playDrawCard = async (
     )
     setTurnData({
       ...turnData,
+      playActionId: turnData.playActionId + 1,
       cardList: [cardList, turnData.cardList[1 - pos]],
       playActionList: turnData.playActionList.concat([{
         gameCardId: gameCardId,
@@ -96,6 +100,7 @@ export const playAttack = (
     }
     const newTurnData = {
       ...turnData,
+      playActionId: preview ? turnData.playActionId : turnData.playActionId + 1,
       cardList: !pos ? [cardList1, cardList2] : [cardList2, cardList1],
       playActionList: turnData.playActionList.concat([{
         gameCardId: gameCardId1,
@@ -179,8 +184,10 @@ export const playAction = async (
       }
     }
   } else {
+    console.log('skip action')
     setTurnData({
       ...turnData,
+      playActionId: turnData.playActionId + 1,
       playActionList: turnData.playActionList.concat([gameAction]),
     })
   }

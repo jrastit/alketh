@@ -24,6 +24,7 @@ export type GameActionType = {
 export type TurnDataType = {
   turn: number
   playActionList: GameActionListType
+  playActionId: number
   cardList: (GameCardType | undefined)[][]
   userId: number[]
   pos: number
@@ -59,6 +60,7 @@ export type GameType = {
   latestTime: number
   version: number
   turn: number
+  actionId: number
   winner: number
   ended: boolean
 }

@@ -23,21 +23,21 @@ export default function DragHelper(props : {
   const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = (e : any) => {
-    setIsDragging(true);
-
-    onPointerDown(e);
+    e.preventDefault()
+    setIsDragging(true)
+    onPointerDown(e)
   };
 
   const handlePointerUp = (e : any) => {
-    setIsDragging(false);
-
-    onPointerUp(e);
+    e.preventDefault()
+    setIsDragging(false)
+    onPointerUp(e)
   };
 
   const handlePointerMove = (e : any) => {
-    if (isDragging) onDragMove(e);
-
-    onPointerMove(e);
+    e.preventDefault()
+    if (isDragging) onDragMove(e)
+    onPointerMove(e)
   };
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function DragHelper(props : {
   );
 }
 
-const { func, element, shape, bool, string } = PropTypes;
+const { func, element, shape, string } = PropTypes;
 
 DragHelper.propTypes = {
   onDragMove: func.isRequired,

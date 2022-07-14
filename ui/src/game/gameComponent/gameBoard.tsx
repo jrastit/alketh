@@ -60,6 +60,7 @@ enum Play {
   Ready,
   Loading,
   AutoPlay,
+  WaitReplay,
 }
 
 const stepId = StepId.Game
@@ -73,14 +74,14 @@ const annimatePlay = async (
   gameCardId2: number,
   preview: boolean,
 ) => {
-  //console.log(gameCardId1, current, cardRefIdList[1 - myTurn])
+  console.log("annimatePlay", gameCardId1, gameCardId2)
   console.log(preview, actionId, gameCardId1, gameCardId2)
   const place1 = current[cardRefIdList[pos][gameCardId1]]?.getPlace()
   //console.log(place1)
   if (place1) {
     if (gameCardId2 !== undefined) {
       let place2 = undefined
-      if (actionId % 2 === ActionType.Attack){
+      if (actionId - (actionId % 2) === ActionType.Attack){
         place2 = current[cardRefIdList[1 - pos][gameCardId2]]?.getPlace()
         if (place2) {
           await current[cardRefIdList[pos][gameCardId1]]?.doTranslate2({
@@ -88,8 +89,14 @@ const annimatePlay = async (
             y: place2.y - place1.y,
           })
         }
+      } else {
+        console.log("actionId not replay")
       }
+    }else {
+      console.log("gameCardId2 undefined")
     }
+  } else {
+    console.log("place1 not found")
   }
 }
 
@@ -136,13 +143,14 @@ const _playNextAction = async (
   check: (val1: number, val2: number, message: string) => boolean
 ) => {
   const playActionTurnList = playActionList[turnData.turn - 1]
-  console.log("playNextAction", playActionTurnList && playActionTurnList[turnData.playActionList.length])
+  console.log(turnData.playActionList.length, playActionTurnList)
+  console.log("playNextAction", playActionTurnList && playActionTurnList[turnData.playActionId])
   if (
     playActionTurnList &&
-    playActionTurnList[turnData.playActionList.length] &&
-    playActionTurnList[turnData.playActionList.length] != null
+    playActionTurnList[turnData.playActionId] &&
+    playActionTurnList[turnData.playActionId] != null
   ) {
-    const gameAction = playActionTurnList[turnData.playActionList.length] as GameActionType
+    const gameAction = playActionTurnList[turnData.playActionId] as GameActionType
     await _playAction(
       contractHandler,
       gameAction,
@@ -186,6 +194,7 @@ const GameBoard = (props: {
   const [turnData, setTurnData] = useState<TurnDataType>({
     turn: 0,
     pos: 0,
+    playActionId: 0,
     userId: [0, 0],
     playActionList: [],
     cardList: [[], []],
@@ -277,7 +286,7 @@ const GameBoard = (props: {
     }
     if ((play === Play.Ready || play === Play.EndTurn) && turnData.turn < turn) {
       setPlay(Play.Loading)
-      endTurnData(turnData, setTurnData)
+      //endTurnData(turnData, setTurnData)
       setTimeout(async () => {
         setPlay(Play.Replay)
       }, 1000)
@@ -382,22 +391,25 @@ const GameBoard = (props: {
     }
   }
 
-  const _playRandomly = async () => {
+  const _playRandomly = async (isAnimate ?: boolean) => {
     try {
       const gameAction = playRandomly(turnData)
       if (gameAction !== 0 && gameAction !== 1) {
+        let animate = undefined
+        if (isAnimate){
+          animate = {
+            cardRefIdList,
+            current: cardRefList.current,
+            annimatePlay,
+          }
+        }
         await _playAction(
           props.contractHandler,
           gameAction,
           turnData,
           setTurnData,
           true,
-          {
-            cardRefIdList,
-            current: cardRefList.current,
-            annimatePlay,
-          }
-
+          animate,
         )
       }
     } catch (err : any) {
@@ -417,9 +429,13 @@ const GameBoard = (props: {
           if (_id === 0){
             _style={borderBottom : 'thin solid black'}
           }
+          let toPlay = ''
+          if (turnData.turn < _turn || (turnData.turn == _turn &&  _id >= turnData.playActionId)) {
+            toPlay = '*'
+          }
           _actionList.push(
             <div style={_style} key={_turn + ' ' + _id}>
-              {_turn} {ActionType[_playAction.actionTypeId]} {_playAction.gameCardId} {_playAction.dest}
+              {toPlay} {_turn}/{_id} {ActionType[_playAction.actionTypeId]} {_playAction.gameCardId} {_playAction.dest}
             </div>
           )
         }
@@ -500,7 +516,7 @@ const GameBoard = (props: {
                       playRandomly(turnData, true) === 1 &&
                       (<Button
                       onClick={() => {
-                        _playRandomly()
+                        _playRandomly(true)
                       }}
                     >Play randomly</Button>)}&nbsp;&nbsp;
                     <Button
@@ -511,6 +527,13 @@ const GameBoard = (props: {
                     </span>
 
                 </div>
+                {play === Play.WaitReplay &&
+                  <Button
+                    onClick={() => {
+                      setPlay(Play.Replay)
+                    }}
+                  >Replay next</Button>
+                }
                 {!autoPlay && play === Play.Ready &&
                   <Button
                     onClick={() => {
@@ -523,7 +546,7 @@ const GameBoard = (props: {
             }
           </div>
           <div style={{ height: '4em', textAlign: 'center' }}>
-            <div>Game : {props.game.id} Turn : {turnData.turn}</div>
+            <div>Game : {props.game.id} Turn : {turnData.turn} Action : {turnData.playActionId}</div>
             <div>{Play[play]}</div>
           </div>
           <div style={{ textAlign: 'center' }}>

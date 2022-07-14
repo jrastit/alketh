@@ -55,6 +55,7 @@ export const getTurnData = (game: GameType, userId: number) => {
     turn: game.turn,
     userId: [game.userId1, game.userId2],
     pos: game.userId1 === userId ? 0 : 1,
+    playActionId: game.actionId,
     playActionList: [],
     drawCardList: [],
     cardList: [game.cardList1, game.cardList2],
