@@ -1,6 +1,4 @@
-import { useState } from 'react'
-
-import { TransactionManager } from '../util/TransactionManager'
+import { ContractHandlerType } from '../type/contractType'
 import AdminContract from '../section/adminContract'
 import DisplayUserDeck from '../section/displayUserDeck'
 import DisplayUserCard from '../section/displayUserCard'
@@ -16,8 +14,6 @@ import Col from 'react-bootstrap/Col'
 
 import { useAppSelector } from '../hooks'
 
-import { ContractHandlerType, newContractHandler } from '../type/contractType'
-
 import {
   isStep,
   StepId,
@@ -26,11 +22,9 @@ import {
 
 const AdminSection = (props: {
   section : string | undefined,
-  transactionManager : TransactionManager,
+  contractHandler : ContractHandlerType,
 })=> {
-  const [contractHandler, _setContractHandler] = useState<ContractHandlerType>(
-    newContractHandler(props.transactionManager)
-  )
+
   const step = useAppSelector((state) => state.contractSlice.step)
 
   const displayAdmin = () => {
@@ -38,7 +32,7 @@ const AdminSection = (props: {
       <Row>
         <Col>
           <AdminContract
-            contractHandler={contractHandler}
+            contractHandler={props.contractHandler}
           />
         </Col>
       </Row>
@@ -50,13 +44,13 @@ const AdminSection = (props: {
     if (isStep(StepId.Game, Step.Init, step) || isStep(StepId.Game, Step.NotSet, step)){
       return (
         <FindGame
-        contractHandler={contractHandler}
+        contractHandler={props.contractHandler}
         />
       )
     }else{
         return (
           <PlayGame
-          contractHandler={contractHandler}
+          contractHandler={props.contractHandler}
           />
         )
     }
@@ -74,20 +68,20 @@ const AdminSection = (props: {
       case 'card':
       return (
         <DisplayCard
-        contractHandler={contractHandler}
+        contractHandler={props.contractHandler}
         />
       )
       case 'userCard':
         return (<DisplayUserCard
-            contractHandler={contractHandler}
+            contractHandler={props.contractHandler}
           />)
       case 'NFT':
         return (<DisplayNFT
-            contractHandler={contractHandler}
+            contractHandler={props.contractHandler}
         />)
       case 'userDeck':
         return (<DisplayUserDeck
-          contractHandler={contractHandler}
+          contractHandler={props.contractHandler}
           />)
       default :
       return displayGame()
@@ -99,7 +93,7 @@ const AdminSection = (props: {
     <Row>
       <Col>
         <ContractLoader
-          contractHandler={contractHandler}
+          contractHandler={props.contractHandler}
         />
       </Col>
     </Row>

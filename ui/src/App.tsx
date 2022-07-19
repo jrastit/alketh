@@ -6,6 +6,7 @@ import AppNav from './AppNav'
 import Container from 'react-bootstrap/Container';
 
 import { TransactionManager } from './util/TransactionManager'
+import { ContractHandlerType, newContractHandler } from './type/contractType'
 import WalletConnection from './section/walletConnection'
 import AdminSection from './section/adminSection'
 import WalletLoader from './loader/walletLoader'
@@ -23,6 +24,12 @@ function App() {
 
   const [section, setSection] = useState<string | undefined>()
   const [transactionManager, setTransactionManager] = useState<TransactionManager>()
+  const [contractHandler, setContractHandler] = useState<ContractHandlerType>()
+
+  const updateTransactionManager = (_transactionManager : TransactionManager) => {
+    setTransactionManager(_transactionManager)
+    setContractHandler(newContractHandler(_transactionManager))
+  }
 
   const step = useAppSelector((state) => state.contractSlice.step)
 
@@ -33,7 +40,7 @@ function App() {
       <Container fluid>
         <WalletLoader
           transactionManager={transactionManager}
-          setTransactionManager={setTransactionManager}
+          setTransactionManager={updateTransactionManager}
         />
         {!isWallet && <AppNav
           section={section}
@@ -46,10 +53,10 @@ function App() {
           />
         }
 
-        { !isWallet && transactionManager && (
+        { !isWallet && contractHandler && (
           <AdminSection
             section={section}
-            transactionManager={transactionManager}
+            contractHandler={contractHandler}
           />
         )}
 
