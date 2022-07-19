@@ -19,6 +19,7 @@ const AppNav = (props: {
   const gameId = useAppSelector((state) => state.gameSlice.gameId)
   const network = useAppSelector((state) => state.walletSlice.network)
   const wallet = useAppSelector((state) => state.walletSlice.wallet)
+  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
 
   return (
     <Navbar
@@ -28,13 +29,13 @@ const AppNav = (props: {
       expand="lg"
       >
     <Container fluid>
-      <Navbar.Brand onClick={() => props.setSection('wallet')}>Alchethmy {network?.name && <> on {network?.name}</>}</Navbar.Brand>
+      <Navbar.Brand onClick={() => props.setSection('wallet')}>Alchethmy {displayAdmin && network?.name && <> on {network?.name}</>}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link onClick={() => props.setSection('wallet')}>Wallet</Nav.Link>
           <Nav.Link onClick={() => props.setSection('game')}>Game</Nav.Link>
-          { user &&
+          { !!user &&
             <>
             <Nav.Link onClick={() => props.setSection('userCard')}>My cards</Nav.Link>
             <Nav.Link onClick={() => props.setSection('userDeck')}>My decks</Nav.Link>
@@ -43,14 +44,20 @@ const AppNav = (props: {
 
           }
           <Nav.Link onClick={() => props.setSection('card')}>All cards</Nav.Link>
-          <Nav.Link onClick={() => props.setSection('editCard')}>Edit cards</Nav.Link>
-          <Nav.Link onClick={() => props.setSection('admin')}>Admin</Nav.Link>
+          { displayAdmin &&
+            <>
+            <Nav.Link onClick={() => props.setSection('editCard')}>Edit cards</Nav.Link>
+            <Nav.Link onClick={() => props.setSection('admin')}>Admin</Nav.Link>
+            </>
+          }
         </Nav>
         <Nav className="mr-auto">
         </Nav>
       </Navbar.Collapse>
       <Navbar.Brand>
-        <UserWidget gameId={gameId} user={user}/>
+        { displayAdmin &&
+          <UserWidget gameId={gameId} user={user}/>
+        }
         <WalletWidget address={wallet.address} error={getStep(StepId.Wallet, step).error} />
         {wallet.balance !== undefined &&
           <span>{Math.floor(wallet.balance * 100) / 100} {network?.tokenName}</span>

@@ -16,6 +16,7 @@ import GameCardWidget from './gameCardWidget'
 import DropHelper from '../../component/dropHelper'
 import PlaceHelper, { PlaceRefType } from '../../component/placeHelper'
 
+import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Button from '../../component/buttonNice'
@@ -187,6 +188,7 @@ const GameBoard = (props: {
 
   const playActionList = useAppSelector((state) => state.gameSlice.playActionList)
   const cardList = useAppSelector((state) => state.cardListSlice.cardList)
+  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
   const dispatch = useAppDispatch()
 
   //const cardIdSpace = [[[],[],[]],[[],[],[]]] as number[][][]
@@ -321,7 +323,7 @@ const GameBoard = (props: {
         {gameCardList.map((_card, _id) => {
           const id = start + _id
           return (
-            <Col xs={xs} key={id} style={{ paddingTop: '1em' }}>
+            <Col className={"d-flex justify-content-center"} xs={xs} key={id} style={{ paddingTop: '1em' }}>
               <div style={{
                 width:"12em",
                 height:"18em",
@@ -471,9 +473,12 @@ const GameBoard = (props: {
   }
 
   return (
+    <Container style={{ maxWidth : '540px'}}>
     <div style={{ fontSize: "11px" }}>
 
       <Row style={{ height: "20em", backgroundColor: "#00000080" }}>
+      <Col>
+
         {displayGameCardList(
           1 - turnData.pos,
           0,
@@ -481,6 +486,8 @@ const GameBoard = (props: {
           false,
           _playAttack,
         )}
+
+      </Col>
       </Row>
       <GameTimer
         myTurn={1}
@@ -505,12 +512,12 @@ const GameBoard = (props: {
         <Col style={{
           backgroundColor: '#ffffff80',
           paddingTop: '1em',
+          paddingBottom: '1em',
         }}>
           <div style={{ height: '10em', textAlign: 'center' }}>
             {
               <div>
                 <div style={{ height: '4em' }}>
-
                     <span>
                     {!autoPlay && play === Play.Ready &&
                       playRandomly(turnData, true) === 1 &&
@@ -545,24 +552,31 @@ const GameBoard = (props: {
 
             }
           </div>
-          <div style={{ height: '4em', textAlign: 'center' }}>
-            <div>Game : {props.game.id} Turn : {turnData.turn} Action : {turnData.playActionId}</div>
-            <div>{Play[play]}</div>
-          </div>
+          { !!displayAdmin &&
+            <div style={{ height: '4em', textAlign: 'center' }}>
+              <div>Game : {props.game.id} Turn : {turnData.turn} Action : {turnData.playActionId}</div>
+              <div>{Play[play]}</div>
+            </div>
+          }
+
           <div style={{ textAlign: 'center' }}>
             {props.children}
           </div>
         </Col>
       </Row>
-      <Row style={{ height: "20em" }}>
-        <Col style={{
-          backgroundColor: '#ffffffD0',
-          paddingTop: '1em',
-        }}>
-          {_displayAction()}
-        </Col>
-      </Row>
+      {displayAdmin &&
+        <Row style={{ height: "20em" }}>
+          <Col style={{
+            backgroundColor: '#ffffffD0',
+            paddingTop: '1em',
+          }}>
+            {_displayAction()}
+          </Col>
+        </Row>
+      }
+
     </div>
+    </Container>
   )
 }
 
