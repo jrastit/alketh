@@ -60,7 +60,7 @@ const AppNav = (props: {
         }
         <WalletWidget address={wallet.address} error={getStep(StepId.Wallet, step).error} />
         {wallet.balance !== undefined &&
-          <span>{Math.floor(wallet.balance * 100) / 100} {network?.tokenName}</span>
+          <span style={{paddingLeft : '.2em', color : 'lightgreen'}}>{Math.floor(wallet.balance * 100) / 100} {network?.tokenName}</span>
         }
       </Navbar.Brand>
       <Navbar.Brand>

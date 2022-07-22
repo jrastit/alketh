@@ -1,11 +1,13 @@
+import { useState } from 'react'
 import Button from 'react-bootstrap/Button'
-import BoxWidget from '../component/boxWidget'
 import SpaceWidget from '../component/spaceWidget'
 import NetworkInfoWidget from '../component/wallet/networkInfoWidget'
 import WalletInfoWidget from '../component/wallet/walletInfoWidget'
 import NetworkSelectWidget from '../component/wallet/networkSelectWidget'
 import NetworkSwitchWidget from '../component/wallet/networkSwitchWidget'
 import WalletSelectWidget from '../component/wallet/walletSelectWidget'
+import WalletDelete from '../component/wallet/walletDelete'
+import WalletAddWidget from '../component/wallet/walletAddWidget'
 import CardWidget from '../game/component/cardWidget'
 import { TransactionManager } from '../util/TransactionManager'
 import DivNice from '../component/divNice'
@@ -55,9 +57,21 @@ const WalletConnection = (props: {
   const network = useAppSelector((state) => state.walletSlice.network)
   const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
 
+  const [ displayOption, setDisplayOption ] = useState<boolean>(false)
+
   const setWalletType = (type?: string) => {
     walletStorageSetType(type)
     dispatch(updateStep({ id: StepId.Wallet, step: Step.Init }))
+  }
+
+  const renderOption = () => {
+    return (
+      <SpaceWidget>
+        <Button variant="primary" onClick={() => {
+          setDisplayOption(!displayOption)
+        }}>{displayOption ? "Back" : "Option"}</Button>
+      </SpaceWidget>
+    )
   }
 
   const renderDisconnect = () => {
@@ -75,7 +89,7 @@ const WalletConnection = (props: {
   const renderHome = () => {
     return (
       <SpaceWidget>
-        <Button variant="warning" onClick={() => setWalletType()}>Home</Button>
+        <Button variant="primary" onClick={() => setWalletType()}>Home</Button>
       </SpaceWidget>
     )
   }
@@ -145,13 +159,17 @@ const WalletConnection = (props: {
     }
     switch (wallet.type) {
       case 'Broswer':
+        if (isStep(StepId.Wallet, Step.Init, step)) {
+          return (
+            <DivNice title='Broswer wallet'>
+                <p>Loading...</p>
+            </DivNice>
+          )
+        }
         if (isStep(StepId.Wallet, Step.NoAddress, step)) {
           return (
-            <DivNice title='Broswer wallet setup'>
-                <WalletSelectWidget
-                  setSection={props.setSection}
-                  isOk={false}
-                />
+            <DivNice title='Broswer wallet create'>
+                <WalletAddWidget/>
               {renderDisconnect()}
               {renderHome()}
             </DivNice>
@@ -169,6 +187,21 @@ const WalletConnection = (props: {
           )
         }
         if (isStep(StepId.Wallet, Step.Ok, step) || isStep(StepId.Wallet, Step.NoNetwork, step) || isStep(StepId.Wallet, Step.NoBalance, step)) {
+          if (displayOption){
+            return (
+              <>
+              <DivNice title='Add wallet'>
+              <WalletAddWidget/>
+              </DivNice>
+              <DivNice title='Delete wallet'>
+              <WalletDelete/>
+              </DivNice>
+              <DivNice>
+              {renderOption()}
+              </DivNice>
+              </>
+            )
+          }
           return (
             <>
             <DivNice title='Select network'>
@@ -180,11 +213,9 @@ const WalletConnection = (props: {
                 }
             </DivNice>
             <DivNice title='Select wallet'>
-            <WalletSelectWidget
-              setSection={props.setSection}
-              isOk={isStep(StepId.Wallet, Step.Ok, step)}
-            />
+            <WalletSelectWidget/>
             </DivNice>
+
             <DivNice title='Wallet info'>
 
             <WalletInfoWidget
@@ -203,6 +234,7 @@ const WalletConnection = (props: {
               </DivNice>
             }
             <DivNice>
+            {renderOption()}
             {renderDisconnect()}
             {renderHome()}
             </DivNice>
@@ -212,13 +244,15 @@ const WalletConnection = (props: {
         if (isStep(StepId.Wallet, Step.Error, step)) {
           return (
             <>
-            <SpaceWidget>
-              <BoxWidget title="Select network">
+            <DivNice title='Select network'>
                 <NetworkSelectWidget />
-              </BoxWidget>
-            </SpaceWidget>
-            <SpaceWidget>
-              <BoxWidget title='Broswer wallet Error'>
+                {!!network && displayAdmin &&
+                  <NetworkInfoWidget
+                    network={network}
+                  />
+                }
+            </DivNice>
+            <DivNice title='Network Error'>
                 <p>Is the network connected?</p>
                 <p>Cannot reach {network?.url}</p>
                 <p>Click ok to re-test</p>
@@ -228,64 +262,77 @@ const WalletConnection = (props: {
                   resetStep={() => { dispatch(clearError(StepId.Wallet)) }}
                 /
                 >
-              </BoxWidget>
-            </SpaceWidget>
-            <SpaceWidget>
-            <BoxWidget>
-              {renderHome()}
-            </BoxWidget>
-            </SpaceWidget>
+            </DivNice>
+            <DivNice>
+            {renderOption()}
+            {renderHome()}
+            </DivNice>
             </>
           )
         }
         return (
-          <BoxWidget title='Error wallet step'>
+          <DivNice title='Error wallet step'>
             {'Unknow step ' + Step[getStep(StepId.Wallet, step).step]}
-          </BoxWidget>
+          </DivNice>
         )
       case 'Metamask':
       case 'WalletConnect':
+      if (isStep(StepId.Wallet, Step.Init, step)) {
+        return (
+          <DivNice title='Metamask'>
+              <p>Loading...</p>
+          </DivNice>
+        )
+      }
         if (isStep(StepId.Wallet, Step.NoAddress, step)) {
           return (
-            <SpaceWidget>
-              <BoxWidget title='Metamask'>
+            <DivNice title='Metamask'>
                 <Button size='sm' variant="warning" onClick={() => {
                   window.ethereum.enable().then()
                 }}>Connect wallet</Button>
                 {renderHome()}
-              </BoxWidget>
-            </SpaceWidget>
+            </DivNice>
           )
         }
         if (isStep(StepId.Wallet, Step.Ok, step)) {
           return (
-            <SpaceWidget>
-              <BoxWidget title='Metamask'>
+            <>
+            <DivNice title='Network'>
               <NetworkSwitchWidget/>
               { network &&
                 <NetworkInfoWidget
                   network={network}
                 />
               }
+            </DivNice>
+            <DivNice title='Metamask Wallet'>
               { wallet &&
                 <WalletInfoWidget
                   wallet={wallet}
                   network={network}
                 />
               }
-                <Button onClick={() => props.setSection('game')}>Ok</Button>
-              </BoxWidget>
-              <BoxWidget>
+              </DivNice>
+              { !wallet.balance &&
+                <DivNice>
+                <p>Wallet balance is empty, add some tokens!</p>
+                </DivNice>
+              }
+              {isStep(StepId.Wallet, Step.Ok, step) &&
+                <DivNice>
+                <Button onClick={() => props.setSection('game')}>Start game</Button>
+                </DivNice>
+              }
+              <DivNice>
                 {renderHome()}
-              </BoxWidget>
-            </SpaceWidget>
+              </DivNice>
+              </>
           )
         }
         if (isStep(StepId.Wallet, Step.Error, step)) {
           return (
             <>
-            <SpaceWidget>
-              <BoxWidget title='Metamask Error'>
+              <DivNice title='Metamask Error'>
                 <p>Is your metamask connected?</p>
                 <Button size='sm' variant="warning" onClick={() => {
                   window.ethereum.enable().then()
@@ -298,30 +345,25 @@ const WalletConnection = (props: {
                 /
                 >
 
-              </BoxWidget>
-            </SpaceWidget>
-            <SpaceWidget>
-            <BoxWidget>
+              </DivNice>
+              <DivNice>
               {renderHome()}
-            </BoxWidget>
-            </SpaceWidget>
+              </DivNice>
             </>
           )
         }
         return (
-          <BoxWidget title='Metamask Error wallet step'>
+          <DivNice title='Metamask Error wallet step'>
             {'Unknow step ' + Step[getStep(StepId.Wallet, step).step]}
             {renderHome()}
-          </BoxWidget>
+          </DivNice>
         )
       default:
         return (
-          <SpaceWidget>
-            <BoxWidget title='Error wallet type'>
+            <DivNice title='Error wallet type'>
               <p>Unkonw type : {wallet.type}</p>
               {renderHome()}
-            </BoxWidget>
-          </SpaceWidget>
+            </DivNice>
         )
     }
   }

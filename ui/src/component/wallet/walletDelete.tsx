@@ -28,7 +28,6 @@ const WalletDelete = () => {
 
   return (
     <>
-    <h3>Delete wallet</h3>
     { step === 0 &&
       <>
         <p>Delete wallet with public address {wallet.address}</p>

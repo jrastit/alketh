@@ -3,6 +3,7 @@ import CardListWidget from '../game/component/cardListWidget'
 import { useAppSelector, useAppDispatch } from '../hooks'
 
 import DownloadCardList from '../game/component/downloadCards'
+import DivNice from '../component/divNice'
 
 import {
   setCard,
@@ -38,9 +39,12 @@ const DisplayCard = () => {
 
   if (cardList) {
     return (
-      <><DownloadCardList
+      <>
+      <DivNice>
+      <DownloadCardList
         cardList={cardList}
         />
+      </DivNice>
       <CardListWidget
         cardList={cardList}
         userId={user?.id}

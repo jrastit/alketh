@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
-import Button from 'react-bootstrap/Button';
 import SelectWidget from '../selectWidget'
 import { walletNiceName } from '../../type/walletType'
-import WalletAddWidget from './walletAddWidget'
-import WalletInfoWidget from './walletInfoWidget'
-import NetworkInfoWidget from './networkInfoWidget'
-import WalletDelete from './walletDelete'
 
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
@@ -34,15 +29,10 @@ const _setWallet2 = (
   }
 }
 
-const WalletSelectWidget = (props: {
-  setSection : (section : string) => void
-  isOk : boolean
-}) => {
+const WalletSelectWidget = () => {
 
   const wallet = useAppSelector((state) => state.walletSlice.wallet)
   const walletList = useAppSelector((state) => state.walletSlice.walletList)
-  const network = useAppSelector((state) => state.walletSlice.network)
-  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
   const dispatch = useAppDispatch()
 
   const [option, setOption] = useState<Array<{
@@ -79,18 +69,9 @@ const WalletSelectWidget = (props: {
         option={option}
         />
 
-      { wallet.address &&
-        <>
-        <WalletDelete />
-        </>
-      }
-
 
       </>
     }
-    <p>import your broswer wallet with the private key or generate a new one</p>
-    <WalletAddWidget/>
-
     </>
   )
 }

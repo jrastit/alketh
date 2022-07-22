@@ -60,6 +60,7 @@ const WalletAddWidget = () => {
   )
   else if (submit === 0) return (
     <Form onSubmit={formSubmit}>
+      <p>import your broswer wallet with the private key or generate a new one</p>
       <Form.Group>
         <Form.Label>Name:</Form.Label>
         <Form.Control type="text" name="name" value={fieldValue.name} onChange={handleChange} />

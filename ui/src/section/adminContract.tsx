@@ -1,6 +1,6 @@
 import ContractWidget from '../game/component/contractWidget'
 import SpaceWidget from '../component/spaceWidget'
-import BoxWidgetHide from '../component/boxWidgetHide'
+import DivNice from '../component/divNice'
 import StepMessageWidget from '../component/stepMessageWidget'
 import { ContractHandlerType } from '../type/contractType'
 
@@ -43,8 +43,7 @@ const AdminContract = (props : {
   }
 
   return (
-    <SpaceWidget>
-      <BoxWidgetHide title="Contract" hide={false}>
+      <DivNice title="Contract">
       <SpaceWidget>
         <ContractWidget contractHandler={props.contractHandler}/>
       </SpaceWidget>
@@ -96,8 +95,7 @@ const AdminContract = (props : {
         Reload all
       </Button>
       </SpaceWidget>
-    </BoxWidgetHide>
-    </SpaceWidget>
+    </DivNice>
   )
 }
 

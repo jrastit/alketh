@@ -29,7 +29,7 @@ const AddressWidget = (props: {
         <span id='address-widget'>
           {formatAddress(props.address, props.name)}&nbsp;
           <Button
-            style={{padding:0,lineHeight:'1em'}}
+            style={{padding:'.1em',lineHeight:'1em',backgroundColor:'white',borderRadius:'.5em'}}
             size='sm'
             variant='default'
             onClick={() => clipboard(props.address || '')}
