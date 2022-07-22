@@ -1,7 +1,6 @@
 import Button from 'react-bootstrap/Button'
 import BoxWidget from '../component/boxWidget'
 import SpaceWidget from '../component/spaceWidget'
-import WalletDeleteAll from '../component/wallet/walletDeleteAll'
 import NetworkInfoWidget from '../component/wallet/networkInfoWidget'
 import WalletInfoWidget from '../component/wallet/walletInfoWidget'
 import NetworkSelectWidget from '../component/wallet/networkSelectWidget'
@@ -43,6 +42,7 @@ const Injected = new InjectedConnector({
 const WalletConnection = (props: {
   transactionManager: TransactionManager | undefined
   setSection: (section: string) => void
+  setDisplayConfig: (arg : boolean) => void
 }) => {
 
   const { activate } = useWeb3React();
@@ -53,7 +53,7 @@ const WalletConnection = (props: {
 
   const wallet = useAppSelector((state) => state.walletSlice.wallet)
   const network = useAppSelector((state) => state.walletSlice.network)
-  const password = useAppSelector((state) => state.walletSlice.password)
+  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
 
   const setWalletType = (type?: string) => {
     walletStorageSetType(type)
@@ -111,37 +111,35 @@ const WalletConnection = (props: {
               exp={0}
             />
           </div>
-          <DivNice>
-            <h3>Alchethmy</h3>
+          <DivNice title='Alchethmy'>
             <p>A blockchain card game!</p>
             <p>Chose your wallet to connect and start playing.</p>
           </DivNice>
-          <SpaceWidget>
-            <BoxWidget title='Metamask'>
-              <p>Use wallet and network configured within Metamask</p>
-              <p><a href='https://metamask.io/' target='_blank' rel="noreferrer">get Metamask here</a></p>
-              <SpaceWidget>
-                <Button onClick={() => {
-                   activate(Injected).then(() => {setWalletType('Metamask')})
-                }}>
-                  Enter with Metamask
-                </Button>
-              </SpaceWidget>
-            </BoxWidget>
-          </SpaceWidget>
-          <SpaceWidget>
+
+          <DivNice title='Broswer Wallet'>
+            <p>Use your internet broswer cache to keep your wallet</p>
+            <Button onClick={() => setWalletType('Broswer')}>
+              Enter with broswer wallet
+            </Button>
+          </DivNice>
+
+          <DivNice title='Metamask Wallet'>
+            <p>Use wallet and network configured within Metamask</p>
+            <p><a href='https://metamask.io/' target='_blank' rel="noreferrer">get Metamask here</a></p>
             <SpaceWidget>
-              <BoxWidget title='Broswer'>
-                <p>Use your internet broswer cache to keep your wallet</p>
-                <Button onClick={() => setWalletType('Broswer')}>
-                  Enter with broswer wallet
-                </Button>
-                {!!password.passwordCheck &&
-                  <WalletDeleteAll />
-                }
-              </BoxWidget>
+              <Button onClick={() => {
+                 activate(Injected).then(() => {setWalletType('Metamask')})
+              }}>
+                Enter with Metamask
+              </Button>
             </SpaceWidget>
-          </SpaceWidget>
+          </DivNice>
+
+          <DivNice title='Options'>
+            <Button onClick={() => props.setDisplayConfig(true)}>
+              Advanced option
+            </Button>
+          </DivNice>
         </>
       )
     }
@@ -149,51 +147,65 @@ const WalletConnection = (props: {
       case 'Broswer':
         if (isStep(StepId.Wallet, Step.NoAddress, step)) {
           return (
-            <>
-              <SpaceWidget>
+            <DivNice title='Broswer wallet setup'>
                 <WalletSelectWidget
                   setSection={props.setSection}
                   isOk={false}
                 />
-              </SpaceWidget>
               {renderDisconnect()}
               {renderHome()}
-            </>
+            </DivNice>
           )
         }
         if (isStep(StepId.Wallet, Step.NoPassword, step)) {
           return (
-            <SpaceWidget>
-              <BoxWidget title='Broswer'>
+            <DivNice title='Broswer wallet setup'>
                 <p>Use your internet broswer cache to keep your wallet</p>
                 <SpaceWidget>
                   <WalletPassword />
                 </SpaceWidget>
                 {renderHome()}
-              </BoxWidget>
-            </SpaceWidget>
+            </DivNice>
           )
         }
         if (isStep(StepId.Wallet, Step.Ok, step) || isStep(StepId.Wallet, Step.NoNetwork, step) || isStep(StepId.Wallet, Step.NoBalance, step)) {
           return (
             <>
-            <SpaceWidget>
-              <BoxWidget title="Select network">
+            <DivNice title='Select network'>
                 <NetworkSelectWidget />
-              </BoxWidget>
-            </SpaceWidget>
-              <SpaceWidget>
-                <WalletSelectWidget
-                  setSection={props.setSection}
-                  isOk={isStep(StepId.Wallet, Step.Ok, step)}
-                />
-              </SpaceWidget>
-              <SpaceWidget>
-                <BoxWidget>
-                  {renderDisconnect()}
-                  {renderHome()}
-                </BoxWidget>
-              </SpaceWidget>
+                {!!network && displayAdmin &&
+                  <NetworkInfoWidget
+                    network={network}
+                  />
+                }
+            </DivNice>
+            <DivNice title='Select wallet'>
+            <WalletSelectWidget
+              setSection={props.setSection}
+              isOk={isStep(StepId.Wallet, Step.Ok, step)}
+            />
+            </DivNice>
+            <DivNice title='Wallet info'>
+
+            <WalletInfoWidget
+              wallet={wallet}
+              network={network}
+            />
+            </DivNice>
+            { !wallet.balance &&
+              <DivNice>
+              <p>Wallet balance is empty, add some tokens!</p>
+              </DivNice>
+            }
+            {isStep(StepId.Wallet, Step.Ok, step) &&
+              <DivNice>
+              <Button onClick={() => props.setSection('game')}>Start game</Button>
+              </DivNice>
+            }
+            <DivNice>
+            {renderDisconnect()}
+            {renderHome()}
+            </DivNice>
             </>
           )
         }

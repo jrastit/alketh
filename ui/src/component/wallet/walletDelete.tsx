@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import BoxWidgetHide from '../../component/boxWidgetHide'
 import { walletDelete } from '../../util/walletStorage'
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
@@ -28,7 +27,8 @@ const WalletDelete = () => {
   }
 
   return (
-    <BoxWidgetHide title='Delete wallet'>
+    <>
+    <h3>Delete wallet</h3>
     { step === 0 &&
       <>
         <p>Delete wallet with public address {wallet.address}</p>
@@ -39,7 +39,7 @@ const WalletDelete = () => {
       step === 1 &&
         <Form.Control type="test" placeholder="Enter yes to confirm" onChange={deleteWallet} />
     }
-    </BoxWidgetHide>
+    </>
   )
 }
 

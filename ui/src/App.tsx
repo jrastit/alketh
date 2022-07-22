@@ -8,6 +8,7 @@ import Container from 'react-bootstrap/Container';
 import { TransactionManager } from './util/TransactionManager'
 import { ContractHandlerType, newContractHandler } from './type/contractType'
 import WalletConnection from './section/walletConnection'
+import OptionConnection from './section/optionConnection'
 import AdminSection from './section/adminSection'
 import WalletLoader from './loader/walletLoader'
 
@@ -25,6 +26,7 @@ function App() {
   const [section, setSection] = useState<string | undefined>()
   const [transactionManager, setTransactionManager] = useState<TransactionManager>()
   const [contractHandler, setContractHandler] = useState<ContractHandlerType>()
+  const [displayConfig, setDisplayConfig] = useState<boolean>(false)
 
   const updateTransactionManager = (_transactionManager : TransactionManager) => {
     setTransactionManager(_transactionManager)
@@ -47,10 +49,22 @@ function App() {
           setSection={setSection}
         />}
         { !!isWallet &&
-          <WalletConnection
-            transactionManager={transactionManager}
-            setSection={setSection}
-          />
+          <>
+          { !!displayConfig &&
+            <OptionConnection
+              setDisplayConfig={setDisplayConfig}
+            />
+          }
+          { !displayConfig &&
+            <WalletConnection
+              transactionManager={transactionManager}
+              setSection={setSection}
+              setDisplayConfig={setDisplayConfig}
+            />
+          }
+          </>
+
+
         }
 
         { !isWallet && contractHandler && (

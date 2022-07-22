@@ -1,13 +1,11 @@
 import { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button';
 import SelectWidget from '../selectWidget'
-import BoxWidget from '../boxWidget'
 import { walletNiceName } from '../../type/walletType'
 import WalletAddWidget from './walletAddWidget'
 import WalletInfoWidget from './walletInfoWidget'
 import NetworkInfoWidget from './networkInfoWidget'
 import WalletDelete from './walletDelete'
-import BoxWidgetHide from '../boxWidgetHide'
 
 
 import { useAppSelector, useAppDispatch } from '../../hooks'
@@ -44,6 +42,7 @@ const WalletSelectWidget = (props: {
   const wallet = useAppSelector((state) => state.walletSlice.wallet)
   const walletList = useAppSelector((state) => state.walletSlice.walletList)
   const network = useAppSelector((state) => state.walletSlice.network)
+  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
   const dispatch = useAppDispatch()
 
   const [option, setOption] = useState<Array<{
@@ -73,36 +72,15 @@ const WalletSelectWidget = (props: {
     <>
     { option.length > 0 &&
       <>
-    <BoxWidget  title={"Select broswer wallet"}>
       <SelectWidget
         name='Select widget'
         value={wallet.address}
         onChange={_setWallet}
         option={option}
         />
-      </BoxWidget>
+
       { wallet.address &&
         <>
-        <BoxWidget  title={"Wallet for " + network?.name}>
-        { network &&
-          <NetworkInfoWidget
-            network={network}
-          />
-        }
-        { wallet &&
-          <WalletInfoWidget
-            wallet={wallet}
-            network={network}
-          />
-        }
-        { !wallet.balance &&
-          <p>Wallet balance is empty, add some tokens!</p>
-        }
-        { props.isOk &&
-          <Button onClick={() => props.setSection('game')}>Ok</Button>
-        }
-
-        </BoxWidget>
         <WalletDelete />
         </>
       }
@@ -110,10 +88,9 @@ const WalletSelectWidget = (props: {
 
       </>
     }
-    <BoxWidgetHide title="Add broswer wallet" hide={option.length > 0}>
-      <p>import your broswer wallet with the private key or generate a new one</p>
-      <WalletAddWidget/>
-    </BoxWidgetHide>
+    <p>import your broswer wallet with the private key or generate a new one</p>
+    <WalletAddWidget/>
+
     </>
   )
 }

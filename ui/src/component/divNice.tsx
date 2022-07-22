@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/Col'
 import SpaceWidget from '../component/spaceWidget'
 
 const DivNice = (props:{
+  title ?: any
   children ?: any
   style ?: any
 }) => {
@@ -15,6 +16,11 @@ const DivNice = (props:{
   <SpaceWidget>
   <div style={{textAlign :'center'}}>
   <div style={props.style}>
+  {!!props.title &&
+    <h3>
+      {props.title}
+    </h3>
+  }
   {props.children}
   </div>
   </div>
