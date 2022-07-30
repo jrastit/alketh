@@ -44,15 +44,15 @@ const checkContractAlchethmy = async (
   _setMessage?: (message: string | undefined) => void,
 ) => {
   if (network && network.gameContract) {
-    contractHandler.alchethmy.contract = getWithManagerContractAlchethmy(
+    contractHandler.alchethmy.setContract(getWithManagerContractAlchethmy(
       ethersUtils.getAddress(network.gameContract),
       contractHandler.transactionManager
-    )
+    ))
   }
-  if (contractHandler.alchethmy.contract) {
+  if (contractHandler.alchethmy.isContract()) {
     try {
       _setMessage && _setMessage("Checking Alchethmy contract...")
-      contractHandler.alchethmy.contractHash = (await contractHandler.alchethmy.contract.contractHash())[0]
+      contractHandler.alchethmy.contractHash = (await contractHandler.alchethmy.getContractNotOk().contractHash())[0]
       if (contractHandler.alchethmy.contractHash) {
         if (getHashContractAlchethmy().eq(contractHandler.alchethmy.contractHash)) {
           contractHandler.alchethmy.versionOk = true
@@ -63,6 +63,7 @@ const checkContractAlchethmy = async (
         contractHandler.alchethmy.versionOk = undefined
       }
     } catch (err: any) {
+      console.error(err)
       contractHandler.alchethmy.versionOk = undefined
     }
   } else {
@@ -89,12 +90,12 @@ const _checkContract = async <T extends {
       if (contractAddress === ethersConstants.AddressZero) {
         contract.versionOk = undefined
       } else {
-        contract.contract = getContract(
+        contract.setContract(getContract(
           contractAddress,
           contractHandler.transactionManager
-        )
+        ))
         _setMessage && _setMessage("Get hash " + name + "...")
-        contract.contractHash = (await contract.contract.contractHash())[0]
+        contract.contractHash = (await contract.getContractNotOk().contractHash())[0]
         if (contract.contractHash) {
           contract.versionOk = contractHash.eq(contract.contractHash)
           _setMessage && _setMessage(
@@ -132,10 +133,10 @@ const _checkContractWithHash = async <T extends {
       if (contractAddress === ethersConstants.AddressZero) {
         contract.versionOk = false
       } else {
-        contract.contract = getContract(
+        contract.setContract(getContract(
           contractAddress,
           contractHandler.transactionManager
-        )
+        ))
         contract.versionOk = true
       }
     } catch (err) {

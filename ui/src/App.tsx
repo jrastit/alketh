@@ -29,6 +29,10 @@ function App() {
   const [displayConfig, setDisplayConfig] = useState<boolean>(false)
 
   const updateTransactionManager = (_transactionManager : TransactionManager) => {
+    console.log("update transaction Manager", transactionManager)
+    if (transactionManager){
+      transactionManager.release()
+    }
     setTransactionManager(_transactionManager)
     setContractHandler(newContractHandler(_transactionManager))
   }

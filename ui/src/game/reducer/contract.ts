@@ -338,7 +338,7 @@ export const loadContract = async (
           dispatch(updateStep({ id: stepId, step: Step.Empty }))
         }
       } else {
-        if (!contractHandler.alchethmy.contract) {
+        if (!contractHandler.alchethmy.isContract()) {
           dispatch(setError({ id: stepId, error: "Alchethmy not set" }))
         } else if (!contractHandler.alchethmy.versionOk) {
           dispatch(setError({ id: stepId, error: "Alchethmy version not found at address" }))

@@ -23,7 +23,7 @@ export const getGameContract = async (
   if (!contractAddress || contractAddress === ethersConstants.AddressZero) {
     return undefined
   }
-  contractHandler.playGame.contract = getWithManagerContractPlayGame(contractAddress, contractHandler.transactionManager)
+  contractHandler.playGame.setContract(getWithManagerContractPlayGame(contractAddress, contractHandler.transactionManager))
   contractHandler.playGame.versionOk = true
 }
 

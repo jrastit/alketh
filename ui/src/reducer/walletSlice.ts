@@ -48,9 +48,16 @@ export const walletSlice = createSlice({
     setNetwork: (state, action: PayloadAction<NetworkType | undefined>) => {
       state.network = action.payload
     },
-    setBalance: (state, action: PayloadAction<{ address: string, balance: number | undefined }>) => {
-      if (state.wallet.address === action.payload.address) {
+    setBalance: (state, action: PayloadAction<{ address: string, chainId: number, balance: number | undefined }>) => {
+      if (
+        state.wallet.address === action.payload.address &&
+        state.network &&
+        state.network.chainId &&
+        state.network.chainId === action.payload.chainId
+      ) {
         state.wallet.balance = action.payload.balance
+      } else {
+        console.error("Wrong balance update ", action.payload)
       }
     },
     clearPassword: (state) => {

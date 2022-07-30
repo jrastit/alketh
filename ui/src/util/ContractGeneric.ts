@@ -96,7 +96,15 @@ class ContractGeneric {
     this.signer = contract.signer
   }
 
+  removeAllListeners() {
+    if (this.listenerCount() > 0) {
+      this.contract.removeAllListeners()
+    }
+  }
 
+  release() {
+    this.removeAllListeners()
+  }
 
 }
 

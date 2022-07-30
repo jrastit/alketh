@@ -223,9 +223,17 @@ const WalletConnection = (props: {
               network={network}
             />
             </DivNice>
-            { !wallet.balance &&
+            { (!wallet.balance || (network && network.faucet)) &&
               <DivNice>
-              <p>Wallet balance is empty, add some tokens!</p>
+              { !wallet.balance &&
+                <p>Wallet balance is empty, add some tokens!</p>
+              }
+              { network && network.faucet &&
+                <>
+                <p>Get more Test token with {network.name} faucet at:</p>
+                <p><a href={network.faucet} target="_blank" rel="noreferrer">{network.faucet}</a></p>
+                </>
+              }
               </DivNice>
             }
             {isStep(StepId.Wallet, Step.Ok, step) &&

@@ -62,6 +62,8 @@ export class TransactionManager {
 
   timerSemaphore: TimerSemaphore | undefined
 
+  balanceInterval: NodeJS.Timer | undefined
+
   constructor(signer: ethers.Signer, timerSemaphore?: TimerSemaphore) {
     this.signer = signer
     this.transactionList = []
@@ -82,6 +84,36 @@ export class TransactionManager {
     } else {
       return this.signer.getBalance()
     }
+  }
+
+  clearRefreshBalance() {
+    if (this.balanceInterval) {
+      clearInterval(this.balanceInterval)
+    }
+    this.balanceInterval = undefined
+  }
+
+  refreshBalance(interval: number, dispatch: any, updateBalance: (
+    dispatch: any,
+    balance: BigNumber,
+    address: string,
+    chainId: number,
+  ) => Promise<number>) {
+    this.clearRefreshBalance()
+    this.balanceInterval = setInterval(async () => {
+      await updateBalance(
+        dispatch,
+        await this.getBalance(),
+        await this.getAddress(),
+        await this.getChainId()
+      )
+    }, interval)
+    console.log(this)
+  }
+
+  release() {
+    this.clearRefreshBalance()
+    this.signer.provider ?.removeAllListeners()
   }
 
   async getNonce() {
@@ -242,5 +274,9 @@ export class TransactionManager {
 
   async getAddress() {
     return await this.signer.getAddress()
+  }
+
+  async getChainId() {
+    return await this.signer.getChainId()
   }
 }

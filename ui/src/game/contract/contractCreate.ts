@@ -39,10 +39,10 @@ export const createContractAlchethmy = async (
   _setMessage?: (message: string | undefined) => void,
 ) => {
   _setMessage && _setMessage("Creating contract Alchethmy...")
-  contractHandler.alchethmy.contract = await createWithManagerContractAlchethmy(
+  contractHandler.alchethmy.setContract(await createWithManagerContractAlchethmy(
     getHashContractAlchethmy(),
     contractHandler.transactionManager
-  )
+  ))
 }
 
 const _createContract = async <T extends { address: string }>(
@@ -90,49 +90,49 @@ export const createContractPlayGameFactory = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  contractHandler.playGameFactory.contract = await _createContract(
+  contractHandler.playGameFactory.setContract(await _createContract(
     "PlayGameFactory",
     getHashContractPlayGameFactory(),
     createWithManagerContractPlayGameFactory,
     getWithManagerContractPlayGameFactory,
     contractHandler,
     _setMessage,
-  )
+  ))
 }
 
 export const createContractPlayActionLib = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  contractHandler.playActionLib.contract = await _createContract(
+  contractHandler.playActionLib.setContract(await _createContract(
     "PlayActionLib",
     getHashContractPlayActionLib(),
     createWithManagerContractPlayActionLib,
     getWithManagerContractPlayActionLib,
     contractHandler,
     _setMessage,
-  )
+  ))
 }
 
 export const createContractCardList = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  contractHandler.cardList.contract = await _createContract(
+  contractHandler.cardList.setContract(await _createContract(
     "CarList",
     getHashContractCardList(),
     createWithManagerContractCardList,
     getWithManagerContractCardList,
     contractHandler,
     _setMessage,
-  )
+  ))
 }
 
 export const createContractNFT = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  contractHandler.nft.contract = await _createContract(
+  contractHandler.nft.setContract(await _createContract(
     "NFT",
     getHashContractNFT(),
     (contractHash: BigNumber,
@@ -149,19 +149,19 @@ export const createContractNFT = async (
     getWithManagerContractNFT,
     contractHandler,
     _setMessage,
-  )
+  ))
 }
 
 export const createContractPlayBot = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  contractHandler.playBot.contract = await _createContract(
+  contractHandler.playBot.setContract(await _createContract(
     "PlayBot",
     getHashContractPlayBot(),
     createWithManagerContractPlayBot,
     getWithManagerContractPlayBot,
     contractHandler,
     _setMessage,
-  )
+  ))
 }

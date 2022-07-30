@@ -51,10 +51,10 @@ const _updateContract = async <T extends { address: string }>(
   updateFunction: (address: string) => Promise<void>,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  if (updateFunction && contract.contract) {
+  if (updateFunction && contract.isContract()) {
     _setMessage && _setMessage("Update " + name + "...")
     await updateFunction(
-      contract.contract.address
+      contract.getContractNotOk().address
     )
     contract.contractHash = contractHash
     contract.versionOk = true
@@ -71,11 +71,11 @@ const _updateContractWithHash = async <T extends { address: string }>(
   updateFunction: (contractHash: BigNumber, address: string) => Promise<void>,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  if (updateFunction && contract.contract) {
+  if (updateFunction && contract.isContract()) {
     _setMessage && _setMessage("Update " + name + "...")
     await updateFunction(
       contractHash,
-      contract.contract.address
+      contract.getContractNotOk().address
     )
     contract.contractHash = contractHash
     contract.versionOk = true
@@ -168,18 +168,18 @@ const updateContractGameManager = async (
     contractHandler,
     _setMessage
   )
-  if (contractHandler.cardList.contract) {
+  if (contractHandler.cardList.isContract()) {
     _setMessage && _setMessage("Creating contract game manager...")
-    contractHandler.gameManager.contract = await createWithManagerContractGameManager(
+    contractHandler.gameManager.setContract(await createWithManagerContractGameManager(
       contractHandler.alchethmy.getContract(),
-      contractHandler.cardList.contract,
+      contractHandler.cardList.getContractNotOk(),
       contractHandler.transactionManager,
-    )
+    ))
   }
-  if (contractHandler.gameManager.contract) {
+  if (contractHandler.gameManager.isContract()) {
     contractHandler.alchethmy.getContract().addContract(
       getHashContractGameManager(),
-      contractHandler.gameManager.contract.address,
+      contractHandler.gameManager.getContractNotOk().address,
     )
     contractHandler.gameManager.contractHash = getHashContractGameManager()
     contractHandler.gameManager.versionOk = true
@@ -201,20 +201,20 @@ const updateContractGameList = async (
     contractHandler,
     _setMessage
   )
-  if (contractHandler.playGameFactory.contract && contractHandler.playActionLib.contract) {
+  if (contractHandler.playGameFactory.isContract() && contractHandler.playActionLib.isContract()) {
     _setMessage && _setMessage("Creating contract game list...")
-    contractHandler.gameList.contract = await createWithManagerContractGameList(
+    contractHandler.gameList.setContract(await createWithManagerContractGameList(
       contractHandler.gameManager.getContract(),
-      contractHandler.playGameFactory.contract,
-      contractHandler.playActionLib.contract,
+      contractHandler.playGameFactory.getContractNotOk(),
+      contractHandler.playActionLib.getContractNotOk(),
       getHashContractGameList(),
       contractHandler.transactionManager
-    )
+    ))
   }
 
-  if (contractHandler.gameList.contract) {
+  if (contractHandler.gameList.isContract()) {
     contractHandler.gameManager.getContract().updateGameList(
-      contractHandler.gameList.contract.address,
+      contractHandler.gameList.getContractNotOk().address,
     )
     contractHandler.gameList.contractHash = getHashContractGameList()
     contractHandler.gameList.versionOk = true
@@ -268,10 +268,10 @@ export const updateAlchethmyContractHash = async (
   _setMessage?: (message: string | undefined) => void,
 ) => {
   _setMessage && _setMessage("get contract Alchethmy...")
-  if (contractHandler.alchethmy.contract && contractHandler.alchethmy.contractHash) {
+  if (contractHandler.alchethmy.isContract() && contractHandler.alchethmy.contractHash) {
     const newContractHash = getHashContractAlchethmy()
     if (!newContractHash.eq(contractHandler.alchethmy.contractHash)) {
-      await contractHandler.alchethmy.contract.setContractHash(newContractHash)
+      await contractHandler.alchethmy.getContract().setContractHash(newContractHash)
       contractHandler.alchethmy.contractHash = newContractHash
       contractHandler.alchethmy.versionOk = true
     }

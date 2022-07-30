@@ -1,6 +1,6 @@
-import { ethers } from 'ethers'
+import { ethers, BigNumber } from 'ethers'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { TransactionManager } from '../util/TransactionManager'
 import TimerSemaphore from '../util/TimerSemaphore'
@@ -39,18 +39,21 @@ import {
 
 import { useAppSelector, useAppDispatch } from '../hooks'
 
-const refreshBalance = async (
+const updateBalance =  async (
   dispatch: any,
-  transactionManager: TransactionManager,
+  balance: BigNumber,
+  address: string,
+  chainId: number,
 ) => {
   const _balance = parseFloat(
     ethers.utils.formatEther(
-      await transactionManager.getBalance()
+      balance
     )
   )
   dispatch(
     setBalance({
-      address: await transactionManager.getAddress(),
+      chainId: chainId,
+      address: address,
       balance: _balance
     })
   )
@@ -60,11 +63,21 @@ const refreshBalance = async (
   return _balance
 }
 
+const refreshBalance = async (
+  dispatch: any,
+  transactionManager: TransactionManager,
+) => {
+  return updateBalance(
+    dispatch,
+    await transactionManager.getBalance(),
+    await transactionManager.getAddress(),
+    await transactionManager.getChainId(),
+  )
+}
+
 const setTransactionManagerUpdate = async (
   dispatch: any,
   provider: ethers.providers.Provider,
-  timer : NodeJS.Timeout | undefined,
-  setTimer : (timer : NodeJS.Timeout) => void,
   setTransactionManager: (transactionManager: TransactionManager) => void,
   network : NetworkType,
   signer : ethers.Signer
@@ -82,16 +95,12 @@ const setTransactionManagerUpdate = async (
   )
   setTransactionManager(transactionManager)
   const balance = refreshBalance(dispatch, transactionManager)
-  provider.removeAllListeners()
-  if (timer) {
-    clearTimeout(timer)
-  }
   if (network.refreshBalance) {
-    setTimer(setInterval(() => {
-      if (transactionManager) {
-        refreshBalance(dispatch, transactionManager)
-      }
-    }, network.refreshBalance))
+    transactionManager.refreshBalance(
+      network.refreshBalance,
+      dispatch,
+      updateBalance
+    )
   } else {
     provider.on('block', () => {
       refreshBalance(dispatch, transactionManager)
@@ -104,8 +113,6 @@ const loadWalletFromBroswer = async (
   dispatch: any,
   password: { password: string | undefined, passwordCheck: string | undefined },
   setTransactionManager: (transactionManager: TransactionManager) => void,
-  timer : NodeJS.Timeout | undefined,
-  setTimer : (timer : NodeJS.Timeout) => void
 ) => {
   dispatch(updateStep({ id: StepId.Wallet, step: Step.Loading }))
   const walletStorage = walletStorageLoad()
@@ -151,8 +158,6 @@ const loadWalletFromBroswer = async (
                     const balance = await setTransactionManagerUpdate(
                       dispatch,
                       provider,
-                      timer,
-                      setTimer,
                       setTransactionManager,
                       _network,
                       new ethers.Wallet(
@@ -205,8 +210,6 @@ const loadWalletFromBroswer = async (
           const balance = await setTransactionManagerUpdate(
             dispatch,
             web3Wallet.signer.provider,
-            timer,
-            setTimer,
             setTransactionManager,
             web3Wallet.network,
             web3Wallet.signer,
@@ -237,7 +240,6 @@ const WalletLoader = (props: {
 
   const step = useAppSelector((state) => state.contractSlice.step)
   const password = useAppSelector((state) => state.walletSlice.password)
-  const [timer, setTimer] = useState<NodeJS.Timeout>()
 
   const dispatch = useAppDispatch()
 
@@ -247,12 +249,9 @@ const WalletLoader = (props: {
         dispatch,
         password,
         props.setTransactionManager,
-        timer,
-        setTimer
       )
     }
   }, [
-      timer,
       dispatch,
       step,
       password,
