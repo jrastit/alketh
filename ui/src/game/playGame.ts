@@ -114,6 +114,40 @@ export const playAttack = (
   }
 }
 
+export const revertActionList = (
+  turnData: TurnDataType,
+  setTurnData: (turnData: TurnDataType) => void,
+) => {
+  let cardList = [turnData.cardList[0].map((_gameCard) => {
+    if (_gameCard) return { ..._gameCard }
+    return undefined
+  }), turnData.cardList[1].map((_gameCard) => {
+    if (_gameCard) return { ..._gameCard }
+    return undefined
+  })]
+
+  const playActionList = turnData.playActionList.map((gameAction) => {
+    if (gameAction) {
+      const pos = (turnData.pos + gameAction.actionTypeId) % 2
+      const actionTypeId = gameAction.actionTypeId - (gameAction.actionTypeId % 2)
+      const gameCard = cardList[pos][gameAction.gameCardId]
+      if (actionTypeId == ActionType.Attack && gameCard) {
+        gameCard.play = 0
+        return undefined
+      }
+    }
+    return gameAction
+  }).filter(gameAction => gameAction != undefined) as (GameActionType | null)[]
+
+  const newTurnData = {
+    ...turnData,
+    cardList: cardList,
+    playActionList: playActionList,
+  }
+  setTurnData(newTurnData)
+
+}
+
 export const playAction = async (
   contractHandler: ContractHandlerType,
   gameAction: GameActionType,

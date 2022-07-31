@@ -1,5 +1,6 @@
 import { ContractHandlerType } from '../../type/contractType'
 import { useEffect, useState, useRef, ReactElement } from 'react'
+
 import {
   GameType,
   GameCardType,
@@ -14,6 +15,7 @@ import { UserType } from '../../type/userType'
 import GameTimer from './gameTimer'
 import GameCardWidget from './gameCardWidget'
 import DropHelper from '../../component/dropHelper'
+
 import PlaceHelper, { PlaceRefType } from '../../component/placeHelper'
 
 import Container from 'react-bootstrap/Container'
@@ -23,6 +25,7 @@ import Button from '../../component/buttonNice'
 
 import {
   playAction,
+  revertActionList,
 } from '../../game/playGame'
 
 import {
@@ -52,6 +55,11 @@ import {
 } from '../../game/game'
 
 
+import {
+  annimatePlay,
+  displayAllAction
+} from '../animation/animation'
+
 enum Play {
   Init,
   MyTurn,
@@ -65,71 +73,6 @@ enum Play {
 }
 
 const stepId = StepId.Game
-
-const annimatePlay = async (
-  pos: number,
-  cardRefIdList: number[][],
-  current: (PlaceRefType | null)[],
-  actionId : number,
-  gameCardId1: number,
-  gameCardId2: number,
-  preview: boolean,
-) => {
-  console.log("annimatePlay", gameCardId1, gameCardId2)
-  console.log(preview, actionId, gameCardId1, gameCardId2)
-  const place1 = current[cardRefIdList[pos][gameCardId1]]?.getPlace()
-  //console.log(place1)
-  if (place1) {
-    if (gameCardId2 !== undefined) {
-      let place2 = undefined
-      if (actionId - (actionId % 2) === ActionType.Attack){
-        place2 = current[cardRefIdList[1 - pos][gameCardId2]]?.getPlace()
-        if (place2) {
-          await current[cardRefIdList[pos][gameCardId1]]?.doTranslate2({
-            x: place2.x - place1.x,
-            y: place2.y - place1.y,
-          })
-        }
-      } else {
-        console.log("actionId not replay")
-      }
-    }else {
-      console.log("gameCardId2 undefined")
-    }
-  } else {
-    console.log("place1 not found")
-  }
-}
-
-const _playAction = async (
-  contractHandler : ContractHandlerType,
-  gameAction: GameActionType,
-  turnData: TurnDataType,
-  setTurnData: (turnData: TurnDataType) => void,
-  preview : boolean,
-  annimate?: {
-    cardRefIdList: number[][],
-    current: (PlaceRefType | null)[],
-    annimatePlay: (
-      myTurn: number,
-      cardRefIdList: number[][],
-      current: (PlaceRefType | null)[],
-      actionId: number,
-      gameCardId1: number,
-      gameCardId2: number,
-      preview: boolean,
-    ) => Promise<void>
-  },
-) => {
-  await playAction(
-    contractHandler,
-    gameAction,
-    turnData,
-    setTurnData,
-    preview,
-    annimate,
-  )
-}
 
 const _playNextAction = async (
   contractHandler : ContractHandlerType,
@@ -152,7 +95,7 @@ const _playNextAction = async (
     playActionTurnList[turnData.playActionId] != null
   ) {
     const gameAction = playActionTurnList[turnData.playActionId] as GameActionType
-    await _playAction(
+    await playAction(
       contractHandler,
       gameAction,
       turnData,
@@ -192,6 +135,8 @@ const GameBoard = (props: {
   const dispatch = useAppDispatch()
 
   //const cardIdSpace = [[[],[],[]],[[],[],[]]] as number[][][]
+
+  let actionPlaceholder : HTMLDivElement | null = null
 
   const [turnData, setTurnData] = useState<TurnDataType>({
     turn: 0,
@@ -305,6 +250,16 @@ const GameBoard = (props: {
     }
   }, [play, autoPlay, props.game, props.user.id, props.contractHandler, turnData, playActionList, cardRefIdList, turn, dispatch])
 
+  useEffect(()=>{
+    displayAllAction(
+      turnData.pos,
+      cardRefIdList,
+      cardRefList.current,
+      turnData.playActionList,
+      actionPlaceholder,
+    )
+  }, [turnData.pos, cardRefIdList, cardRefList.current, turnData.playActionList])
+
 
   const displayGameCardList = (
     pos: number,
@@ -375,17 +330,17 @@ const GameBoard = (props: {
       self : true,
     }
     try{
-      await _playAction(
+      await playAction(
         props.contractHandler,
         gameAction,
         turnData,
         setTurnData,
         true,
-        {
+        /*{
           cardRefIdList,
           current : cardRefList.current,
           annimatePlay,
-        }
+        }*/
       )
     } catch (err : any) {
       console.log(err)
@@ -398,14 +353,14 @@ const GameBoard = (props: {
       const gameAction = playRandomly(turnData)
       if (gameAction !== 0 && gameAction !== 1) {
         let animate = undefined
-        if (isAnimate){
+        if (isAnimate && 0){
           animate = {
             cardRefIdList,
             current: cardRefList.current,
             annimatePlay,
           }
         }
-        await _playAction(
+        await playAction(
           props.contractHandler,
           gameAction,
           turnData,
@@ -472,13 +427,14 @@ const GameBoard = (props: {
     )
   }
 
+
+
   return (
     <Container style={{ maxWidth : '540px'}}>
     <div style={{ fontSize: "11px" }}>
 
       <Row style={{ height: "20em", backgroundColor: "#00000080" }}>
       <Col>
-
         {displayGameCardList(
           1 - turnData.pos,
           0,
@@ -486,7 +442,6 @@ const GameBoard = (props: {
           false,
           _playAttack,
         )}
-
       </Col>
       </Row>
       <GameTimer
@@ -500,12 +455,15 @@ const GameBoard = (props: {
         style={{ height: "20em", backgroundColor: "#00000080" }}
       >
       <Col>
+          <>
           {displayGameCardList(
             turnData.pos,
             0,
             2,
             play === Play.Ready,
           )}
+          </>
+          <div ref={(_actionPlaceholder : HTMLDivElement | null) => actionPlaceholder = _actionPlaceholder}></div>
           </Col>
           </Row>
           <Row>
@@ -534,6 +492,17 @@ const GameBoard = (props: {
                     </span>
 
                 </div>
+                {turnData.playActionList && turnData.playActionList.length > 0 &&
+                  <Button
+                    onClick={() => {
+                      console.log(turnData.playActionId, turnData.playActionList)
+                      revertActionList(
+                        turnData,
+                        setTurnData,
+                      )
+                    }}
+                  >Reset action</Button>
+                }
                 {play === Play.WaitReplay &&
                   <Button
                     onClick={() => {
