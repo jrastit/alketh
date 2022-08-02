@@ -1,5 +1,10 @@
 allowedHosts = ["all"];
 module.exports = {
+  resolve: {
+    alias: {
+      'react-dnd': path.resolve('../node_modules/react-dnd')
+    }
+  },
   resolve.fallback: {
     "util": require.resolve("util/"),
     'stream': require.resolve('stream-browserify'),

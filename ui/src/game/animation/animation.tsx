@@ -1,4 +1,4 @@
-import * as ReactDOM from 'react-dom';
+import ReactDOMClient from "react-dom/client"
 import LineHelper from '../../component/lineHelper'
 import RoundHelper from '../../component/roundHelper'
 import { PlaceRefType } from '../../component/placeHelper'
@@ -26,13 +26,13 @@ const displayAction = (
   gameCardId1: number,
   dest: number | undefined,
 ) => {
-  console.log("Display action", pos, actionId, gameCardId1, dest)
+  //console.log("Display action", pos, actionId, gameCardId1, dest)
   if (actionId - (actionId % 2) === ActionType.Attack && dest !== undefined){
     const place1 = getPlace(pos, cardRefIdList, current, gameCardId1)
     const place2 = getPlace(1 - pos, cardRefIdList, current, dest)
     if (place1 && place2) {
-      console.log("Display action attack", gameCardId1, dest)
-      console.log("Display line", place1, place2)
+      //console.log("Display action attack", gameCardId1, dest)
+      //console.log("Display line", place1, place2)
       return (
         <div key={id}>
         <LineHelper key={id}
@@ -77,9 +77,13 @@ export const displayAllAction = (
             _playAction.dest,
           )
         }
+        return undefined
       })}</div>
     )
-    ReactDOM.render(element, actionPlaceholder)
+    //ReactDOM.render(element, actionPlaceholder)
+    const root = ReactDOMClient.createRoot(actionPlaceholder)
+    root.render(element)
+
     /*
     actionPlaceholder.append(
       element
@@ -94,14 +98,20 @@ export const annimatePlay = async (
   current: (PlaceRefType | null)[],
   actionId : number,
   gameCardId1: number,
-  gameCardId2: number,
+  gameCardId2: number | undefined,
   preview: boolean,
 ) => {
-  console.log("annimatePlay", gameCardId1, gameCardId2)
-  console.log(preview, actionId, gameCardId1, gameCardId2)
+  //console.log("annimatePlay", gameCardId1, gameCardId2)
+  //console.log(preview, actionId, gameCardId1, gameCardId2)
   const place1 = getPlace(pos, cardRefIdList, current, gameCardId1)
   //console.log(place1)
   if (place1) {
+    if (actionId - (actionId % 2) === ActionType.Draw){
+      await current[cardRefIdList[pos][gameCardId1]]?.doTranslate2({
+        x: place1.x + 100,
+        y: place1.y + 100,
+      })
+    }
     if (gameCardId2 !== undefined) {
       let place2 = undefined
       if (actionId - (actionId % 2) === ActionType.Attack){

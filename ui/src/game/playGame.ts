@@ -131,13 +131,13 @@ export const revertActionList = (
       const pos = (turnData.pos + gameAction.actionTypeId) % 2
       const actionTypeId = gameAction.actionTypeId - (gameAction.actionTypeId % 2)
       const gameCard = cardList[pos][gameAction.gameCardId]
-      if (actionTypeId == ActionType.Attack && gameCard) {
+      if (actionTypeId === ActionType.Attack && gameCard) {
         gameCard.play = 0
         return undefined
       }
     }
     return gameAction
-  }).filter(gameAction => gameAction != undefined) as (GameActionType | null)[]
+  }).filter(gameAction => gameAction !== undefined) as (GameActionType | null)[]
 
   const newTurnData = {
     ...turnData,
@@ -163,7 +163,7 @@ export const playAction = async (
       current: (PlaceRefType | null)[],
       actionId: number,
       gameCardId1: number,
-      gameCardId2: number,
+      gameCardId2: number | undefined,
       preview: boolean,
     ) => Promise<void>
   }
@@ -179,6 +179,15 @@ export const playAction = async (
         turnData,
         setTurnData,
         pos,
+      )
+      annimate && await annimate.annimatePlay(
+        pos,
+        annimate.cardRefIdList,
+        annimate.current,
+        actionTypeId,
+        gameAction.gameCardId,
+        undefined,
+        preview,
       )
     } else if (actionTypeId === ActionType.Attack) {
       const _gameCard = turnData.cardList[pos][gameAction.gameCardId]

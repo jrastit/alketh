@@ -13,7 +13,7 @@ const LineHelper = (props: {
 
   const angle = (Math.atan2(height, width) * 1800) / (Math.PI * 10)
 
-  console.log(angle)
+  //console.log(angle)
 
   return (
     <>

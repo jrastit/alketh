@@ -266,8 +266,8 @@ const GameBoard = (props: {
     start: number,
     stop: number,
     draggable?: boolean,
-    onDrop?: (data: string, gameCard: GameCardType,) => void,
-    onDropEmpty?: (data: string, id: number) => void,
+    onDrop?: (data: number, gameCard: GameCardType,) => void,
+    onDropEmpty?: (data: number, id: number) => void,
   ) => {
     const xs = Math.floor(12 / (stop - start))
     const padding = Math.floor((12 - ((stop - start) * xs)) / 2)
@@ -303,7 +303,7 @@ const GameBoard = (props: {
               }
               { !_card &&
                 <DropHelper
-                  onDrop={(data : string) => onDropEmpty && onDropEmpty(data, id)}
+                  onDrop={(data : number) => onDropEmpty && onDropEmpty(data, id)}
                   style={{
                     width:"12em",
                     height:"18em",
@@ -320,8 +320,8 @@ const GameBoard = (props: {
     )
   }
 
-  const _playAttack = async (data: string, gameCard2: GameCardType) => {
-    const gameCardId1 = parseInt(data)
+  const _playAttack = async (data: number, gameCard2: GameCardType) => {
+    const gameCardId1 = data
     const gameCardId2 = gameCard2.id
     const gameAction = {
       gameCardId : gameCardId1,
@@ -387,7 +387,7 @@ const GameBoard = (props: {
             _style={borderBottom : 'thin solid black'}
           }
           let toPlay = ''
-          if (turnData.turn < _turn || (turnData.turn == _turn &&  _id >= turnData.playActionId)) {
+          if (turnData.turn < _turn || (turnData.turn === _turn &&  _id >= turnData.playActionId)) {
             toPlay = '*'
           }
           _actionList.push(
@@ -495,7 +495,7 @@ const GameBoard = (props: {
                 {turnData.playActionList && turnData.playActionList.length > 0 &&
                   <Button
                     onClick={() => {
-                      console.log(turnData.playActionId, turnData.playActionList)
+                      //console.log(turnData.playActionId, turnData.playActionList)
                       revertActionList(
                         turnData,
                         setTurnData,

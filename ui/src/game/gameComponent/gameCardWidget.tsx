@@ -7,14 +7,14 @@ import { GameCardType } from '../../type/gameType'
 
 import CardWidget from '../component/cardWidget'
 
-import DragHelper from '../../component/dragHelper2'
+import DragHelper from '../../component/dragHelper'
 import DropHelper from '../../component/dropHelper'
 
 const GameCardWidget = (props : {
   cardList : CardType[],
   gameCard : GameCardType,
   draggable : boolean,
-  onDrop ?: (data : string, gameCard : GameCardType) => void
+  onDrop ?: (data : number, gameCard : GameCardType) => void
 }) => {
 
   const card = props.cardList.filter((card) => card.id === props.gameCard.cardId)[0]
@@ -58,7 +58,7 @@ const GameCardWidget = (props : {
   if (props.onDrop) {
     return (
       <DropHelper
-        onDrop={(data : string) => props.onDrop && props.onDrop(data, props.gameCard)}
+        onDrop={(data : number) => {props.onDrop && props.onDrop(data, props.gameCard)}}
       >
       {renderCard()}
       </DropHelper>
