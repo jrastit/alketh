@@ -33,7 +33,7 @@
       "url": "https://testnet.emerald.oasis.dev",
       "faucet" : "https://faucet.testnet.oasis.dev/",
       "chainId": 42261,
-      "gameContract": "0xe1DA2BA07ae2264eB49362f5DDF7aA73268C20B2",
+      "gameContract": "0x8B20287f563e6E228dBc62a378c9914939770922",
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
       "retry" : 2
