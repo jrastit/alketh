@@ -30,7 +30,7 @@
       ]
     },
     {
-      "contract": "Alchethmy",
+      "contract": "Alketh",
       "arg": [
         {
           "name": "_contractHash",
@@ -43,7 +43,7 @@
       "contract": "GameManager",
       "arg": [
         {
-          "name": "_alchethmy",
+          "name": "_alketh",
           "type": "ethers.Contract"
         },
         {

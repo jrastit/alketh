@@ -26,9 +26,9 @@ const ContractInfoWidget = (props : {
 
   const render = () => {
     const ret = []
-    const alchethmy = displayContract(props.contractHandler.alchethmy)
-    if (alchethmy){
-      ret.push(alchethmy)
+    const alketh = displayContract(props.contractHandler.alketh)
+    if (alketh){
+      ret.push(alketh)
       const gameManager = displayContract(props.contractHandler.gameManager)
       if (gameManager){
         ret.push(gameManager)

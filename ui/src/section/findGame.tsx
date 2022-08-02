@@ -258,7 +258,7 @@ const FindGame = (props: {
   return (
     <Container>
       <DivNice>
-        Alchethmy is a P2E Card Game. <br /><br />
+        Alketh is a P2E Card Game. <br /><br />
         Play to Increase the value of your cards. <br /><br />
         Gain more value by converting them to NFTs. <br /><br />
         Sell/Buy cards from other players. <br />

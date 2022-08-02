@@ -9,7 +9,7 @@ import Button from 'react-bootstrap/Button'
 import {
   clearState,
   fillContract,
-  updateAlchethmyContractHash,
+  updateAlkethContractHash,
   updateContract,
 } from '../game/reducer/contract'
 
@@ -66,11 +66,11 @@ const AdminContract = (props : {
         </SpaceWidget>
         { network?.gameContract &&
           <SpaceWidget>
-          <Button variant="warning" onClick={() => {updateAlchethmyContractHash(
+          <Button variant="warning" onClick={() => {updateAlkethContractHash(
             dispatch,
             props.contractHandler
           )}}>
-            Update Alchethmy Hash
+            Update Alketh Hash
           </Button>
           </SpaceWidget>
         }

@@ -10,7 +10,7 @@ import {
   getHashContractPlayActionLib as _getHashContractPlayActionLib,
   getHashContractPlayBot as _getHashContractPlayBot,
   getHashContractNFT as _getHashContractNFT,
-  getHashContractAlchethmy as _getHashContractAlchethmy,
+  getHashContractAlketh as _getHashContractAlketh,
   getHashContractGameList as _getHashContractGameList,
   getHashContractCardList as _getHashContractCardList,
 
@@ -44,8 +44,8 @@ export const getHashContractPlayBot = () => {
   return _getHash(_getHashContractPlayBot())
 }
 
-export const getHashContractAlchethmy = () => {
-  return _getHash(_getHashContractAlchethmy())
+export const getHashContractAlketh = () => {
+  return _getHash(_getHashContractAlketh())
 }
 
 export const getHashContractGameList = () => {

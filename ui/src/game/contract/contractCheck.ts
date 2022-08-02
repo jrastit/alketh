@@ -13,7 +13,7 @@ import {
 } from '../../type/contractType'
 
 import {
-  getWithManagerContractAlchethmy,
+  getWithManagerContractAlketh,
   getWithManagerContractPlayGameFactory,
   getWithManagerContractPlayActionLib,
   getWithManagerContractGameManager,
@@ -29,7 +29,7 @@ import {
   getHashContractPlayActionLib,
   getHashContractPlayBot,
   getHashContractNFT,
-  getHashContractAlchethmy,
+  getHashContractAlketh,
   getHashContractGameList,
   getHashContractCardList,
 } from './contractHash'
@@ -38,36 +38,36 @@ import { ContractHandlerType } from '../../type/contractType'
 
 import { NetworkType } from '../../type/networkType'
 
-const checkContractAlchethmy = async (
+const checkContractAlketh = async (
   network: NetworkType | undefined,
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
   if (network && network.gameContract) {
-    contractHandler.alchethmy.setContract(getWithManagerContractAlchethmy(
+    contractHandler.alketh.setContract(getWithManagerContractAlketh(
       ethersUtils.getAddress(network.gameContract),
       contractHandler.transactionManager
     ))
   }
-  if (contractHandler.alchethmy.isContract()) {
+  if (contractHandler.alketh.isContract()) {
     try {
-      _setMessage && _setMessage("Checking Alchethmy contract...")
-      contractHandler.alchethmy.contractHash = (await contractHandler.alchethmy.getContractNotOk().contractHash())[0]
-      if (contractHandler.alchethmy.contractHash) {
-        if (getHashContractAlchethmy().eq(contractHandler.alchethmy.contractHash)) {
-          contractHandler.alchethmy.versionOk = true
+      _setMessage && _setMessage("Checking Alketh contract...")
+      contractHandler.alketh.contractHash = (await contractHandler.alketh.getContractNotOk().contractHash())[0]
+      if (contractHandler.alketh.contractHash) {
+        if (getHashContractAlketh().eq(contractHandler.alketh.contractHash)) {
+          contractHandler.alketh.versionOk = true
         } else {
-          contractHandler.alchethmy.versionOk = false
+          contractHandler.alketh.versionOk = false
         }
       } else {
-        contractHandler.alchethmy.versionOk = undefined
+        contractHandler.alketh.versionOk = undefined
       }
     } catch (err: any) {
       console.error(err)
-      contractHandler.alchethmy.versionOk = undefined
+      contractHandler.alketh.versionOk = undefined
     }
   } else {
-    contractHandler.alchethmy.versionOk = undefined
+    contractHandler.alketh.versionOk = undefined
   }
 }
 
@@ -247,7 +247,7 @@ const checkContractGameManager = async (
     contractHandler.gameManager,
     getHashContractGameManager(),
     getWithManagerContractGameManager,
-    contractHandler.alchethmy.getContract().getContract,
+    contractHandler.alketh.getContract().getContract,
     contractHandler,
     _setMessage,
   )
@@ -258,8 +258,8 @@ export const checkAllContract = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  await checkContractAlchethmy(network, contractHandler, _setMessage)
-  if (contractHandler.alchethmy.versionOk) {
+  await checkContractAlketh(network, contractHandler, _setMessage)
+  if (contractHandler.alketh.versionOk) {
     await checkContractGameManager(contractHandler, _setMessage)
     if (contractHandler.gameManager.versionOk) {
       await checkContractCardList(contractHandler, _setMessage)
@@ -274,7 +274,7 @@ export const checkAllContract = async (
   }
 
   return (
-    contractHandler.alchethmy.versionOk &&
+    contractHandler.alketh.versionOk &&
     contractHandler.gameManager.versionOk &&
     contractHandler.gameList.versionOk &&
     contractHandler.cardList.versionOk &&

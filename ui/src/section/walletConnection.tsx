@@ -130,7 +130,7 @@ const WalletConnection = (props: {
               exp={0}
             />
           </div>
-          <DivNice title='Alchethmy'>
+          <DivNice title='Alketh'>
             <p>A blockchain card game!</p>
             <p>Chose your wallet to connect and start playing.</p>
           </DivNice>

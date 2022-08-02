@@ -1,5 +1,5 @@
 function cmd {
-	ssh alchethmy.com "$1"
+	ssh alketh.io "$1"
 	ret=$?
 	if [[ $ret != 0 ]]
 	then
@@ -7,9 +7,9 @@ function cmd {
 		exit $ret
 	fi
 }
-cmd "cd alchethmy/alchethmy && git pull"
-cmd ". .profile ; cd alchethmy/alchethmy/contract ; npm i"
-cmd ". .profile ; cd alchethmy/alchethmy/contract ; npm run build"
-cmd ". .profile ; cd alchethmy/alchethmy/ui ; npm i"
-cmd ". .profile ; cd alchethmy/alchethmy/ui ; npm run build"
-cmd ". .profile ; cd alchethmy/alchethmy/ui ; pm2 reload alchethmy"
+cmd "cd alketh/alketh && git pull"
+cmd ". .profile ; cd alketh/alketh/contract ; npm i"
+cmd ". .profile ; cd alketh/alketh/contract ; npm run build"
+cmd ". .profile ; cd alketh/alketh/ui ; npm i"
+cmd ". .profile ; cd alketh/alketh/ui ; npm run build"
+cmd ". .profile ; cd alketh/alketh/ui ; pm2 reload alketh"

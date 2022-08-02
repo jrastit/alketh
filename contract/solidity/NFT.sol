@@ -29,7 +29,7 @@ contract NFT is IERC2981, ERC721 {
         string memory _baseURI,
         uint256 _contractHash
     )
-        ERC721("Alchethmy", "AND")
+        ERC721("Alketh", "AND")
     {
 				receiver = _receiver;
 				royaltyFraction = _royaltyFraction;

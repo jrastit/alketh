@@ -8,7 +8,7 @@ import { PlayGameFactory } from "./PlayGameFactory.sol";
 import { PlayActionLib } from "./PlayActionLib.sol";
 import { PlayBot } from "./PlayBot.sol";
 import { NFT } from "./NFT.sol";
-import { Alchethmy } from "./Alchethmy.sol";
+import { Alketh } from "./Alketh.sol";
 
 struct User {
     uint64 id;
@@ -53,7 +53,7 @@ contract GameManager {
     ///////////////////////// contract /////////////////////////////////////
 
     function checkOwner(address _sender) public view {
-        alchethmy.checkOwner(_sender);
+        alketh.checkOwner(_sender);
     }
 
     modifier _isOwner() {
@@ -62,19 +62,19 @@ contract GameManager {
     }
 
     function withdraw (uint _amount) public _isOwner {
-        alchethmy.owner().transfer(_amount);
+        alketh.owner().transfer(_amount);
     }
 
     constructor(
-        Alchethmy _alchethmy,
+        Alketh _alketh,
         CardList _cardList
     ) {
-        alchethmy = _alchethmy;
+        alketh = _alketh;
         cardList = _cardList;
     }
 
-    //////////////////////////////////// Alchethmy ///////////////////////
-    Alchethmy public alchethmy;
+    //////////////////////////////////// Alketh ///////////////////////
+    Alketh public alketh;
 
     /////////////////////////////// CardList //////////////////////////////////
     CardList public cardList;

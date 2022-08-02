@@ -18,13 +18,13 @@ import {
   getHashContractPlayActionLib,
   getHashContractPlayBot,
   getHashContractNFT,
-  getHashContractAlchethmy,
+  getHashContractAlketh,
   getHashContractGameList,
   getHashContractCardList,
 } from './contractHash'
 
 import {
-  createContractAlchethmy,
+  createContractAlketh,
   createContractPlayGameFactory,
   createContractPlayActionLib,
   createContractCardList,
@@ -34,14 +34,14 @@ import {
 
 import { ContractHandlerType } from '../../type/contractType'
 
-const updateContractAlchethmy = async (
+const updateContractAlketh = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  await createContractAlchethmy(contractHandler, _setMessage)
-  contractHandler.alchethmy.contractHash = getHashContractAlchethmy()
-  contractHandler.alchethmy.versionOk = true
-  console.log("Alchethmy created at " + contractHandler.alchethmy.getContract().address)
+  await createContractAlketh(contractHandler, _setMessage)
+  contractHandler.alketh.contractHash = getHashContractAlketh()
+  contractHandler.alketh.versionOk = true
+  console.log("Alketh created at " + contractHandler.alketh.getContract().address)
 }
 
 const _updateContract = async <T extends { address: string }>(
@@ -171,13 +171,13 @@ const updateContractGameManager = async (
   if (contractHandler.cardList.isContract()) {
     _setMessage && _setMessage("Creating contract game manager...")
     contractHandler.gameManager.setContract(await createWithManagerContractGameManager(
-      contractHandler.alchethmy.getContract(),
+      contractHandler.alketh.getContract(),
       contractHandler.cardList.getContractNotOk(),
       contractHandler.transactionManager,
     ))
   }
   if (contractHandler.gameManager.isContract()) {
-    contractHandler.alchethmy.getContract().addContract(
+    contractHandler.alketh.getContract().addContract(
       getHashContractGameManager(),
       contractHandler.gameManager.getContractNotOk().address,
     )
@@ -229,10 +229,10 @@ export const updateAllContract = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  if (!contractHandler.alchethmy.versionOk) {
-    await updateContractAlchethmy(contractHandler, _setMessage)
+  if (!contractHandler.alketh.versionOk) {
+    await updateContractAlketh(contractHandler, _setMessage)
   }
-  if (contractHandler.alchethmy.versionOk) {
+  if (contractHandler.alketh.versionOk) {
     if (!contractHandler.gameManager.versionOk) {
       await updateContractGameManager(contractHandler, _setMessage)
     }
@@ -263,20 +263,20 @@ export const updateAllContract = async (
   }
 }
 
-export const updateAlchethmyContractHash = async (
+export const updateAlkethContractHash = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  _setMessage && _setMessage("get contract Alchethmy...")
-  if (contractHandler.alchethmy.isContract() && contractHandler.alchethmy.contractHash) {
-    const newContractHash = getHashContractAlchethmy()
-    if (!newContractHash.eq(contractHandler.alchethmy.contractHash)) {
-      await contractHandler.alchethmy.getContract().setContractHash(newContractHash)
-      contractHandler.alchethmy.contractHash = newContractHash
-      contractHandler.alchethmy.versionOk = true
+  _setMessage && _setMessage("get contract Alketh...")
+  if (contractHandler.alketh.isContract() && contractHandler.alketh.contractHash) {
+    const newContractHash = getHashContractAlketh()
+    if (!newContractHash.eq(contractHandler.alketh.contractHash)) {
+      await contractHandler.alketh.getContract().setContractHash(newContractHash)
+      contractHandler.alketh.contractHash = newContractHash
+      contractHandler.alketh.versionOk = true
     }
-    contractHandler.alchethmy.versionOk = contractHandler.alchethmy.contractHash ?
-      newContractHash.eq(contractHandler.alchethmy.contractHash) :
+    contractHandler.alketh.versionOk = contractHandler.alketh.contractHash ?
+      newContractHash.eq(contractHandler.alketh.contractHash) :
       false
   }
 }

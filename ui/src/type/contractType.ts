@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 
 import {
-  ContractAlchethmy,
+  ContractAlketh,
   ContractGameManager,
   ContractNFT,
   ContractPlayBot,
@@ -28,7 +28,7 @@ export type ContractType<Contract> = {
 
 export type ContractHandlerType = {
   transactionManager: TransactionManager
-  alchethmy: ContractType<ContractAlchethmy>
+  alketh: ContractType<ContractAlketh>
   gameManager: ContractType<ContractGameManager>
   cardList: ContractType<ContractCardList>
   gameList: ContractType<ContractGameList>
@@ -83,7 +83,7 @@ export const newContractHandler = (
 ): ContractHandlerType => {
   return {
     transactionManager: transactionManager,
-    alchethmy: new newContract<ContractAlchethmy>("Alchethmy"),
+    alketh: new newContract<ContractAlketh>("Alketh"),
     gameManager: new newContract<ContractGameManager>("Game Manager"),
     nft: new newContract<ContractNFT>("NFT"),
     playGameFactory: new newContract<ContractPlayGameFactory>("Play Game Factory"),

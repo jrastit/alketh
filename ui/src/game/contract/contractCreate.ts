@@ -8,7 +8,7 @@ import {
 } from '../../util/TransactionManager'
 
 import {
-  createWithManagerContractAlchethmy,
+  createWithManagerContractAlketh,
   createWithManagerContractPlayGameFactory,
   createWithManagerContractPlayActionLib,
   createWithManagerContractNFT,
@@ -28,19 +28,19 @@ import {
   getHashContractPlayActionLib,
   getHashContractPlayBot,
   getHashContractNFT,
-  getHashContractAlchethmy,
+  getHashContractAlketh,
   getHashContractCardList,
 } from './contractHash'
 
 import { ContractHandlerType } from '../../type/contractType'
 
-export const createContractAlchethmy = async (
+export const createContractAlketh = async (
   contractHandler: ContractHandlerType,
   _setMessage?: (message: string | undefined) => void,
 ) => {
-  _setMessage && _setMessage("Creating contract Alchethmy...")
-  contractHandler.alchethmy.setContract(await createWithManagerContractAlchethmy(
-    getHashContractAlchethmy(),
+  _setMessage && _setMessage("Creating contract Alketh...")
+  contractHandler.alketh.setContract(await createWithManagerContractAlketh(
+    getHashContractAlketh(),
     contractHandler.transactionManager
   ))
 }
@@ -60,9 +60,9 @@ const _createContract = async <T extends { address: string }>(
   _setMessage?: (message: string | undefined) => void,
 ) => {
   let contract: T | undefined
-  if (contractHandler.alchethmy.versionOk) {
+  if (contractHandler.alketh.versionOk) {
     _setMessage && _setMessage("Loading contract " + name + "...")
-    const contractAddress = (await contractHandler.alchethmy.getContract().getContract(contractHash))[0]
+    const contractAddress = (await contractHandler.alketh.getContract().getContract(contractHash))[0]
     if (contractAddress !== ethersConstants.AddressZero) {
       contract = getWithManager(
         contractAddress,
@@ -77,8 +77,8 @@ const _createContract = async <T extends { address: string }>(
       contractHandler.transactionManager,
     )
   }
-  if (contractHandler.alchethmy.versionOk) {
-    await contractHandler.alchethmy.getContract().addContract(
+  if (contractHandler.alketh.versionOk) {
+    await contractHandler.alketh.getContract().addContract(
       contractHash,
       contract.address
     )
@@ -140,8 +140,8 @@ export const createContractNFT = async (
       return createWithManagerContractNFT(
         contractHandler.gameManager.getContract().address,
         500, //5%
-        contractHandler.alchethmy.getContract().address,
-        window.location.hostname === "localhost" ? "http://localhost/nft/" : "https://alchethmy.com/nft/",
+        contractHandler.alketh.getContract().address,
+        window.location.hostname === "localhost" ? "http://localhost/nft/" : "https://alketh.com/nft/",
         contractHash,
         transactionManager,
       )

@@ -24,7 +24,7 @@ import {
 } from '../../game/contract/contractCheck'
 
 import {
-  updateAlchethmyContractHash as _updateAlchethmyContractHash,
+  updateAlkethContractHash as _updateAlkethContractHash,
   updateAllContract,
 } from '../../game/contract/contractUpdate'
 
@@ -129,7 +129,7 @@ export const updateContract = async (
   })
 }
 
-export const updateAlchethmyContractHash = (
+export const updateAlkethContractHash = (
   dispatch: any,
   contractHandler: ContractHandlerType,
 ) => {
@@ -137,7 +137,7 @@ export const updateAlchethmyContractHash = (
     dispatch(setMessage({ id: stepId, message: message }))
   }
   dispatch(updateStep({ id: stepId, step: Step.Loading }))
-  _updateAlchethmyContractHash(contractHandler, _setMessage).then(async () => {
+  _updateAlkethContractHash(contractHandler, _setMessage).then(async () => {
     clearState(dispatch)
     dispatch(resetAllSubStep())
     dispatch(updateStep({ id: stepId, step: Step.Init }))
@@ -338,12 +338,12 @@ export const loadContract = async (
           dispatch(updateStep({ id: stepId, step: Step.Empty }))
         }
       } else {
-        if (!contractHandler.alchethmy.isContract()) {
-          dispatch(setError({ id: stepId, error: "Alchethmy not set" }))
-        } else if (!contractHandler.alchethmy.versionOk) {
-          dispatch(setError({ id: stepId, error: "Alchethmy version not found at address" }))
+        if (!contractHandler.alketh.isContract()) {
+          dispatch(setError({ id: stepId, error: "Alketh not set" }))
+        } else if (!contractHandler.alketh.versionOk) {
+          dispatch(setError({ id: stepId, error: "Alketh version not found at address" }))
         } else {
-          dispatch(setError({ id: stepId, error: "Wrong version of Alchethmy" }))
+          dispatch(setError({ id: stepId, error: "Wrong version of Alketh" }))
         }
       }
     }).catch((err) => {

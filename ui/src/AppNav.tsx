@@ -29,7 +29,7 @@ const AppNav = (props: {
       expand="lg"
       >
     <Container fluid>
-      <Navbar.Brand onClick={() => props.setSection('wallet')}>Alchethmy {displayAdmin && network?.name && <> on {network?.name}</>}</Navbar.Brand>
+      <Navbar.Brand onClick={() => props.setSection('wallet')}>Alketh {displayAdmin && network?.name && <> on {network?.name}</>}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
