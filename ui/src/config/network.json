@@ -46,7 +46,8 @@
       "chainId": 42262,
       "gameContract": "0xC17c3Fece9C4c1D05b12E2dc467e86918cB0fD4d",
       "tokenName": "ROSE",
-      "retry" : 2
+      "retry" : 2,
+      "host" : "none"
     },
     {
       "name" : "Optimism Testnet",
@@ -57,7 +58,8 @@
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
       "host" : "localhost",
-      "retry" : 2
+      "retry" : 2,
+      "host" : "none"
     },
     {
       "name" : "Optimism Testnet",
@@ -67,7 +69,8 @@
       "gameContract": "0xDe97a49910546b71f42A61Fb1e4A048263a3Fe8E",
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
-      "retry" : 2
+      "retry" : 2,
+      "host" : "none"
     },
     {
       "name" : "Skale Testnet",
@@ -77,7 +80,8 @@
       "gameContract": "0xFA1efce9ffF20C0cEB853F98412446752061fe68",
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
-      "retry" : 2
+      "retry" : 2,
+      "host" : "none"
     },
     {
       "name" : "Skale Testnet",
@@ -99,7 +103,8 @@
       "tokenName": "ETH",
       "timeBetweenRequest" : 1000,
       "retry" : 2,
-      "refreshBalance" : 10000
+      "refreshBalance" : 10000,
+      "host" : "none"
     },
     {
       "name" : "Polygon Testnet",
@@ -110,7 +115,8 @@
       "tokenName": "MATIC",
       "timeBetweenRequest" : 1000,
       "refreshBalance" : 10000,
-      "retry" : 16
+      "retry" : 16,
+      "host" : "none"
     },
     {
       "name" : "Polygon Mainnet",
@@ -120,7 +126,8 @@
       "tokenName": "MATIC",
       "timeBetweenRequest" : 1000,
       "refreshBalance" : 20000,
-      "retry" : 16
+      "retry" : 16,
+      "host" : "none"
     },
     {
       "name" : "Cronos testnet",
@@ -129,7 +136,8 @@
       "chainId": 338,
       "gameContract": "0x6c60Fc1CeE5dFC6d9Eb368FeBb690273889C5e7F",
       "tokenName": "TEST",
-      "retry" : 2
+      "retry" : 2,
+      "host" : "none"
     },
     {
       "name" : "Boba testnet",
@@ -138,7 +146,8 @@
       "chainId": 28,
       "gameContract": "0x022adcA4B5B7407161ce43eC6ee68D36Eb556Dfa",
       "tokenName": "TEST",
-      "retry" : 2
+      "retry" : 2,
+      "host" : "none"
     },
     {
       "name" : "Boba testnet",
