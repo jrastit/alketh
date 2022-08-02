@@ -17,6 +17,7 @@ import StepMessageNiceWidget from '../component/stepMessageNiceWidget'
 import {
   walletStorageSetType,
   walletStorageClearPassword,
+  walletStorageSetNetworkId,
 } from '../util/walletStorage'
 
 import { useWeb3React } from '@web3-react/core'
@@ -103,6 +104,10 @@ const WalletConnection = (props: {
           </SpaceWidget>
           <DivNice>
             <p>Loading wallet ...</p>
+            <Button variant="danger" onClick={() => {
+              walletStorageSetNetworkId(undefined)
+              window.location.reload()
+            }}>Cancel</Button>
           </DivNice>
         </>
       )
