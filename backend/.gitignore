@@ -1,0 +1,8 @@
+build
+node_modules
+package-lock.json
+src/config/apiConfig.ts
+src/config/authConfig.ts
+src/config/dbConfig.ts
+src/config/hostConfig.ts
+key/

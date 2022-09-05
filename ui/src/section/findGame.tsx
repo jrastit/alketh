@@ -60,6 +60,7 @@ const FindGame = (props: {
   const userDeckList = useAppSelector((state) => state.userSlice.userDeckList)
   const network = useAppSelector((state) => state.walletSlice.network)
   const dispatch = useAppDispatch()
+  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
 
   const [deck, setDeck] = useState<UserDeckType | undefined>(
     userDeckList ? userDeckList[0] : undefined
@@ -217,8 +218,10 @@ const FindGame = (props: {
   const createGameRender = () => {
     return deck && (
       <>
-        <Button onClick={_createGame}>New Game</Button><br /><br />
         <Button onClick={_createGameBot}>New Game against bot</Button>
+        { displayAdmin &&
+          <><br/><br/><Button onClick={_createGame}>New Game</Button></>
+        }
       </>
     )
   }
@@ -312,10 +315,12 @@ const FindGame = (props: {
             {createGameRender()}
           </DivNice>
         }
+        { displayAdmin &&
+          <DivNice>
+            {joinGameRender()}
+          </DivNice>
+        }
 
-        <DivNice>
-          {joinGameRender()}
-        </DivNice>
         </>
       }
 

@@ -44,10 +44,11 @@ const AppNav = (props: {
 
           }
           <Nav.Link onClick={() => props.setSection('card')}>All cards</Nav.Link>
-          { displayAdmin &&
+          { (displayAdmin || 1) &&
             <>
             <Nav.Link onClick={() => props.setSection('editCard')}>Edit cards</Nav.Link>
             <Nav.Link onClick={() => props.setSection('admin')}>Admin</Nav.Link>
+            <Nav.Link onClick={() => props.setSection('user')}>User</Nav.Link>
             </>
           }
         </Nav>

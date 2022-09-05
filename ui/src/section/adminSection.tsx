@@ -5,6 +5,7 @@ import DisplayUserCard from '../section/displayUserCard'
 import DisplayNFT from '../section/displayNFT'
 import DisplayCard from '../section/displayCard'
 import EditCard from '../section/editCard'
+import UserSection from '../section/userSection'
 import ContractLoader from '../loader/contractLoader'
 import PlayGame from './playGame'
 import FindGame from './findGame'
@@ -59,6 +60,8 @@ const AdminSection = (props: {
 
   const render = () => {
     switch (props.section){
+      case 'user':
+      return <UserSection/>
       case 'admin':
       return displayAdmin()
       case 'editCard':

@@ -22,6 +22,9 @@
     "crypto-js": "^4.1.1",
     "eth-ens-namehash": "^2.0.8",
     "ethers": "^5.6.9",
+    "i18next": "^21.9.1",
+    "i18next-browser-languagedetector": "^6.1.5",
+    "i18next-http-backend": "^1.4.1",
     "json-rpc-engine": "^6.1.0",
     "raw-loader": "^4.0.2",
     "react": "^18.2.0",
@@ -32,6 +35,8 @@
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-touch-backend": "^16.0.1",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.2",
+    "react-i18next": "^11.18.5",
     "react-redux": "^8.0.2",
     "redux-thunk": "^2.4.1",
     "stream-browserify": "^3.0.0",
@@ -47,8 +52,9 @@
     "test": "react-scripts test",
     "test:sync": "react-scripts test --runInBand",
     "eject": "react-scripts eject",
-    "ganache": "npx ganache --hardfork london -a 10 -m='candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --gasLimit=8000000 --port 8545 -i 1234 --networkId 1234",
-    "ganache-slow": "npx ganache -a 10 -b 1 -m='candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --gasLimit=8000000 --port 8545 -i 1234 --networkId 1234"
+    "ganache": "npx ganache --hardfork london -a 10 -m='candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --gasLimit=8000000 --gasPrice=100000000000 --port 8545 -i 1234 --networkId 1234",
+    "ganache-slow": "npx ganache -a 10 -b 1 -m='candy maple cake sugar pudding cream honey rich smooth crumble sweet treat' --gasLimit=8000000 --port 8545 -i 1234 --networkId 1234",
+    "ganache-test": "curl -X POST --data '{\"jsonrpc\":\"2.0\",\"method\":\"web3_clientVersion\",\"params\":[],\"id\":67}' localhost:8545"
   },
   "proxy": "http://localhost:3011",
   "eslintConfig": {

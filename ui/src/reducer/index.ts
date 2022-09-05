@@ -5,6 +5,9 @@ import gameSlice from './gameSlice'
 import contractSlice from './contractSlice'
 import walletSlice from './walletSlice'
 import configSlice from './configSlice'
+import authSlice from './backend/authSlice'
+import messageSlice from './backend/messageSlice'
+
 
 export default combineReducers({
   cardListSlice,
@@ -13,4 +16,6 @@ export default combineReducers({
   contractSlice,
   walletSlice,
   configSlice,
+  authSlice,
+  messageSlice,
 })

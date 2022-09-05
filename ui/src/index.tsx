@@ -11,6 +11,8 @@ import { TouchBackend } from 'react-dnd-touch-backend'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { isMobile } from 'react-device-detect';
 
+import './i18n'
+
 function getLibrary(provider : any) {
   return new Web3Provider(provider);
 }
