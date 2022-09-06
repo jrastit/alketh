@@ -1,14 +1,12 @@
 import db from '../models'
 const Wallet = db.wallet
 import { RequestHandler } from 'express'
-import { faucet } from 'ethers-network/src/util/faucet'
+import { faucet } from 'ethers-network'
 import { Transaction } from 'sequelize'
 
 
-
-
 const faucetWallet = async (req: any, t: Transaction, res: any) => {
-  const privateKeys = require("../../key/" + req.body.networkName.replace(/ /g, "") + "PrivateKeys.json")
+  const privateKeys = require("../../../key/" + req.body.networkName.replace(/ /g, "") + "PrivateKeys.json")
   try {
     await faucet(req.body.address, req.body.networkName, privateKeys)
     console.log("faucet", req.ip, req.body.address)

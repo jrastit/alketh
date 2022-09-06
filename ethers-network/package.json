@@ -2,6 +2,8 @@
   "name": "ethers-network",
   "version": "0.1.0",
   "private": true,
+  "main": "build/index.js",
+  "typings": "build/index.d.ts",
   "dependencies": {
     "ethers": "^5.7.0"
   },

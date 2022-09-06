@@ -1,5 +1,5 @@
-const databaseInit = require("./src/utils/databaseInit").default;
-const appInit = require("./src/utils/appInit").default;
+const databaseInit = require("./build/src/utils/databaseInit").default;
+const appInit = require("./build/src/utils/appInit").default;
 
 databaseInit()
 appInit()

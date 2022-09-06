@@ -9,6 +9,7 @@ import WalletSelectWidget from '../component/wallet/walletSelectWidget'
 import WalletDelete from '../component/wallet/walletDelete'
 import WalletAddWidget from '../component/wallet/walletAddWidget'
 import CardWidget from '../game/component/cardWidget'
+import Faucet from '../component/backend/Faucet'
 import { TransactionManager } from '../util/TransactionManager'
 import DivNice from '../component/divNice'
 
@@ -237,6 +238,12 @@ const WalletConnection = (props: {
                 <>
                 <p>Get more Test token with {network.name} faucet at:</p>
                 <p><a href={network.faucet} target="_blank" rel="noreferrer">{network.faucet}</a></p>
+                </>
+              }
+              { wallet.address &&
+                <>
+                <p>Get more Test token with alketh faucet</p>
+                <p><Faucet address={wallet.address}/></p>
                 </>
               }
               </DivNice>

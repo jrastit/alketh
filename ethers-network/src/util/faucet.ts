@@ -31,7 +31,7 @@ export const faucet = async (address: string, networkName: string, privateKeys: 
   const wallet = getWallet(networkName, privateKeys)
   const ret = await wallet.sendTransaction({
     to: address,
-    value: ethers.utils.parseEther('0.01')
+    value: ethers.utils.parseEther('1')
   })
   //console.log(ret)
   await ret.wait()

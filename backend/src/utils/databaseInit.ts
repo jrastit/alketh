@@ -1,6 +1,7 @@
 import {
   Identifier
 } from "sequelize";
+
 import db from '../models'
 // database
 const Role = db.role;
