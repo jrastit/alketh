@@ -17,7 +17,7 @@ const RequireFaucet = () => {
     )
   }
 
-  if (!network.warningBalance ||  (wallet.balance && wallet.balance >= network.warningBalance)) {
+  if ((!network.warningBalance ||  (wallet.balance && wallet.balance >= network.warningBalance) && !network.faucet)) {
     return (
       <></>
     )
@@ -40,7 +40,7 @@ const RequireFaucet = () => {
       <p><Faucet address={wallet.address}/></p>
       </>
     }
-    { network && network.faucet &&
+    { network.faucet &&
       <>
 
       <p>Get more Test token with {network.name} faucet at:</p>
@@ -48,7 +48,7 @@ const RequireFaucet = () => {
       </>
     }
     </DivNice>
-  
+
   </>
   )
 }
