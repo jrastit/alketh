@@ -17,7 +17,7 @@ const RequireFaucet = () => {
     )
   }
 
-  if ((!network.warningBalance ||  (wallet.balance && wallet.balance >= network.warningBalance) && !network.faucet)) {
+  if ((!network.warningBalance ||  (wallet.balance && wallet.balance >= network.warningBalance))) {
     return (
       <></>
     )

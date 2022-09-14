@@ -39,7 +39,6 @@ const appInit = () => {
 
   //private file server
   const publicPath = path.join(__dirname, '../../../public')
-  console.log(publicPath)
   app.use(express.static(publicPath))
 
   // routes
