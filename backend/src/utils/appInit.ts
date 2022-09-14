@@ -38,7 +38,9 @@ const appInit = () => {
   });
 
   //private file server
-  app.use(express.static(path.join(__dirname, 'public')))
+  const publicPath = path.join(__dirname, '../../../public')
+  console.log(publicPath)
+  app.use(express.static(publicPath))
 
   // routes
   require('../routes/authRoutes').default(app)
