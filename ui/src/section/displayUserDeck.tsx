@@ -37,6 +37,7 @@ import Container from 'react-bootstrap/Container'
 const DisplayUserDeck = (props : {
   contractHandler : ContractHandlerType,
 }) => {
+  const cardList = useAppSelector((state) => state.cardListSlice.cardList)
   const userCardList = useAppSelector((state) => state.userSlice.userCardList)
   const userDeckList = useAppSelector((state) => state.userSlice.userDeckList)
   const dispatch = useAppDispatch()
@@ -54,12 +55,22 @@ const DisplayUserDeck = (props : {
     const length = userCardSubList.length
     const list = userCardSubList.filter(_userCard => _userCard.id !== userCard.id)
     if (list.length === length){
-      const list2 = userCardSubList.filter(_userCard => _userCard.cardId === userCard.cardId)
-      if (list2.length < 2){
+      const card = cardList.filter(card => card.id === userCard.cardId)[0]
+      const list2 = userCardSubList.filter(_userCard => {
+        const _card = cardList.filter(card => card.id === _userCard.cardId)[0]
+        return _card.mana === card.mana
+      })
+      if (list2.length < 1){
         list.push(userCard)
+
       }
     }
-    setUserCardSubList(list)
+    const newList = list.sort((userCard1, userCard2) => {
+      const card1 = cardList.filter(card => card.id === userCard1.cardId)[0]
+      const card2 = cardList.filter(card => card.id === userCard2.cardId)[0]
+      return card1.mana - card2.mana
+    })
+    setUserCardSubList(newList)
   }
 
   const _updateDeck = async () => {

@@ -278,9 +278,7 @@ const FindGame = (props: {
         Gain more value by converting them to NFTs. <br /><br />
         Sell/Buy cards from other players. <br />
       </DivNice>
-      
       {reanderLoading()}
-
       {isStep(StepId.Contract, Step.NotFound, step) &&
         <DivNice>
         <Button onClick={() => {
