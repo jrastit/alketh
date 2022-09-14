@@ -52,7 +52,7 @@ const DisplayNFT = (props: {
                 expWin : 0,
                 price : 0,
                 sold : false,
-                nftId : nft.id,
+                nftId : nft.id.toNumber(),
               }
             })}
             nftBurnCard={(nftId : BigNumber) => {nftBurnCard(dispatch, props.contractHandler, nftId)}}

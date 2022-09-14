@@ -1,6 +1,6 @@
 {
-  "short_name": "Alchestmy",
-  "name": "Alchestmy",
+  "short_name": "Alketh",
+  "name": "Alketh",
   "icons": [
     {
       "src": "favicon.ico",
@@ -8,9 +8,9 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo200.png",
+      "src": "android-chrome-192x192.png",
       "type": "image/png",
-      "sizes": "200x200"
+      "sizes": "192x192"
     }
   ],
   "start_url": ".",

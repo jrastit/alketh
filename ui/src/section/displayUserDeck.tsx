@@ -108,7 +108,7 @@ const DisplayUserDeck = (props : {
       if (deck){
         setUserCardSubList(deck.userCardIdList.map((id) => {
           return userCardList.filter((userCard) => userCard.id === id)[0]
-        }).filter(userCard => (!userCard.price && !userCard.sold && userCard.nftId.eq(0))))
+        }).filter(userCard => (!userCard.price && !userCard.sold && userCard.nftId === 0)))
       } else {
         setUserCardSubList([])
       }
@@ -158,7 +158,7 @@ const DisplayUserDeck = (props : {
         <UserCardListWidget
           userCardList={userCardList.concat([]).sort((card1, card2) => {
             return card2.exp - card1.exp
-          }).filter(card => !card.price && !card.sold && card.nftId.eq(0))}
+          }).filter(card => !card.price && !card.sold && card.nftId === 0)}
           selectCard={selectCard}
           userCardSubList={userCardSubList}
         />

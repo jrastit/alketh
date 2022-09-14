@@ -37,7 +37,7 @@ export const userSlice = createSlice({
       if (!userCard) {
         throw Error('User Card not found ' + action.payload.userCardId)
       }
-      userCard.nftId = action.payload.id
+      userCard.nftId = action.payload.id.toNumber()
       userCard.sold = true
       state.userCardList = newUserCardList
     },
@@ -58,7 +58,7 @@ export const userSlice = createSlice({
         expWin: 0,
         price: 0,
         sold: false,
-        nftId: BigNumber.from(0)
+        nftId: 0
       }])
     },
     setUser: (state, action: PayloadAction<UserType>) => {

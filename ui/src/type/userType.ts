@@ -1,5 +1,3 @@
-import { BigNumber } from 'ethers'
-
 export type UserType = {
   id: number
   name: string
@@ -19,5 +17,5 @@ export type UserCardType = {
   expWin: number,
   price: number,
   sold: boolean,
-  nftId: BigNumber,
+  nftId: number,
 }

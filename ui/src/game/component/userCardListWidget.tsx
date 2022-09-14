@@ -26,7 +26,7 @@ const userCardListWidget = (props : {
 
   const renderBottom = (userCard : UserCardType) => {
     if (props.nftCard && userCard.exp > 10){
-      if (!userCard.nftId.eq(0)){
+      if (userCard.nftId){
         return (
           <div style={{
             textAlign : "center",
@@ -44,7 +44,7 @@ const userCardListWidget = (props : {
     }
     else if (props.nftBurnCard){
       return (
-        <ButtonNice onClick={() => { props.nftBurnCard && props.nftBurnCard(userCard.nftId) }}>
+        <ButtonNice onClick={() => { props.nftBurnCard && props.nftBurnCard(BigNumber.from(userCard.nftId)) }}>
           Conver NFT to card
         </ButtonNice>
       )

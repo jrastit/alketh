@@ -9,6 +9,8 @@ const RequireFaucet = () => {
   const wallet = useAppSelector((state) => state.walletSlice.wallet)
   const network = useAppSelector((state) => state.walletSlice.network)
 
+  console.log(network, network?.warningBalance, wallet.balance)
+
   if (!network) {
     return (
       <></>
@@ -23,7 +25,7 @@ const RequireFaucet = () => {
 
   return (
   <>
-  { (!wallet.balance || (network && network.faucet)) &&
+  (
     <DivNice>
     { !wallet.balance &&
       <p>Wallet balance is empty, add some tokens!</p>
@@ -46,7 +48,7 @@ const RequireFaucet = () => {
       </>
     }
     </DivNice>
-  }
+  
   </>
   )
 }

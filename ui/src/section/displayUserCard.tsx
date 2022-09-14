@@ -38,7 +38,7 @@ const DisplayUserCard = (props: {
   const [error, setError] = useState<string>()
 
   const userCardListToSplit = userCardList ? userCardList.concat([]).filter((userCard) => {
-    return !userCard.sold && userCard.nftId.eq(0)
+    return !userCard.sold && !userCard.nftId
   }).sort((card1, card2) => {
     return card2.exp - card1.exp
   }) : []
