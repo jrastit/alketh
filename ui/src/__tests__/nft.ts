@@ -34,7 +34,7 @@ const getNextCardToSold = (cardList: UserCardType[]) => {
   return cardList.filter(
     card => (!card.sold) &&
       (card.price === 0) &&
-      (card.nftId.eq(0))
+      (card.nftId === 0)
   ).sort((card1, card2) => {
     return card1.exp > card2.exp ? -1 : 1
   })[0]

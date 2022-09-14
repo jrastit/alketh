@@ -26,7 +26,7 @@ const userCardListWidget = (props : {
 
   const renderBottom = (userCard : UserCardType) => {
     if (props.nftCard && userCard.exp > 10){
-      if (userCard.nftId){
+      if (userCard.nftId > 0){
         return (
           <div style={{
             textAlign : "center",

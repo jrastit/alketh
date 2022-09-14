@@ -228,10 +228,7 @@ const WalletConnection = (props: {
 
             <DivNice title='Wallet info'>
 
-            <WalletInfoWidget
-              wallet={wallet}
-              network={network}
-            />
+            <WalletInfoWidget/>
             </DivNice>
             <RequireFaucet/>
             {isStep(StepId.Wallet, Step.Ok, step) &&
@@ -313,10 +310,7 @@ const WalletConnection = (props: {
             </DivNice>
             <DivNice title='Metamask Wallet'>
               { wallet &&
-                <WalletInfoWidget
-                  wallet={wallet}
-                  network={network}
-                />
+                <WalletInfoWidget/>
               }
               </DivNice>
               <RequireFaucet/>

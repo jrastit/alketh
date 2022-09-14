@@ -1,20 +1,21 @@
-import { WalletInfo } from '../../type/walletInfo'
-import { NetworkType } from '../../type/networkType'
 import AddressWidget from '../addressWidget'
+import BalanceWidget from './balanceWidget'
 
-const WalletInfoWidget = (props : {
-  wallet : WalletInfo
-  network ?: NetworkType | undefined
-}) => {
+import { useAppSelector } from '../../hooks'
+
+const WalletInfoWidget = () => {
+
+  const wallet = useAppSelector((state) => state.walletSlice.wallet)
 
   return (
     <>
-    { !!props.wallet.address &&
-      <p>Wallet address : <AddressWidget address={props.wallet.address}/></p>
+    { !!wallet.address &&
+      <>
+      <p>Wallet address : <AddressWidget address={wallet.address}/><br/>
+      Balance : <BalanceWidget/></p>
+      </>
     }
-    { props.wallet.balance !== undefined &&
-      <p>Wallet balance : {props.wallet.balance} {props.network?.tokenName}</p>
-    }
+
     </>
   )
 }
