@@ -9,9 +9,9 @@ import WalletSelectWidget from '../component/wallet/walletSelectWidget'
 import WalletDelete from '../component/wallet/walletDelete'
 import WalletAddWidget from '../component/wallet/walletAddWidget'
 import CardWidget from '../game/component/cardWidget'
-import Faucet from '../component/backend/Faucet'
 import { TransactionManager } from '../util/TransactionManager'
 import DivNice from '../component/divNice'
+import RequireFaucet from '../component/backend/RequireFaucet'
 
 import WalletPassword from '../component/wallet/walletPassword'
 import StepMessageNiceWidget from '../component/stepMessageNiceWidget'
@@ -138,22 +138,26 @@ const WalletConnection = (props: {
 
           <DivNice title='Broswer Wallet'>
             <p>Use your internet broswer cache to keep your wallet</p>
+            <p>Good for testing the game</p>
+            <p>You will lose your wallet when the broswer cache is cleared</p>
             <Button onClick={() => setWalletType('Broswer')}>
               Enter with broswer wallet
             </Button>
           </DivNice>
 
-          <DivNice title='Metamask Wallet'>
-            <p>Use wallet and network configured within Metamask</p>
-            <p><a href='https://metamask.io/' target='_blank' rel="noreferrer">get Metamask here</a></p>
-            <SpaceWidget>
-              <Button onClick={() => {
-                 activate(Injected).then(() => {setWalletType('Metamask')})
-              }}>
-                Enter with Metamask
-              </Button>
-            </SpaceWidget>
-          </DivNice>
+          { displayAdmin &&
+            <DivNice title='Metamask Wallet'>
+              <p>Use wallet and network configured within Metamask</p>
+              <p><a href='https://metamask.io/' target='_blank' rel="noreferrer">get Metamask here</a></p>
+              <SpaceWidget>
+                <Button onClick={() => {
+                   activate(Injected).then(() => {setWalletType('Metamask')})
+                }}>
+                  Enter with Metamask
+                </Button>
+              </SpaceWidget>
+            </DivNice>
+          }
 
           <DivNice title='Options'>
             <Button onClick={() => props.setDisplayConfig(true)}>
@@ -229,25 +233,7 @@ const WalletConnection = (props: {
               network={network}
             />
             </DivNice>
-            { (!wallet.balance || (network && network.faucet)) &&
-              <DivNice>
-              { !wallet.balance &&
-                <p>Wallet balance is empty, add some tokens!</p>
-              }
-              { network && network.faucet &&
-                <>
-                <p>Get more Test token with {network.name} faucet at:</p>
-                <p><a href={network.faucet} target="_blank" rel="noreferrer">{network.faucet}</a></p>
-                </>
-              }
-              { wallet.address &&
-                <>
-                <p>Get more Test token with alketh faucet</p>
-                <p><Faucet address={wallet.address}/></p>
-                </>
-              }
-              </DivNice>
-            }
+            <RequireFaucet/>
             {isStep(StepId.Wallet, Step.Ok, step) &&
               <DivNice>
               <Button onClick={() => props.setSection('game')}>Start game</Button>
@@ -333,11 +319,7 @@ const WalletConnection = (props: {
                 />
               }
               </DivNice>
-              { !wallet.balance &&
-                <DivNice>
-                <p>Wallet balance is empty, add some tokens!</p>
-                </DivNice>
-              }
+              <RequireFaucet/>
               {isStep(StepId.Wallet, Step.Ok, step) &&
                 <DivNice>
                 <Button onClick={() => props.setSection('game')}>Start game</Button>

@@ -1,9 +1,11 @@
 import {
-  fundWallet
+  fundWallet,
+  checkFaucetController,
 } from '../controllers/walletController'
 
 import {
-  verifyWallet
+  verifyAddress,
+  verifyNetwork,
 } from '../middleware/verifyWallet'
 
 import express from 'express'
@@ -19,8 +21,14 @@ const authRoute = function(app: express.Application) {
 
   app.post(
     "/api/wallet/fund",
-    [verifyWallet],
+    [verifyAddress, verifyNetwork],
     fundWallet
+  );
+
+  app.post(
+    "/api/wallet/checkFaucet",
+    [verifyAddress, verifyNetwork],
+    checkFaucetController
   );
 };
 

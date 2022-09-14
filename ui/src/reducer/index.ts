@@ -7,6 +7,7 @@ import walletSlice from './walletSlice'
 import configSlice from './configSlice'
 import authSlice from './backend/authSlice'
 import messageSlice from './backend/messageSlice'
+import faucetSlice from './backend/faucetSlice'
 
 
 export default combineReducers({
@@ -18,4 +19,5 @@ export default combineReducers({
   configSlice,
   authSlice,
   messageSlice,
+  faucetSlice,
 })

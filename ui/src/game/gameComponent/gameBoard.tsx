@@ -472,9 +472,10 @@ const GameBoard = (props: {
           paddingTop: '1em',
           paddingBottom: '1em',
         }}>
-          <div style={{ height: '10em', textAlign: 'center' }}>
+          <div style={{ height: displayAdmin ? '10em' : '4em', textAlign: 'center' }}>
             {
               <div>
+              { displayAdmin &&
                 <div style={{ height: '4em' }}>
                     <span>
                     {!autoPlay && play === Play.Ready &&
@@ -492,7 +493,10 @@ const GameBoard = (props: {
                     </span>
 
                 </div>
-                {turnData.playActionList && turnData.playActionList.length > 0 &&
+              }
+
+                {!autoPlay && play === Play.Ready && turnData.playActionList && turnData.playActionList.length > 0 &&
+                  <span style={{paddingRight : '2em'}}>
                   <Button
                     onClick={() => {
                       //console.log(turnData.playActionId, turnData.playActionList)
@@ -502,6 +506,7 @@ const GameBoard = (props: {
                       )
                     }}
                   >Reset action</Button>
+                  </span>
                 }
                 {play === Play.WaitReplay &&
                   <Button
@@ -516,6 +521,9 @@ const GameBoard = (props: {
                       _endTurn()
                     }}
                   >End turn</Button>
+                }
+                { play !== Play.Ready &&
+                  <span><h3>{Play[play]}</h3></span>
                 }
               </div>
 

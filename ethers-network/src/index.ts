@@ -1,3 +1,3 @@
-import { faucet } from './util/faucet'
+import { faucet, checkFaucet } from './util/faucet'
 
-export { faucet }
+export { faucet, checkFaucet }

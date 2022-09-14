@@ -6,6 +6,7 @@ type NetworkType = {
   gameContract?: string
   blockExplorerTxPrefix?: string
   faucet?: string
+  faucetAmount?: number
   entityRegistryAddress?: string
   tokenName?: string
   contractDomainChainlink?: {

@@ -42,7 +42,7 @@ function App() {
   const isWallet = (section === 'wallet' || !isOk(StepId.Wallet, step))
 
   return (
-    <div className="App">
+    <div className="App" style={isWallet ? {top : '0px'} : {}}>
       <Container fluid>
         <WalletLoader
           transactionManager={transactionManager}

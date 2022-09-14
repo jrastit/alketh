@@ -17,6 +17,7 @@ import {
 const WalletAddWidget = () => {
 
   const password = useAppSelector((state) => state.walletSlice.password)
+  const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
   const dispatch = useAppDispatch()
 
   const [fieldValue, setFieldValue] = useState<any>({
@@ -60,15 +61,19 @@ const WalletAddWidget = () => {
   )
   else if (submit === 0) return (
     <Form onSubmit={formSubmit}>
-      <p>import your broswer wallet with the private key or generate a new one</p>
+      { displayAdmin &&
+        <p>import your broswer wallet with the private key or generate a new one</p>
+      }
       <Form.Group>
         <Form.Label>Name:</Form.Label>
         <Form.Control type="text" name="name" value={fieldValue.name} onChange={handleChange} />
       </Form.Group>
-      <Form.Group>
-        <Form.Label>Private key (optional):</Form.Label>
-        <Form.Control type="text" name="pkey" value={fieldValue.pkey} onChange={handleChange} />
-      </Form.Group>
+      { displayAdmin &&
+        <Form.Group>
+          <Form.Label>Private key (optional):</Form.Label>
+          <Form.Control type="text" name="pkey" value={fieldValue.pkey} onChange={handleChange} />
+        </Form.Group>
+      }
       {fieldValue.name &&
         <Form.Group><Button variant="info" type="submit">Ok</Button></Form.Group>
       }

@@ -3,6 +3,7 @@ import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 
 import WalletWidget from './component/walletWidget'
+import BalanceWidget from './component/wallet/balanceWidget'
 import UserWidget from './game/component/userWidget'
 
 import { useAppSelector } from './hooks'
@@ -26,6 +27,7 @@ const AppNav = (props: {
       fixed="top"
       variant="dark"
       style={{ backgroundColor:'#000000B0'}}
+      collapseOnSelect
       expand="lg"
       >
     <Container fluid>
@@ -34,21 +36,21 @@ const AppNav = (props: {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
           <Nav.Link onClick={() => props.setSection('wallet')}>Wallet</Nav.Link>
-          <Nav.Link onClick={() => props.setSection('game')}>Game</Nav.Link>
+          <Nav.Link eventKey="1" onClick={() => props.setSection('game')}>Game</Nav.Link>
           { !!user &&
             <>
-            <Nav.Link onClick={() => props.setSection('userCard')}>My cards</Nav.Link>
-            <Nav.Link onClick={() => props.setSection('userDeck')}>My decks</Nav.Link>
-            <Nav.Link onClick={() => props.setSection('NFT')}>My NFTs</Nav.Link>
+            <Nav.Link eventKey="1" onClick={() => props.setSection('userCard')}>My cards</Nav.Link>
+            <Nav.Link eventKey="1" onClick={() => props.setSection('userDeck')}>My decks</Nav.Link>
+            <Nav.Link eventKey="1" onClick={() => props.setSection('NFT')}>My NFTs</Nav.Link>
             </>
 
           }
-          <Nav.Link onClick={() => props.setSection('card')}>All cards</Nav.Link>
-          { (displayAdmin || 1) &&
+          <Nav.Link eventKey="1" onClick={() => props.setSection('card')}>All cards</Nav.Link>
+          { (displayAdmin) &&
             <>
-            <Nav.Link onClick={() => props.setSection('editCard')}>Edit cards</Nav.Link>
-            <Nav.Link onClick={() => props.setSection('admin')}>Admin</Nav.Link>
-            <Nav.Link onClick={() => props.setSection('user')}>User</Nav.Link>
+            <Nav.Link eventKey="1" onClick={() => props.setSection('editCard')}>Edit cards</Nav.Link>
+            <Nav.Link eventKey="1" onClick={() => props.setSection('admin')}>Admin</Nav.Link>
+            <Nav.Link eventKey="1" onClick={() => props.setSection('user')}>User</Nav.Link>
             </>
           }
         </Nav>
@@ -60,9 +62,7 @@ const AppNav = (props: {
           <UserWidget gameId={gameId} user={user}/>
         }
         <WalletWidget address={wallet.address} error={getStep(StepId.Wallet, step).error} />
-        {wallet.balance !== undefined &&
-          <span style={{paddingLeft : '.2em', color : 'lightgreen'}}>{Math.floor(wallet.balance * 100) / 100} {network?.tokenName}</span>
-        }
+        <BalanceWidget />
       </Navbar.Brand>
       <Navbar.Brand>
       </Navbar.Brand>

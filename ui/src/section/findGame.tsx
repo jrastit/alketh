@@ -6,6 +6,7 @@ import DivNice from '../component/divNice'
 import StepMessageNiceWidget from '../component/stepMessageNiceWidget'
 import DeckSelect from '../game/component/deckSelect'
 import FormControl from 'react-bootstrap/FormControl'
+import RequireFaucet from '../component/backend/RequireFaucet'
 
 import { ContractHandlerType } from '../type/contractType'
 
@@ -80,8 +81,19 @@ const FindGame = (props: {
   }
 
   const reanderLoading = () => {
+    if (
+      isStep(StepId.Contract, Step.Ok, step) &&
+      isStep(StepId.CardList, Step.Ok, step) &&
+      isStep(StepId.GameList, Step.Ok, step) &&
+      isStep(StepId.Nft, Step.Ok, step) &&
+      isStep(StepId.User, Step.Ok, step) &&
+      isStep(StepId.UserCardList, Step.Ok, step) &&
+      isStep(StepId.UserDeckList, Step.Ok, step)
+    ) {
+      return (<></>)
+    }
     return (
-      <div>
+      <DivNice>
         <StepMessageNiceWidget
           title='Contract'
           step={getStep(StepId.Contract, step)}
@@ -126,7 +138,7 @@ const FindGame = (props: {
           </>
         }
 
-      </div>
+      </DivNice>
     )
   }
 
@@ -266,10 +278,9 @@ const FindGame = (props: {
         Gain more value by converting them to NFTs. <br /><br />
         Sell/Buy cards from other players. <br />
       </DivNice>
+      
+      {reanderLoading()}
 
-      <DivNice>
-        {reanderLoading()}
-      </DivNice>
       {isStep(StepId.Contract, Step.NotFound, step) &&
         <DivNice>
         <Button onClick={() => {
@@ -309,6 +320,9 @@ const FindGame = (props: {
             Select your deck :
         {deckSelectRender()}
           </DivNice>
+        }
+        {
+          <RequireFaucet/>
         }
         {deck &&
           <DivNice>

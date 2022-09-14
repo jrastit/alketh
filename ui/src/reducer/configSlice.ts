@@ -8,7 +8,7 @@ interface ConfigState {
 
 // Define the initial state using that type
 const initialState: ConfigState = {
-  displayAdmin: false,
+  displayAdmin: localStorage.getItem("displayAdmin") === "true",
 }
 
 export const configSlice = createSlice({
@@ -17,6 +17,11 @@ export const configSlice = createSlice({
   initialState,
   reducers: {
     setDisplayAdmin: (state, action: PayloadAction<boolean>) => {
+      if (action.payload) {
+        localStorage.setItem("displayAdmin", "true")
+      } else {
+        localStorage.removeItem("displayAdmin")
+      }
       state.displayAdmin = action.payload
     },
   },

@@ -13,6 +13,8 @@ interface FaucetState {
   network: Array<{ networkName: string, lastRequest: Date }>
   message: string | undefined
   pending: boolean
+  enable: boolean
+  faucetAmount: number | undefined
 }
 
 const API_URL = backendConfig.url;
@@ -20,10 +22,17 @@ const API_URL = backendConfig.url;
 const initialState: FaucetState = {
   network: [] as Array<{ networkName: string, lastRequest: Date }>,
   message: undefined,
-  pending: false
+  pending: false,
+  enable: false,
+  faucetAmount: undefined,
 };
 
-export const faucet = axiosThunkData<{ address: string, networkName: string }>(
+export const checkFaucet = axiosThunkData<{ address: string, networkName: string }>(
+  'wallet/checkFaucet',
+  API_URL + "wallet/checkFaucet",
+)
+
+export const faucet = axiosThunk<{ address: string, networkName: string }>(
   'wallet/fund',
   API_URL + "wallet/fund",
 )
@@ -36,6 +45,20 @@ export const faucetSlice = createSlice({
 
   },
   extraReducers: (builder) => {
+    builder.addCase(checkFaucet.fulfilled, (state, action: PayloadAction<{ faucetAmount: number | undefined }>) => {
+      state.faucetAmount = action.payload.faucetAmount
+      state.enable = true
+      state.pending = false
+    })
+    builder.addCase(checkFaucet.rejected, (state) => {
+      state.faucetAmount = undefined
+      state.enable = false
+      state.pending = false
+    })
+    builder.addCase(checkFaucet.pending, (state) => {
+      state.faucetAmount = undefined
+      state.pending = true
+    })
     /*
     builder.addCase(faucet.fulfilled, (state, action: PayloadAction<{message : string}>) => {
       state.message = action.payload.message

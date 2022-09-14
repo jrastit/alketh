@@ -5,6 +5,7 @@
       "url": "http://localhost:8545",
       "chainId": 1337,
       "gameContract": "0x8CdaF0CD259887258Bc13a92C0a6dA92698644C0",
+      "warningBalance": 0.75,
       "tokenName": "TEST",
       "host" : "localhost"
     },
@@ -13,7 +14,8 @@
       "url": "https://testnet.emerald.oasis.dev",
       "faucet" : "https://faucet.testnet.oasis.dev/",
       "chainId": 42261,
-      "gameContract": "0x9F77276d33b1C7c029b2420065584802943fC2A2",
+      "gameContract": "0x435f158F37De0C6B95c127F5382B92380e1f9499",
+      "warningBalance": 0.75,
       "tokenName": "TEST",
       "timeBetweenRequest" : 10,
       "retry" : 2,

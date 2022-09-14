@@ -18,6 +18,7 @@ type NetworkType = {
   refreshBalance?: number
   host?: string
   default?: boolean
+  warningBalance?: number
 }
 
 export type { NetworkType }
