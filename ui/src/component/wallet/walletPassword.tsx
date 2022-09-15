@@ -67,18 +67,24 @@ const WalletPassword = () => {
     }
   }
 
+  const renderRemeber = () => {
+    return (
+      <Form.Check
+      checked={remember}
+      type="checkbox"
+      label="Remember it"
+      name="remeber"
+      onChange={(_event) => {setRemember(!remember)}}
+      />
+    )
+  }
+
   return (
     <>
       { (!!password.passwordCheck) &&
         <>
           <p style={{fontWeight:'bold'}}>Unlock your local wallet</p>
-          <Form.Check
-          checked={remember}
-          type="checkbox"
-          label="Remember it"
-          name="remeber"
-          onChange={(_event) => {setRemember(!remember)}}
-          />
+          {renderRemeber()}
           <Form.Control type="password" placeholder="Password" name="password" onChange={_unlockPassword}/>
         </>
 
@@ -86,15 +92,10 @@ const WalletPassword = () => {
       { (!password.passwordCheck) &&
         <>
           <p style={{fontWeight:'bold'}}>Setup your password</p>
+          {renderRemeber()}
           <p>Enter Password : <input type="password" name="password1" onChange={event => {setPassword1(event.target.value)}}></input></p>
-          { !!password1 &&
-            <>
-            <p>ReEnter Password : <input type="password" name="password2" onChange={event => {setPassword2(event.target.value)}}></input></p>
-            { (password1 === password2) &&
-              <Button onClick={() => {!!password1 && _newPassword(password1)}}>Set password</Button>
-            }
-            </>
-          }
+          <p>ReEnter Password : <input disabled={!password1} type="password" name="password2" onChange={event => {setPassword2(event.target.value)}}></input></p>
+          <Button disabled={!password1 || password1 !== password2} onClick={() => {!!password1 && _newPassword(password1)}}>Set password</Button>
         </>
       }
     </>

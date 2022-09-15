@@ -24,8 +24,6 @@ const RequireFaucet = () => {
   }
 
   return (
-  <>
-  (
     <DivNice>
     { !wallet.balance &&
       <p>Wallet balance is empty, add some tokens!</p>
@@ -48,8 +46,6 @@ const RequireFaucet = () => {
       </>
     }
     </DivNice>
-
-  </>
   )
 }
 

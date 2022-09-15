@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
+import SpaceWidget from '../spaceWidget'
 import {
   walletAdd,
   walletStorageSetWallet,
@@ -21,7 +22,7 @@ const WalletAddWidget = () => {
   const dispatch = useAppDispatch()
 
   const [fieldValue, setFieldValue] = useState<any>({
-    name: '',
+    name: displayAdmin?'':'My wallet',
     pkey: '',
   })
   const [submit, setSubmit] = useState(0)
@@ -65,7 +66,7 @@ const WalletAddWidget = () => {
         <p>import your broswer wallet with the private key or generate a new one</p>
       }
       <Form.Group>
-        <Form.Label>Name:</Form.Label>
+        <Form.Label>Give a Name to your wallet :</Form.Label>
         <Form.Control type="text" name="name" value={fieldValue.name} onChange={handleChange} />
       </Form.Group>
       { displayAdmin &&
@@ -74,9 +75,9 @@ const WalletAddWidget = () => {
           <Form.Control type="text" name="pkey" value={fieldValue.pkey} onChange={handleChange} />
         </Form.Group>
       }
-      {fieldValue.name &&
-        <Form.Group><Button variant="info" type="submit">Ok</Button></Form.Group>
-      }
+      <SpaceWidget>
+      <Form.Group><Button disabled={!fieldValue.name} variant="info" type="submit">Ok</Button></Form.Group>
+      </SpaceWidget>
     </Form>
   )
   else if (submit === 1) return (

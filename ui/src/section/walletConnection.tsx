@@ -6,9 +6,14 @@ import WalletInfoWidget from '../component/wallet/walletInfoWidget'
 import NetworkSelectWidget from '../component/wallet/networkSelectWidget'
 import NetworkSwitchWidget from '../component/wallet/networkSwitchWidget'
 import WalletSelectWidget from '../component/wallet/walletSelectWidget'
-import WalletDelete from '../component/wallet/walletDelete'
+import Logo from '../component/broswerWallet/Logo'
+import Introduction from '../component/broswerWallet/Introduction'
+import Option from '../component/broswerWallet/Option'
+import OptionButton from '../component/broswerWallet/OptionButton'
+import BroswerWalletButton from '../component/broswerWallet/BroswerWalletButton'
+import MetamaskButton from '../component/broswerWallet/MetamaskButton'
 import WalletAddWidget from '../component/wallet/walletAddWidget'
-import CardWidget from '../game/component/cardWidget'
+
 import { TransactionManager } from '../util/TransactionManager'
 import DivNice from '../component/divNice'
 import RequireFaucet from '../component/backend/RequireFaucet'
@@ -20,9 +25,6 @@ import {
   walletStorageClearPassword,
   walletStorageSetNetworkId,
 } from '../util/walletStorage'
-
-import { useWeb3React } from '@web3-react/core'
-import { InjectedConnector } from "@web3-react/injected-connector";
 
 import {
   Step,
@@ -39,22 +41,15 @@ import {
 
 import { useAppSelector, useAppDispatch } from '../hooks'
 
-const Injected = new InjectedConnector({
- //supportedChainIds: [1, 3, 4, 5, 42]
-});
-
 const WalletConnection = (props: {
   transactionManager: TransactionManager | undefined
   setSection: (section: string) => void
   setDisplayConfig: (arg : boolean) => void
 }) => {
 
-  const { activate } = useWeb3React();
-
   const dispatch = useAppDispatch()
 
   const step = useAppSelector((state) => state.contractSlice.step)
-
   const wallet = useAppSelector((state) => state.walletSlice.wallet)
   const network = useAppSelector((state) => state.walletSlice.network)
   const displayAdmin = useAppSelector((state) => state.configSlice.displayAdmin)
@@ -64,16 +59,6 @@ const WalletConnection = (props: {
   const setWalletType = (type?: string) => {
     walletStorageSetType(type)
     dispatch(updateStep({ id: StepId.Wallet, step: Step.Init }))
-  }
-
-  const renderOption = () => {
-    return (
-      <SpaceWidget>
-        <Button variant="primary" onClick={() => {
-          setDisplayOption(!displayOption)
-        }}>{displayOption ? "Back" : "Option"}</Button>
-      </SpaceWidget>
-    )
   }
 
   const renderDisconnect = () => {
@@ -93,6 +78,12 @@ const WalletConnection = (props: {
       <SpaceWidget>
         <Button variant="primary" onClick={() => setWalletType()}>Home</Button>
       </SpaceWidget>
+    )
+  }
+
+  const renderOption = () => {
+    return (
+      <OptionButton displayOption={displayOption} setDisplayOption={setDisplayOption}/>
     )
   }
 
@@ -118,45 +109,17 @@ const WalletConnection = (props: {
         <>
           <SpaceWidget>
           </SpaceWidget>
-          <div style={{ fontSize: '14px' }}>
-            <CardWidget
-              family={1}
-              name={'Hacker'}
-              mana={1}
-              level={0}
-              attack={10}
-              life={10}
-              speed={1}
-              description={'Connecting...'}
-              exp={0}
-            />
-          </div>
-          <DivNice title='Alketh'>
-            <p>A blockchain card game!</p>
-            <p>Chose your wallet to connect and start playing.</p>
-          </DivNice>
+          <Logo/>
+          <Introduction/>
 
-          <DivNice title='Broswer Wallet'>
-            <p>Use your internet broswer cache to keep your wallet</p>
-            <p>Good for testing the game</p>
-            <p>You will lose your wallet when the broswer cache is cleared</p>
-            <Button onClick={() => setWalletType('Broswer')}>
-              Enter with broswer wallet
-            </Button>
-          </DivNice>
+          <BroswerWalletButton
+            setWalletType={setWalletType}
+          />
 
           { displayAdmin &&
-            <DivNice title='Metamask Wallet'>
-              <p>Use wallet and network configured within Metamask</p>
-              <p><a href='https://metamask.io/' target='_blank' rel="noreferrer">get Metamask here</a></p>
-              <SpaceWidget>
-                <Button onClick={() => {
-                   activate(Injected).then(() => {setWalletType('Metamask')})
-                }}>
-                  Enter with Metamask
-                </Button>
-              </SpaceWidget>
-            </DivNice>
+            <MetamaskButton
+              setWalletType={setWalletType}
+            />
           }
 
           <DivNice title='Options'>
@@ -200,12 +163,7 @@ const WalletConnection = (props: {
           if (displayOption){
             return (
               <>
-              <DivNice title='Add wallet'>
-              <WalletAddWidget/>
-              </DivNice>
-              <DivNice title='Delete wallet'>
-              <WalletDelete/>
-              </DivNice>
+              <Option/>
               <DivNice>
               {renderOption()}
               </DivNice>
@@ -227,10 +185,11 @@ const WalletConnection = (props: {
             </DivNice>
 
             <DivNice title='Wallet info'>
-
             <WalletInfoWidget/>
             </DivNice>
+
             <RequireFaucet/>
+            
             {isStep(StepId.Wallet, Step.Ok, step) &&
               <DivNice>
               <Button onClick={() => props.setSection('game')}>Start game</Button>
@@ -263,8 +222,7 @@ const WalletConnection = (props: {
                   title='Wallet'
                   step={getStep(StepId.Wallet, step)}
                   resetStep={() => { dispatch(clearError(StepId.Wallet)) }}
-                /
-                >
+                />
             </DivNice>
             <DivNice>
             {renderOption()}
